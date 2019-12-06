@@ -1,0 +1,10 @@
+	SELECT managementID,userID,name,mailaddress,password,profile,profilepicture,release,post_count,follows,followers,likes_count,TO_CHAR(registered_date ,'YYYY/MM/DD HH24:MI:SS') AS registered_data FROM Users;
+	SELECT * FROM Post;
+	SELECT * FROM Post_Like;
+	SELECT * FROM Coment;
+	SELECT * FROM Coment_Like;
+	SELECT * FROM Ripry;
+	SELECT * FROM Ripry_Like;
+	SELECT * FROM Follow;
+	SELECT * FROM Directmail;
+	SELECT logID,active_managementID,passive_managementID,action,TO_CHAR(time ,'YYYY/MM/DD HH24:MI:SS') AS time FROM Log;
