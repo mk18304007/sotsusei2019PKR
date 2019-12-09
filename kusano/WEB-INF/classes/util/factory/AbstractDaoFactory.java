@@ -15,7 +15,7 @@ public abstract class AbstractDaoFactory{
 			prop.load(new FileInputStream("c:/webapps/impaku/WEB-INF/classes/dao.properties"));
 			
 			String name=prop.getProperty(key);
-			System.out.println(name);
+			
 			Class c=Class.forName(name);
 			
 			factory=(AbstractDaoFactory)c.newInstance();

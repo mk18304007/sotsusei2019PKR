@@ -27,10 +27,10 @@ public class LoginCommand extends AbstractCommand{
 		String[] passwords=reqc.getParameter("password");
 		String password=passwords[0];
 		
-		//新しいUserProductクラスをインスタンス化する
+		//判定用のwhere句とuserIDをMapに格納する
 		Map<String,String> user = new HashMap<String,String>();
-		user.put("userId",userId);
-		user.put("password",password);
+		user.put("value",userId);
+		user.put("where","where userId=?");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
@@ -40,8 +40,8 @@ public class LoginCommand extends AbstractCommand{
 		AbstractDao dao=factory.getAbstractDao();
 		UserBean ub=(UserBean)dao.read(user);
 		
-		//入力パラメータとDBから取得した値が正しいか判定
-		if(userId.equals(ub.getUserId()) && password.equals(ub.getPassword())){
+		//入力パラメータとDBから取得したパスワードが正しいか判定
+		if(password.equals(ub.getPassword())){
 			//一致する場合Homeへ転送
 			Map<String,Bean> result=new HashMap<String,Bean>();
 			result.put("user",ub);
@@ -49,8 +49,10 @@ public class LoginCommand extends AbstractCommand{
 			resc.setTarget("home");
 			
 		}else{
-			/*一致しない場合、ログインページへ(仮)
-								本来は例外を送出する*/
+			//一致しない場合、ログインページへ(仮)本来は例外を送出する
+			Map<String,String> result=new HashMap<String,String>();
+			result.put("failed","failed");
+			resc.setResult(result);
 			resc.setTarget("login");
 			System.out.println("IDかパスワードが違います");
 		}

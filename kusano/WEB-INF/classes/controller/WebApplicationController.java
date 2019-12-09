@@ -49,6 +49,7 @@ public class WebApplicationController implements ApplicationController{
 				//ResponseContextにセットされたResultを取得し、セッションに持たせる
 				Map result=(Map)resc.getResult();
 				HttpSession session=req.getSession();
+				System.out.println(result.get("user"));
 				session.setAttribute("user",result.get("user"));
 			}
 		

@@ -7,8 +7,8 @@
 	<body>
 		<h1>ほーむ</h1>
 		<p>ログイン成功</p>
-		<p>ID:${data.id}</p>
-		<p>pass:${data.pass}</p>
+		<p>ID:${user.userId}</p>
+		<p>pass:${user.password}</p>
 		<p><a href="profile">プロフィール</a></p>
 		<p><a href="logout">ログアウト</a></p>
 	</body>

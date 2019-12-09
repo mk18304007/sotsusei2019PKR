@@ -14,6 +14,10 @@ import bean.UserBean;
 import util.OracleConnectionManager;
 
 public class UsersDao implements AbstractDao{
+	PreparedStatement ps=null;
+	Connection cn=null;
+	ResultSet rs=null;
+	
 	public int update(Map map){
 		return 0;
 	}
@@ -25,19 +29,17 @@ public class UsersDao implements AbstractDao{
 	}
 	public Bean read(Map map){
 		UserBean ub=new UserBean();
-		PreparedStatement ps=null;
 		try{
-			Connection cn=null;
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
-			String sql="SELECT * FROM Users WHERE userId = ? AND password = ?";
+			StringBuffer sql=new StringBuffer();
+			sql.append("SELECT * FROM Users ");
+			sql.append((String)map.get("where"));
+			System.out.println(sql);
+			ps=cn.prepareStatement(new String(sql));
+			ps.setString(1,(String)map.get("value"));
 			
-			ps=cn.prepareStatement(sql);
-			ps.setString(1,(String)map.get("userId"));
-			ps.setString(2,(String)map.get("password"));
-			
-			ResultSet rs=ps.executeQuery();
-			
+			rs=ps.executeQuery();
 			if(rs.next()){
 				ub.setManagementId(rs.getString(1));
 				ub.setUserId(rs.getString(2));
