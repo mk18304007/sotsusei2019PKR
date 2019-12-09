@@ -15,18 +15,18 @@ INSERT INTO Coment(managementID,postID,comentID,coment)VALUES('1','2',(SELECT co
 -- Coment_Like表のテストINSERT
 INSERT INTO Coment_Like(managementID,comentID)VALUES('1','1');
 INSERT INTO Coment_Like(managementID,comentID)VALUES('3','2');
--- Ripry表のテストINSERT
-INSERT INTO Ripry(managementID,comentID,ripryID,ripry) VALUES('3','1',(SELECT coalesce(MAX(ripryID),0)+1 FROM Ripry),'Hello');
-INSERT INTO Ripry(managementID,comentID,ripryID,ripry) VALUES('2','2',(SELECT coalesce(MAX(ripryID),0)+1 FROM Ripry),'シェイシェイ');
-INSERT INTO Ripry(managementID,ripryID,ripry) VALUES('1',(SELECT coalesce(MAX(ripryID),0)+1 FROM Ripry),'GoodMorning');
--- Ripry_Like表のテストINSERT
-INSERT INTO Ripry_Like(managementID,ripryID) VALUES('1','1');
-INSERT INTO Ripry_Like(managementID,ripryID) VALUES('1','3');
+-- Riply表のテストINSERT
+INSERT INTO Riply(managementID,comentID,riplyID,riply) VALUES('3','1',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'Hello');
+INSERT INTO Riply(managementID,comentID,riplyID,riply) VALUES('2','2',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'シェイシェイ');
+INSERT INTO Riply(managementID,riplyID,riply) VALUES('1',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'GoodMorning');
+-- Riply_Like表のテストINSERT
+INSERT INTO Riply_Like(managementID,riplyID) VALUES('1','1');
+INSERT INTO Riply_Like(managementID,riplyID) VALUES('1','3');
 -- Follow表のテストINSERT
-INSERT INTO Follow(followID,follower_managementID,followers_managementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'1','2');
-INSERT INTO Follow(followID,follower_managementID,followers_managementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'1','3');
-INSERT INTO Follow(followID,follower_managementID,followers_managementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'2','3');
+INSERT INTO Follow(followID,followerManagementID,followersManagementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'1','2');
+INSERT INTO Follow(followID,followerManagementID,followersManagementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'1','3');
+INSERT INTO Follow(followID,followerManagementID,followersManagementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'2','3');
 -- Directmail表のテストINSERT
-INSERT INTO Directmail(send_managementID,sent_managementID,talk)VALUES('1','2','こんにちわ');
-INSERT INTO Directmail(send_managementID,sent_managementID,contents)VALUES('2','3','C:\Directmail\contents\ウホホ.jpg');
-INSERT INTO Directmail(send_managementID,sent_managementID,talk,contents)VALUES('3','2','Hello','C:\Dricmail\contents\HelloWord.hello');
+INSERT INTO Directmail(sendManagementID,sentManagementID,talk)VALUES('1','2','こんにちわ');
+INSERT INTO Directmail(sendManagementID,sentManagementID,contents)VALUES('2','3','C:\Directmail\contents\ウホホ.jpg');
+INSERT INTO Directmail(sendManagementID,sentManagementID,talk,contents)VALUES('3','2','Hello','C:\Dricmail\contents\HelloWord.hello');

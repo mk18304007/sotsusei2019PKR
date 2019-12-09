@@ -18,17 +18,17 @@
 	col report for 9
 	col good for 9
 	col logID for 999999999
-	col active_managementID for 999999999
-	col passive_managementID for 999999999
+	col activeManagementID for 999999999
+	col passiveManagementID for 999999999
 	col action for 9
 	col time for 99999
 	col followID for 999999999
-	col follower_managementID for 999999999
-	col followers_managementID for 999999999
-	col send_managementID for 999999999
-	col sent_managementID for 999999999
+	col followerManagementID for 999999999
+	col followersManagementID for 999999999
+	col sendManagementID for 999999999
+	col sentManagementID for 999999999
 	col talk for a30
 	col comentID for 999999999
 	col coment for a20
-	col ripryID for 999999999
-	col ripry for a20
+	col replyID for 999999999
+	col reply for a20

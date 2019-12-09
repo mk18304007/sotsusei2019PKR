@@ -10,11 +10,11 @@
 		profile 			VARCHAR2(800),
 		profilepicture 		VARCHAR2(1000) DEFAULT 'C:\Piccture.jpg',
 		release 			NUMBER(1) DEFAULT 0, 
-		post_count 			NUMBER(9) DEFAULT 0,
+		postcount 			NUMBER(9) DEFAULT 0,
 		follows 			NUMBER(9) DEFAULT 0,
 		followers 			NUMBER(9) DEFAULT 0,
-		likes_count 		NUMBER(9) DEFAULT 0,
-		registered_date 	DATE DEFAULT SYSDATE 
+		likescount 		NUMBER(9) DEFAULT 0,
+		registereddate 	DATE DEFAULT SYSDATE 
 		--CONSTRAINT NN_Users_registerd_date NOT NULL
 	);
 
@@ -56,55 +56,56 @@
 		CONSTRAINT FK_Coment_Like_comentID 			FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
 	);
 
--- Ripry表
-	CREATE TABLE Ripry(
+-- Reply表
+	CREATE TABLE Reply(
 		managementID 	NUMBER(9),
 		comentID 		NUMBER(9),
-		ripryID 		NUMBER(9) CONSTRAINT UQ_NN_coment_ripryID UNIQUE,
-		ripry 			VARCHAR2(2000),
-		CONSTRAINT FK_Ripry_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Ripry_comentID 		FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
+		replyID 		NUMBER(9) CONSTRAINT UQ_NN_coment_replyID UNIQUE,
+		reply 			VARCHAR2(2000),
+		CONSTRAINT FK_Reply_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
+		CONSTRAINT FK_Reply_comentID 		FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
 	);
 	
--- Ripry_Like表
-	CREATE TABLE Ripry_Like(
+-- Reply_Like表
+	CREATE TABLE Reply_Like(
 		managementID 	NUMBER(9),
-		ripryID 		NUMBER(9),
+		replyID 		NUMBER(9),
 		good 			NUMBER(1) DEFAULT(1),
-		CONSTRAINT FK_Ripry_Like_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Ripry_Like_ripryID 		FOREIGN KEY(ripryID) 		REFERENCES Ripry(ripryID)		
+		CONSTRAINT FK_Reply_Like_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
+		CONSTRAINT FK_Reply_Like_replyID 		FOREIGN KEY(replyID) 		REFERENCES Reply(replyID)		
 	);
 
 -- Follow表
 	CREATE TABLE Follow(
 		followID 				NUMBER(9) CONSTRAINT PK_followID PRIMARY KEY,
-		follower_managementID 	NUMBER(9),
-		followers_managementID 	NUMBER(9),
-		CONSTRAINT FK_Follow_followerID  FOREIGN KEY(follower_managementID)  REFERENCES Users(managementID),
-		CONSTRAINT FK_Follow_followersID FOREIGN KEY(followers_managementID) REFERENCES Users(managementID)
+		followerManagementID 	NUMBER(9),
+		followersManagementID 	NUMBER(9),
+		
+		CONSTRAINT FK_Follow_followerID  FOREIGN KEY(followerManagementID)  REFERENCES Users(managementID),
+		CONSTRAINT FK_Follow_followersID FOREIGN KEY(followersManagementID) REFERENCES Users(managementID)
 	);
 
 -- Directmail表
 	CREATE TABLE Directmail(
-		send_managementID 	NUMBER(9),
-		sent_managementID 	NUMBER(9),
+		sendManagementID 	NUMBER(9),
+		sentManagementID 	NUMBER(9),
 		talk 				VARCHAR2(4000),
 		contents 			VARCHAR2(1000),
-		CONSTRAINT FK_Directmail_send_managementID FOREIGN KEY(send_managementID) REFERENCES Users(managementID),
-		CONSTRAINT FK_Directmail_sent_managementID FOREIGN KEY(sent_managementID) REFERENCES Users(managementID)
+		CONSTRAINT FK_Directmail_sendManagementID FOREIGN KEY(sendManagementID) REFERENCES Users(managementID),
+		CONSTRAINT FK_Directmail_sentManagementID FOREIGN KEY(sentManagementID) REFERENCES Users(managementID)
 	);
 
 -- Log表
 	CREATE TABLE Log(
 		logID 					NUMBER(9) CONSTRAINT PK_logID PRIMARY KEY,
-		active_managementID 	NUMBER(9),
-		passive_managementID 	NUMBER(9),
+		activeManagementID 	NUMBER(9),
+		passiveManagementID 	NUMBER(9),
 		--アクション(フォロー(0)orいいね(1)orコメント(2)or投稿(3))
 		action 					NUMBER(1) CONSTRAINT NN_action NOT NULL,
 		time 					DATE DEFAULT SYSDATE,
 		-- CONSTRAINT NN_time NOT NULL,
-		CONSTRAINT FK_Log_active_managementID  FOREIGN KEY(active_managementID)  REFERENCES Users(managementID),
-		CONSTRAINT FK_Log_passive_managementID FOREIGN KEY(passive_managementID) REFERENCES Users(managementID)
+		CONSTRAINT FK_Log_activeManagementID  FOREIGN KEY(activeManagementID)  REFERENCES Users(managementID),
+		CONSTRAINT FK_Log_passiveManagementID FOREIGN KEY(passiveManagementID) REFERENCES Users(managementID)
 	);
 
 

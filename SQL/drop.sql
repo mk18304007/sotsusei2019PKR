@@ -2,8 +2,8 @@
 DROP TABLE Log;
 DROP TABLE Follow;
 DROP TABLE Directmail;
-DROP TABLE Ripry_Like;
-DROP TABLE Ripry;
+DROP TABLE Riply_Like;
+DROP TABLE Riply;
 DROP TABLE Coment_Like;
 DROP TABLE Coment;
 DROP TABLE Post_Like;
