@@ -1,8 +1,8 @@
 
 
--- Usersï\
+-- UsersË°®
 	CREATE TABLE Users(
-		managementID 		NUMBER(9)Å@CONSTRAINT PK_managementID PRIMARY KEY,
+		managementID 		NUMBER(9)„ÄÄCONSTRAINT PK_managementID PRIMARY KEY,
 		userID 				VARCHAR2(100) CONSTRAINT UQ_NN_userID UNIQUE NOT NULL,
 		name 				VARCHAR2(100) CONSTRAINT NN_name NOT NULL,
 		mailaddress 		VARCHAR2(30) CONSTRAINT UQ_NN_addres UNIQUE NOT NULL,
@@ -18,7 +18,7 @@
 		--CONSTRAINT NN_Users_registerd_date NOT NULL
 	);
 
--- Postï\
+-- PostË°®
 	CREATE TABLE Post(
 		postID 			NUMBER(9) CONSTRAINT PK_postID PRIMARY KEY,
 		managementID 	NUMBER(9),
@@ -28,7 +28,7 @@
 		CONSTRAINT FK_Post_managementID FOREIGN KEY(managementID) REFERENCES Users(managementID)
 	);
 
--- Post_Likeï\
+-- Post_LikeË°®
 	CREATE TABLE Post_Like(
 		managementID 	NUMBER(9),
 		postID 			NUMBER(9),	
@@ -37,7 +37,7 @@
 		CONSTRAINT FK_Post_Like_postID 		 FOREIGN KEY(postID) 		REFERENCES Post(postID)
 	);
 
--- Comentï\
+-- ComentË°®
 	CREATE TABLE Coment(
 		managementID 	NUMBER(9),
 		postID 			NUMBER(9),
@@ -47,7 +47,7 @@
 		CONSTRAINT FK_Coment_postID 		FOREIGN KEY(postID) 		REFERENCES Post(postID)
 	);
 
--- Coment_Likeï\
+-- Coment_LikeË°®
 	CREATE TABLE Coment_Like(
 		managementID 	NUMBER(9),
 		comentID 		NUMBER(9),
@@ -56,7 +56,7 @@
 		CONSTRAINT FK_Coment_Like_comentID 			FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
 	);
 
--- Replyï\
+-- ReplyË°®
 	CREATE TABLE Reply(
 		managementID 	NUMBER(9),
 		comentID 		NUMBER(9),
@@ -66,7 +66,7 @@
 		CONSTRAINT FK_Reply_comentID 		FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
 	);
 	
--- Reply_Likeï\
+-- Reply_LikeË°®
 	CREATE TABLE Reply_Like(
 		managementID 	NUMBER(9),
 		replyID 		NUMBER(9),
@@ -75,7 +75,7 @@
 		CONSTRAINT FK_Reply_Like_replyID 		FOREIGN KEY(replyID) 		REFERENCES Reply(replyID)		
 	);
 
--- Followï\
+-- FollowË°®
 	CREATE TABLE Follow(
 		followID 				NUMBER(9) CONSTRAINT PK_followID PRIMARY KEY,
 		followerManagementID 	NUMBER(9),
@@ -85,7 +85,7 @@
 		CONSTRAINT FK_Follow_followersID FOREIGN KEY(followersManagementID) REFERENCES Users(managementID)
 	);
 
--- Directmailï\
+-- DirectmailË°®
 	CREATE TABLE Directmail(
 		sendManagementID 	NUMBER(9),
 		sentManagementID 	NUMBER(9),
@@ -95,12 +95,12 @@
 		CONSTRAINT FK_Directmail_sentManagementID FOREIGN KEY(sentManagementID) REFERENCES Users(managementID)
 	);
 
--- Logï\
+-- LogË°®
 	CREATE TABLE Log(
 		logID 					NUMBER(9) CONSTRAINT PK_logID PRIMARY KEY,
 		activeManagementID 	NUMBER(9),
 		passiveManagementID 	NUMBER(9),
-		--ÉAÉNÉVÉáÉì(ÉtÉHÉçÅ[(0)orÇ¢Ç¢ÇÀ(1)orÉRÉÅÉìÉg(2)orìäçe(3))
+		--„Ç¢„ÇØ„Ç∑„Éß„É≥(„Éï„Ç©„É≠„Éº(0)or„ÅÑ„ÅÑ„Å≠(1)or„Ç≥„É°„É≥„Éà(2)orÊäïÁ®ø(3))
 		action 					NUMBER(1) CONSTRAINT NN_action NOT NULL,
 		time 					DATE DEFAULT SYSDATE,
 		-- CONSTRAINT NN_time NOT NULL,

@@ -1,4 +1,4 @@
-	-- —ñƒTƒCƒY
+	-- åˆ—ã‚µã‚¤ã‚º
 	col managementID for 999999999
 	col userID for a30
 	col name for a30

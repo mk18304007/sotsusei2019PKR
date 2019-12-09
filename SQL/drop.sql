@@ -1,4 +1,4 @@
---Šù‘¶TABLE‚ðÁ‚·
+--æ—¢å­˜TABLEã‚’æ¶ˆã™
 DROP TABLE Log;
 DROP TABLE Follow;
 DROP TABLE Directmail;

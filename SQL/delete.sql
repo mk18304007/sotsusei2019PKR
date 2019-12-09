@@ -1,4 +1,4 @@
---Šù‘¶FROM‚È‚¢ƒf[ƒ^‚ðÁ‚·
+--æ—¢å­˜FROMãªã„ãƒ‡ãƒ¼ã‚¿ã‚’æ¶ˆã™
 DELETE FROM Log;
 DELETE FROM Follow;
 DELETE FROM Directmail;

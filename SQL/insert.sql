@@ -1,32 +1,32 @@
--- Users•\‚ÌƒeƒXƒgINSERT    
-INSERT INTO Users(managementID,userID,name,mailaddress,password,profile)VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),'Imamura','‚¢‚Ü‚Ş‚ç','si18304004@ga.tera-house.ac.jp','z5zCZQ1B','ƒvƒƒtƒB[ƒ‹•¶ƒeƒXƒg');
-INSERT INTO Users(managementID,userID,name,mailaddress,password,profile)VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),'Gorilla','ƒSƒŠƒ‰ƒSƒŠƒ‰','gorillaComCom@id.apple.com','a1a1a1','™');
-INSERT INTO Users(managementID,userID,name,mailaddress,password,profile)VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),'Orange','µÚİ¼Ş','Orangerenge@ezweb.ne.jp','Orange','^^^^^^^^^');
--- Post•\‚ÌƒeƒXƒgINSERT
-INSERT INTO Post(postID,managementID,contents,text)VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),'1','C:\post_picturs\aa.png','‰“Še');
-INSERT INTO Post(postID,managementID,contents,text)VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),'2','C:\post_picturs\bbbbb.png','‚¤‚Ù‚Ù');
--- Post_Like•\‚ÌƒeƒXƒgINSERT
+-- Usersè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT    
+INSERT INTO Users(managementID,userID,name,mailaddress,password,profile)VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),'Imamura','ã„ã¾ã‚€ã‚‰','si18304004@ga.tera-house.ac.jp','z5zCZQ1B','ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«æ–‡ãƒ†ã‚¹ãƒˆ');
+INSERT INTO Users(managementID,userID,name,mailaddress,password,profile)VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),'Gorilla','ã‚´ãƒªãƒ©ã‚´ãƒªãƒ©','gorillaComCom@id.apple.com','a1a1a1','â˜†');
+INSERT INTO Users(managementID,userID,name,mailaddress,password,profile)VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),'Orange','ï½µï¾šï¾ï½¼ï¾','Orangerenge@ezweb.ne.jp','Orange','^^^^^^^^^');
+-- Postè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
+INSERT INTO Post(postID,managementID,contents,text)VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),'1','C:\post_picturs\aa.png','åˆæŠ•ç¨¿');
+INSERT INTO Post(postID,managementID,contents,text)VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),'2','C:\post_picturs\bbbbb.png','ã†ã»ã»');
+-- Post_Likeè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
 INSERT INTO Post_Like(managementID,postID)VALUES('2','1');
 INSERT INTO Post_Like(managementID,postID)VALUES('1','2');
 INSERT INTO Post_Like(managementID,postID)VALUES('3','1');
--- Coment•\‚ÌƒeƒXƒgINSERT
+-- Comentè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
 INSERT INTO Coment(managementID,postID,comentID,coment)VALUES('2','1',(SELECT coalesce(MAX(comentID),0)+1 FROM Coment),'TestComent');
 INSERT INTO Coment(managementID,postID,comentID,coment)VALUES('1','2',(SELECT coalesce(MAX(comentID),0)+1 FROM Coment),'COMENTCOMENT');
--- Coment_Like•\‚ÌƒeƒXƒgINSERT
+-- Coment_Likeè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
 INSERT INTO Coment_Like(managementID,comentID)VALUES('1','1');
 INSERT INTO Coment_Like(managementID,comentID)VALUES('3','2');
--- Riply•\‚ÌƒeƒXƒgINSERT
+-- Riplyè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
 INSERT INTO Riply(managementID,comentID,riplyID,riply) VALUES('3','1',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'Hello');
-INSERT INTO Riply(managementID,comentID,riplyID,riply) VALUES('2','2',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'ƒVƒFƒCƒVƒFƒC');
+INSERT INTO Riply(managementID,comentID,riplyID,riply) VALUES('2','2',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'ã‚·ã‚§ã‚¤ã‚·ã‚§ã‚¤');
 INSERT INTO Riply(managementID,riplyID,riply) VALUES('1',(SELECT coalesce(MAX(riplyID),0)+1 FROM Riply),'GoodMorning');
--- Riply_Like•\‚ÌƒeƒXƒgINSERT
+-- Riply_Likeè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
 INSERT INTO Riply_Like(managementID,riplyID) VALUES('1','1');
 INSERT INTO Riply_Like(managementID,riplyID) VALUES('1','3');
--- Follow•\‚ÌƒeƒXƒgINSERT
+-- Followè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
 INSERT INTO Follow(followID,followerManagementID,followersManagementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'1','2');
 INSERT INTO Follow(followID,followerManagementID,followersManagementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'1','3');
 INSERT INTO Follow(followID,followerManagementID,followersManagementID)VALUES((SELECT coalesce(MAX(followID),0)+1 FROM Follow),'2','3');
--- Directmail•\‚ÌƒeƒXƒgINSERT
-INSERT INTO Directmail(sendManagementID,sentManagementID,talk)VALUES('1','2','‚±‚ñ‚É‚¿‚í');
-INSERT INTO Directmail(sendManagementID,sentManagementID,contents)VALUES('2','3','C:\Directmail\contents\ƒEƒzƒz.jpg');
+-- Directmailè¡¨ã®ãƒ†ã‚¹ãƒˆINSERT
+INSERT INTO Directmail(sendManagementID,sentManagementID,talk)VALUES('1','2','ã“ã‚“ã«ã¡ã‚');
+INSERT INTO Directmail(sendManagementID,sentManagementID,contents)VALUES('2','3','C:\Directmail\contents\ã‚¦ãƒ›ãƒ›.jpg');
 INSERT INTO Directmail(sendManagementID,sentManagementID,talk,contents)VALUES('3','2','Hello','C:\Dricmail\contents\HelloWord.hello');
