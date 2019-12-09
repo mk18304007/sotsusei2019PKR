@@ -21,16 +21,13 @@ public class LoginCommand extends AbstractCommand{
 		RequestContext reqc=getRequestContext();
 		
 		//RequestContextから入力パラメータを取得する
-		String[] userIds=reqc.getParameter("userId");
-		String userId=userIds[0];
-		
-		String[] passwords=reqc.getParameter("password");
-		String password=passwords[0];
+		String userId=reqc.getParameter("userId")[0];
+		String password=reqc.getParameter("password")[0];
 		
 		//判定用のwhere句とuserIDをMapに格納する
-		Map<String,String> user = new HashMap<String,String>();
-		user.put("value",userId);
-		user.put("where","where userId=?");
+		Map<String,String> palams=new HashMap<String,String>();
+		palams.put("value",userId);
+		palams.put("where","where userId=?");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
@@ -38,7 +35,7 @@ public class LoginCommand extends AbstractCommand{
 		//インテグレーションレイヤの処理を呼び出す
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
 		AbstractDao dao=factory.getAbstractDao();
-		UserBean ub=(UserBean)dao.read(user);
+		UserBean ub=(UserBean)dao.read(palams);
 		
 		//入力パラメータとDBから取得したパスワードが正しいか判定
 		if(password.equals(ub.getPassword())){
@@ -58,10 +55,10 @@ public class LoginCommand extends AbstractCommand{
 		}
 		
 		//トランザクションを終了する
-		OracleConnectionManager.getInstance().commit();
+		//OracleConnectionManager.getInstance().commit();
 		
 		//コネクションを切断する
-		OracleConnectionManager.getInstance().closeConnection();
+		//OracleConnectionManager.getInstance().closeConnection();
 		
 		return resc;
 	}

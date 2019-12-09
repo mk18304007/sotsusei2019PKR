@@ -18,19 +18,22 @@ public class UsersDao implements AbstractDao{
 	PreparedStatement ps=null;
 	Connection cn=null;
 	ResultSet rs=null;
-
+	UserBean ub=new UserBean();
+	
 	public int update(Map map){
+		int count=0;
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE Users SET");
-			sql.append("userID=?,name=?,name,mailaddress,pasword,profilepicture,release")
+			sql.append("userID=?,name=?,name,mailaddress,pasword,profilepicture,release");
 			ps=cn.prepareStatement(new String(sql));
 			ps.setString(1,(String)map.get("value"));
-
 			rs=ps.executeQuery();
-			if(rs.next()){
+			rs.next();
+			count=rs.getInt(1);
+			/*if(rs.next()){
 				ub.setManagementId(rs.getString(1));
 				ub.setUserId(rs.getString(2));
 				ub.setName(rs.getString(3));
@@ -46,7 +49,7 @@ public class UsersDao implements AbstractDao{
 				ub.setRegistredDate(rs.getString(13));
 			}else{
 				System.out.println("ユーザーが見つかりません");
-			}
+			}*/
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{
@@ -58,7 +61,7 @@ public class UsersDao implements AbstractDao{
 				throw new RuntimeException(e.getMessage(),e);
 			}
 		}
-		return ub;
+		return count;
 	}
 
 	public int insert(Map map){
@@ -68,12 +71,15 @@ public class UsersDao implements AbstractDao{
 			
 			StringBuffer sql = new StringBuffer();
 			//COALESCE は 最初のNULLと置き換える
-			sql.append("INSERT INTO Users VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),usersID,name,mailaddress,password)");
+			sql.append("INSERT INTO Users(managementID,userID,name,mailAddress,password) VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),?,?,?,?)");
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("value"));
+			ps.setString(1,(String)map.get("userId"));
+			ps.setString(2,(String)map.get("name"));
+			ps.setString(3,(String)map.get("mailAddress"));
+			ps.setString(4,(String)map.get("password"));
 			rs=ps.executeQuery();
 			rs.next();//カーソルを動かす
-			count = rs.getInt();
+			count = rs.getInt(0);
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{
@@ -91,7 +97,6 @@ public class UsersDao implements AbstractDao{
 		return null;
 	}
 	public Bean read(Map map){
-		UserBean ub=new UserBean();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
