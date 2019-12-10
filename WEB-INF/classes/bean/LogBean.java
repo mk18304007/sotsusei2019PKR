@@ -1,6 +1,6 @@
 package bean;
 
-// Log•\‚Ìbean
+// Logè¡¨ã®bean
 public class LogBean extends Bean{
     private String logId;
     private String activeManagementId;

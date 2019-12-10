@@ -26,11 +26,64 @@ public class UsersDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("UPDATE Users SET");
-			sql.append("userID=?,name=?,name,mailaddress,pasword,profilepicture,release");
+			sql.append("UPDATE Users SET ");
+			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,release=?,state=?");
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("value"));
+			// ユーザーIDの変更
+			if(map.containsKey("userID")){
+                pst.setString(1,(String)map.get("userID"));
+            }else{
+                pst.setString(1,ub.getUserId());
+			}
+			// ユーザーネームの変更
+			if(map.containsKey("userName")){
+                pst.setString(2,(String)map.get("userName"));
+            }else{
+                pst.setString(2,ub.getUserName());
+			}
+			// メールアドレスの変更
+			if(map.containsKey("mailAddress")){
+                pst.setString(3,(String)map.get("mailAddress"));
+            }else{
+                pst.setString(3,ub.getMailAddress());
+			}
+			// パスワードの変更
+			if(map.containsKey("password")){
+                pst.setString(4,(String)map.get("password"));
+            }else{
+                pst.setString(4,ub.getPassword());
+			}
+			// プロフィール文の変更
+			if(map.containsKey("profile")){
+                pst.setString(5,(String)map.get("profile"));
+            }else{
+                pst.setString(5,ub.getProfile());
+			}
+			// プロフィールの写真変更
+			if(map.containsKey("profilePicture")){
+                pst.setString(6,(String)map.get("profilePicture"));
+            }else{
+                pst.setString(6,ub.getProfilePicture());
+			}
+			// 公開非公開の変更
+			if(map.containsKey("release")){
+                pst.setString(7,(String)map.get("release"));
+            }else{
+                pst.setString(7,ub.getRelease());
+			}
+			// ユーザーの状態
+			if(map.containsKey("state")){
+                pst.setString(8,(String)map.get("state"));
+            }else{
+                pst.setString(8,ub.getRelease());
+			}
+			// WHERE句が存在したらUPDATE文を実行する
+			if(map.containsKey("where")){
+                sql.append((String)map.get("where"));
+			}
+			// 処理列数を返す
 			count=ps.executeUpdate();
+
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{
@@ -51,8 +104,8 @@ public class UsersDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			//COALESCE �� �ŏ���NULL�ƒu��������
-			sql.append("INSERT INTO Users(managementID,userID,name,mailAddress,password) VALUES((SELECT coalesce(MAX(managementID),0)+1 FROM Users),?,?,?,?)");
+
+			sql.append("INSERT INTO Users(managementID,userID,name,mailAddress,password) VALUES((SELECT COALESCE(MAX(managementID),0)+1 FROM Users),?,?,?,?)");
 			ps=cn.prepareStatement(new String(sql));
 			ps.setString(1,(String)map.get("userId"));
 			ps.setString(2,(String)map.get("name"));
@@ -100,9 +153,10 @@ public class UsersDao implements AbstractDao{
 				ub.setFollows(rs.getString(10));
 				ub.setFollowers(rs.getString(11));
 				ub.setLikesCount(rs.getString(12));
-				ub.setRegistredDate(rs.getString(13));
+				ub.setState(rs.getString(13));
+				ub.setRegistredDate(rs.getString(14));
 			}else{
-				System.out.println("���[�U�[��������܂���");
+				System.out.println("ユーザーが見つかりません");
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
