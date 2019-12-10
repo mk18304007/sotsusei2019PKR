@@ -1,6 +1,6 @@
 package bean;
 
-// Coment_Like•\‚ÌBean
+// Coment_Likeè¡¨ã®Bean
 public class ComentLikeBean extends Bean{
     private String managementId;
     private String comentId;

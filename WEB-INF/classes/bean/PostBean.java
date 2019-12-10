@@ -1,12 +1,19 @@
 package bean;
 
-// Post�\��Bean
+// Postの表Bean
 public class PostBean extends Bean{
+    //投稿の管理用ID
     private String postId;
+    // 投稿したユーザーの管理用ID
     private String managementId;
+    // 写真/動画のパスを入れる
     private String contents;
+    // 投稿の文書
     private String text;
+    // 投稿に対する通報数
     private String report;
+    // 投稿の状態を管理
+    private String state;
 
     public String getPostId(){
         return postId;
@@ -38,4 +45,10 @@ public class PostBean extends Bean{
     public void setReport(String report){
         this.report = report;
     }
+    public String getState(){
+		return state;
+	}
+	public void setState(String state){
+		this.state=state;
+	}
 }

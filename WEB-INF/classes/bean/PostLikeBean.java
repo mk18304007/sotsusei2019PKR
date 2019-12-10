@@ -1,9 +1,12 @@
 package bean;
 
-// Post_Like�\��Bean
+// PostLike表のBean
 public class PostLikeBean extends Bean{
+    // いいねしたユーザの管理用ID
     private String managementId;
+    // いいねされた投稿の管理用ID
     private String postId;
+    // いいね
     private String good;
 
     public String getManagementId(){

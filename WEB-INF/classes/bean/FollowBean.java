@@ -1,6 +1,6 @@
 package bean;
 
-// Followï\ÇÃBean
+// FollowË°®„ÅÆBean
 public class FollowBean extends Bean{
     private String followId;
     private String followerManagementId;
