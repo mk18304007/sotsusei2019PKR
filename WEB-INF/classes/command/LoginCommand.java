@@ -12,6 +12,7 @@ import bean.UserBean;
 
 import util.OracleConnectionManager;
 import util.factory.AbstractDaoFactory;
+import util.SessionManager;
 
 import dao.AbstractDao;
 
@@ -48,7 +49,7 @@ public class LoginCommand extends AbstractCommand{
 		}else{
 			//一致しない場合、ログインページへ(仮)本来は例外を送出する
 			Map<String,String> result=new HashMap<String,String>();
-			result.put("failed","failed");
+			result.put("user","failed");
 			resc.setResult(result);
 			resc.setTarget("login");
 			System.out.println("IDかパスワードが違います");
@@ -59,6 +60,10 @@ public class LoginCommand extends AbstractCommand{
 		
 		//コネクションを切断する
 		//OracleConnectionManager.getInstance().closeConnection();
+		
+		//セッションにユーザー情報を持たせる
+		SessionManager session=new SessionManager(reqc);
+		session.setAttribute("user",((Map)resc.getResult()).get("user"));
 		
 		return resc;
 	}

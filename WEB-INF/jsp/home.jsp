@@ -7,9 +7,10 @@
 	<body>
 		<h1>ほーむ</h1>
 		<p>ログイン成功</p>
-		<p>ID:${user.userId}</p>
-		<p>pass:${user.password}</p>
+		<p>ID:${sessionScope.user.userId}</p>
+		<p>pass:${sessionScope.user.password}</p>
 		<p><a href="profile">プロフィール</a></p>
+		<p><a href="post">投稿</a></p>
 		<p><a href="logout">ログアウト</a></p>
 	</body>
 </html>

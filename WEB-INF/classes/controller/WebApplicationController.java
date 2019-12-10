@@ -44,15 +44,6 @@ public class WebApplicationController implements ApplicationController{
 		//使用したコマンドを判別するためにCommandPathを取得
 		String path=reqc.getCommandPath();
 		
-		//CommandPathに合わせたSession管理をする
-			if(path.equals("login_check")){
-				//ResponseContextにセットされたResultを取得し、セッションに持たせる
-				Map result=(Map)resc.getResult();
-				HttpSession session=req.getSession();
-				System.out.println(result.get("user"));
-				session.setAttribute("user",result.get("user"));
-			}
-		
 		RequestDispatcher dis=req.getRequestDispatcher(resc.getTarget());
 		
 		try{

@@ -7,9 +7,9 @@
 	<body>
 		<h1>プロフィールページ</h1>
 		<p>ログイン成功</p>
-		<p>ID:${data.id}</p>
-		<p>pass:${data.pass}</p>
-		<p><img src="${data.image}" title="プロフィール画像"></p>
+		<p>ID:${sessionScope.user.userId}</p>
+		<p>pass:${sessionScope.user.password}</p>
+		<p><img src="${sessionScope.user.profilePicture}" title="プロフィール画像"></p>
 		<p><a href="logout">ログアウト</a></p>
 	</body>
 </html>
