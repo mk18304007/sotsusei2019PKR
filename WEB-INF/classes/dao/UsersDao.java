@@ -30,26 +30,7 @@ public class UsersDao implements AbstractDao{
 			sql.append("userID=?,name=?,name,mailaddress,pasword,profilepicture,release");
 			ps=cn.prepareStatement(new String(sql));
 			ps.setString(1,(String)map.get("value"));
-			rs=ps.executeQuery();
-			rs.next();
-			count=rs.getInt(1);
-			/*if(rs.next()){
-				ub.setManagementId(rs.getString(1));
-				ub.setUserId(rs.getString(2));
-				ub.setName(rs.getString(3));
-				ub.setMailAddress(rs.getString(4));
-				ub.setPassword(rs.getString(5));
-				ub.setProfile(rs.getString(6));
-				ub.setProfilePicture(rs.getString(7));
-				ub.setRelease(rs.getString(8));
-				ub.setPostCount(rs.getString(9));
-				ub.setFollows(rs.getString(10));
-				ub.setFollowers(rs.getString(11));
-				ub.setLikesCount(rs.getString(12));
-				ub.setRegistredDate(rs.getString(13));
-			}else{
-				System.out.println("ユーザーが見つかりません");
-			}*/
+			count=ps.executeUpdate();
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{
@@ -77,9 +58,7 @@ public class UsersDao implements AbstractDao{
 			ps.setString(2,(String)map.get("name"));
 			ps.setString(3,(String)map.get("mailAddress"));
 			ps.setString(4,(String)map.get("password"));
-			rs=ps.executeQuery();
-			rs.next();//カーソルを動かす
-			count = rs.getInt(0);
+			count=ps.executeUpdate();
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{

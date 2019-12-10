@@ -47,7 +47,7 @@ public class SignUpCommand extends AbstractCommand{
 		dao.insert(palams);
 		
 		//トランザクションを終了する
-		//OracleConnectionManager.getInstance().commit();
+		OracleConnectionManager.getInstance().commit();
 		
 		//コネクションを切断する
 		//OracleConnectionManager.getInstance().closeConnection();
@@ -57,7 +57,7 @@ public class SignUpCommand extends AbstractCommand{
 		lc.init(reqc);
 		resc=lc.execute(resc);
 		
-		Map result=new HashMap();
+		Map<String,Object> result=new HashMap<String,Object>();
 		result.put("user",resc.getResult());
 		resc.setResult(result);
 		return resc;

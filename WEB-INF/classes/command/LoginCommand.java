@@ -55,7 +55,7 @@ public class LoginCommand extends AbstractCommand{
 		}
 		
 		//トランザクションを終了する
-		//OracleConnectionManager.getInstance().commit();
+		OracleConnectionManager.getInstance().commit();
 		
 		//コネクションを切断する
 		//OracleConnectionManager.getInstance().closeConnection();
