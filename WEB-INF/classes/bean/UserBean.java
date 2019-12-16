@@ -1,34 +1,34 @@
 package bean;
 
-// Usersè¡¨ã®Bean
+// Users•\‚ÌBean
 public class UserBean extends Bean{
-	// ç®¡ç†ç”¨ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
+	// ŠÇ——p‚Ìƒ†[ƒU[ID
 	private String managementId;
-	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
+	// ƒ†[ƒU[ID
 	private String userId;
-	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒãƒ¼ãƒ 
+	// ƒ†[ƒU[ƒl[ƒ€
 	private String userName;
-	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
+	// ƒ†[ƒU[‚Ìƒ[ƒ‹ƒAƒhƒŒƒX
 	private String mailAddress;
-	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+	// ƒ†[ƒU[‚ÌƒpƒXƒ[ƒh
 	private String password;
-	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«æ–‡
+	// ƒ†[ƒU[‚ÌƒvƒƒtƒB[ƒ‹•¶
 	private String profile;
-	// ãƒ¦ãƒ¼ã‚¶ã®ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ã®å†™çœŸ
+	// ƒ†[ƒU‚ÌƒvƒƒtƒB[ƒ‹‚ÌÊ^
 	private String profilePicture;
-	// å…¬é–‹(1)/éå…¬é–‹(0)ã®è¨­å®š
+	// ŒöŠJ(1)/”ñŒöŠJ(0)‚Ìİ’è
 	private String release;
-	// è‡ªåˆ†ã®æŠ•ç¨¿æ•°
-	private String postCount;
-	// è‡ªåˆ†ã®ãƒ•ã‚©ãƒ­ãƒ¼æ•°
+	// ©•ª‚ÌƒtƒHƒ[”
 	private String follows;
-	// è‡ªåˆ†ã‚’ãƒ•ã‚©ãƒ­ãƒ¼ã—ã¦ã‚‹æ•°
+	// ©•ª‚ğƒtƒHƒ[‚µ‚Ä‚é”
 	private String followers;
-	// è‡ªåˆ†ã®ã„ã„ã­ã—ãŸæ•°
+	// ©•ª‚Ì“Še”
+	private String postCount;
+	// ©•ª‚Ì‚¢‚¢‚Ë‚µ‚½”
 	private String likesCount;
-	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®çŠ¶æ…‹ã‚’ç®¡ç†
+	// ƒ†[ƒU[‚Ìó‘Ô‚ğŠÇ—
 	private String state;
-	// ç™»éŒ²ã—ãŸæ—¥ä»˜
+	// “o˜^‚µ‚½“ú•t
 	private String registredDate;
 	
 	public String getManagementId(){
@@ -86,14 +86,6 @@ public class UserBean extends Bean{
 	public void setRelease(String release){
 		this.release=release;
 	}
-	
-	public String getPostCount(){
-		return postCount;
-	}
-	public void setPostCount(String postCount){
-		this.postCount=postCount;
-	}
-	
 	public String getFollows(){
 		return follows;
 	}
@@ -107,7 +99,12 @@ public class UserBean extends Bean{
 	public void setFollowers(String followers){
 		this.followers=followers;
 	}
-	
+	public String getPostCount(){
+		return postCount;
+	}
+	public void setPostCount(String postCount){
+		this.postCount=postCount;
+	}
 	public String getLikesCount(){
 		return likesCount;
 	}

@@ -1,16 +1,16 @@
-<%@page pageEncoding="Windows-31J" contentType="text/html; charset=Windows-31J"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 	<head>
 		<title>home</title>
 	</head>
 	<body>
-		<h1>‚Ù[‚Ş</h1>
-		<p>ƒƒOƒCƒ“¬Œ÷</p>
+		<h1>ã»ãƒ¼ã‚€</h1>
+		<p>ãƒ­ã‚°ã‚¤ãƒ³æˆåŠŸ</p>
 		<p>ID:${sessionScope.user.userId}</p>
 		<p>pass:${sessionScope.user.password}</p>
-		<p><a href="profile">ƒvƒƒtƒB[ƒ‹</a></p>
-		<p><a href="post">“Še</a></p>
-		<p><a href="logout">ƒƒOƒAƒEƒg</a></p>
+		<p><a href="profile">ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«</a></p>
+		<p><a href="post">æŠ•ç¨¿</a></p>
+		<p><a href="logout">ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ</a></p>
 	</body>
 </html>

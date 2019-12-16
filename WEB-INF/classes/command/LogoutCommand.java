@@ -1,16 +1,16 @@
 /*----------ログアウトするためのコマンド----------*/
 package command;
 
-import java.util.Map;
-import java.util.HashMap;
+import util.SessionManager;
 
+import context.RequestContext;
 import context.ResponseContext;
 
 public class LogoutCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		Map<String,String> result=new HashMap<String,String>();
-		result.put("logout","logout");
-		resc.setResult(result);
+		RequestContext reqc=getRequestContext();
+		SessionManager session=new SessionManager(reqc);
+		session.invalidate();
 		resc.setTarget("index");
 		return resc;
 	}

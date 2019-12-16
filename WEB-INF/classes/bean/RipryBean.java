@@ -1,12 +1,11 @@
 package bean;
 
-// RipryË°®„ÅÆBean
+// Ripryï\ÇÃBean
 public class RipryBean extends Bean{
     private String managementId;
     private String comentId;
     private String ripryId;
     private String ripry;
-    private String state;
 
     public String getManagementId(){
         return managementId;
@@ -32,10 +31,4 @@ public class RipryBean extends Bean{
     public void set(String ripry){
         this.ripry = ripry;
     }
-    public String getState(){
-		return state;
-	}
-	public void setState(String state){
-		this.state=state;
-	}
 }

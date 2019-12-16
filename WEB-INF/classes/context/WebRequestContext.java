@@ -8,7 +8,6 @@ public class WebRequestContext implements RequestContext{
 	private HttpServletRequest _request;
 	public String getCommandPath(){
 		String servletPath=_request.getServletPath();
-		
 		String commandPath=servletPath.substring(1);
 		
 		return commandPath;

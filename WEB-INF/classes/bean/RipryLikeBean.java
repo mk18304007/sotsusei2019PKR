@@ -1,6 +1,6 @@
 package bean;
 
-// Ripry_Likeè¡¨ã®Bean
+// Ripry_Like•\‚ÌBean
 public class RipryLikeBean extends Bean{
     private String managementId;
     private String ripryId;

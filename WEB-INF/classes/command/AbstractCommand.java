@@ -3,11 +3,11 @@ package command;
 import java.io.IOException;
 import context.RequestContext;
 import context.ResponseContext;
-import bean.UserProduct;
+import bean.UserBean;
 
 public abstract class AbstractCommand{
 	private RequestContext _reqContext;
-	private UserProduct product;
+	private UserBean product;
 	public void init(RequestContext rc){
 		_reqContext=rc;
 	}

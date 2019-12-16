@@ -1,17 +1,17 @@
-<%@page pageEncoding="Windows-31J" contentType="text/html; charset=Windows-31J"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <html>
 	<head>
-		<title>ƒAƒJƒEƒ“ƒgì¬</title>
+		<title>ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆ</title>
 	</head>
 	<body>
-		<h1>ƒAƒJƒEƒ“ƒgì¬</h1>
+		<h1>ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆ</h1>
 		<form action="signup" method="post">
-			<input type="text" name="name" placeholder="ƒ†[ƒU[–¼"><br>
+			<input type="text" name="userName" placeholder="ãƒ¦ãƒ¼ã‚¶ãƒ¼å"><br>
 			<input type="text" name="userId" placeholder="ID"><br>
-			<input type="text" name="mailAddress" placeholder="ƒ[ƒ‹ƒAƒhƒŒƒX"><br>
-			<input type="text" name="password" placeholder="ƒpƒXƒ[ƒh"><br>
-			<input type="text" name="password" placeholder="Šm”F—pƒpƒXƒ[ƒh"><br>
-			<input type="submit" value="V‹K“o˜^">
+			<input type="text" name="mailAddress" placeholder="ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹"><br>
+			<input type="text" name="password" placeholder="ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰"><br>
+			<input type="text" name="password" placeholder="ç¢ºèªç”¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰"><br>
+			<input type="submit" value="æ–°è¦ç™»éŒ²">
 		</form>
 	</body>
 </html>

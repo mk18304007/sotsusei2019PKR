@@ -1,8 +1,17 @@
 <web-app>
-
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<filter>
+		<filter-name>LoginCheckFilter</filter-name>
+		<filter-class>filter.LoginCheckFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginCheckFilter</filter-name>
+		<url-pattern>/home</url-pattern>
+		<url-pattern>/profile</url-pattern>
+	</filter-mapping>
 	
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
@@ -11,6 +20,11 @@
 	<servlet-mapping>
 		<servlet-name>FrontController</servlet-name>
 		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/images/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

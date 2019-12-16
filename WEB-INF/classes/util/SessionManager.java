@@ -20,4 +20,7 @@ public class SessionManager{
 	public Object getAttribute(String name){
 		return session.getAttribute(name);
 	}
+	public void invalidate(){
+		session.invalidate();
+	}
 }

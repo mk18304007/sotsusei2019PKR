@@ -1,14 +1,14 @@
-<%@page pageEncoding="Windows-31J" contentType="text/html; charset=Windows-31J"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <html>
 	<head>
-		<title>ÉçÉOÉCÉì</title>
+		<title>„É≠„Ç∞„Ç§„É≥</title>
 	</head>
 	<body>
-		<h1>ÉçÉOÉCÉì</h1>
+		<h1>„É≠„Ç∞„Ç§„É≥</h1>
 		<form action="login_check" method="post">
 			<input type="text" name="userId" placeholder="ID"><br>
-			<input type="text" name="password" placeholder="ÉpÉXÉèÅ[Éh"><br>
-			<input type="submit" value="ÉçÉOÉCÉì">
+			<input type="text" name="password" placeholder="„Éë„Çπ„ÉØ„Éº„Éâ"><br>
+			<input type="submit" value="„É≠„Ç∞„Ç§„É≥">
 		</form>
 	</body>
 </html>

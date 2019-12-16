@@ -20,7 +20,7 @@ public class SignUpCommand extends AbstractCommand{
 		RequestContext reqc=getRequestContext();
 		
 		//RequestContext‚©‚ç“ü—Í
-		String name=reqc.getParameter("name")[0];
+		String userName=reqc.getParameter("userName")[0];
 		String userId=reqc.getParameter("userId")[0];
 		String mailAddress=reqc.getParameter("mailAddress")[0];
 		String password=reqc.getParameter("password")[0];
@@ -33,7 +33,7 @@ public class SignUpCommand extends AbstractCommand{
 		}*/
 		//“o˜^‚·‚é’l‚ðƒ}ƒbƒv‚ÉŠi”[
 		Map<String,String> palams=new HashMap<String,String>();
-		palams.put("name",name);
+		palams.put("userName",userName);
 		palams.put("userId",userId);
 		palams.put("mailAddress",mailAddress);
 		palams.put("password",password);

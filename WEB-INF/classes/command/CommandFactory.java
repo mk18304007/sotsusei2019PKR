@@ -16,9 +16,9 @@ public class CommandFactory{
 			Properties prop=new Properties();
 			
 			prop.load(new FileInputStream("c:/webapps/impaku/WEB-INF/classes/commands.properties"));
-			System.out.println(rc.getCommandPath());
+			System.out.println("CommandFactory.getCommand()_rc.getCommandPath():"+rc.getCommandPath());
 			String name=prop.getProperty(rc.getCommandPath());
-			System.out.println(name+"‚¾‚æ");
+			System.out.println("CommandFactory.getCommand()"+name+"‚¾‚æ");
 			
 			Class c=Class.forName(name);
 			

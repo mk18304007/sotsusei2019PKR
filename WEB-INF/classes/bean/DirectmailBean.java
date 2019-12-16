@@ -1,12 +1,11 @@
 package bean;
 
-// DrirectMailè¡¨ã®Bean
-public class DirectMailBean extends Bean{
+// Drirectmail•\‚Ìbean
+public class DirectmailBean extends Bean{
     private String sendManagementId;
     private String sentManagementId;
     private String talk;
     private String contents;
-	private String state;
 
     public String getSendManagementId(){
         return sendManagementId;
@@ -32,10 +31,4 @@ public class DirectMailBean extends Bean{
     public void setContents(String contents){
         this.contents = contents;
     }
-    public String getState(){
-		return state;
-	}
-	public void setState(String state){
-		this.state=state;
-	}
 }

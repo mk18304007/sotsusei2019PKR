@@ -29,59 +29,59 @@ public class UsersDao implements AbstractDao{
 			sql.append("UPDATE Users SET ");
 			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,release=?,state=?");
 			ps=cn.prepareStatement(new String(sql));
-			// ãƒ¦ãƒ¼ã‚¶ãƒ¼IDã®å¤‰æ›´
+			// ƒ†[ƒU[ID‚Ì•ÏX
 			if(map.containsKey("userID")){
-                pst.setString(1,(String)map.get("userID"));
+                ps.setString(1,(String)map.get("userId"));
             }else{
-                pst.setString(1,ub.getUserId());
+                ps.setString(1,ub.getUserId());
 			}
-			// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒãƒ¼ãƒ ã®å¤‰æ›´
+			// ƒ†[ƒU[ƒl[ƒ€‚Ì•ÏX
 			if(map.containsKey("userName")){
-                pst.setString(2,(String)map.get("userName"));
+                ps.setString(2,(String)map.get("userName"));
             }else{
-                pst.setString(2,ub.getUserName());
+                ps.setString(2,ub.getUserName());
 			}
-			// ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å¤‰æ›´
+			// ƒ[ƒ‹ƒAƒhƒŒƒX‚Ì•ÏX
 			if(map.containsKey("mailAddress")){
-                pst.setString(3,(String)map.get("mailAddress"));
+                ps.setString(3,(String)map.get("mailAddress"));
             }else{
-                pst.setString(3,ub.getMailAddress());
+                ps.setString(3,ub.getMailAddress());
 			}
-			// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®å¤‰æ›´
+			// ƒpƒXƒ[ƒh‚Ì•ÏX
 			if(map.containsKey("password")){
-                pst.setString(4,(String)map.get("password"));
+                ps.setString(4,(String)map.get("password"));
             }else{
-                pst.setString(4,ub.getPassword());
+                ps.setString(4,ub.getPassword());
 			}
-			// ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«æ–‡ã®å¤‰æ›´
+			// ƒvƒƒtƒB[ƒ‹•¶‚Ì•ÏX
 			if(map.containsKey("profile")){
-                pst.setString(5,(String)map.get("profile"));
+                ps.setString(5,(String)map.get("profile"));
             }else{
-                pst.setString(5,ub.getProfile());
+                ps.setString(5,ub.getProfile());
 			}
-			// ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ã®å†™çœŸå¤‰æ›´
+			// ƒvƒƒtƒB[ƒ‹‚ÌÊ^•ÏX
 			if(map.containsKey("profilePicture")){
-                pst.setString(6,(String)map.get("profilePicture"));
+                ps.setString(6,(String)map.get("profilePicture"));
             }else{
-                pst.setString(6,ub.getProfilePicture());
+                ps.setString(6,ub.getProfilePicture());
 			}
-			// å…¬é–‹éå…¬é–‹ã®å¤‰æ›´
+			// ŒöŠJ”ñŒöŠJ‚Ì•ÏX
 			if(map.containsKey("release")){
-                pst.setString(7,(String)map.get("release"));
+                ps.setString(7,(String)map.get("release"));
             }else{
-                pst.setString(7,ub.getRelease());
+                ps.setString(7,ub.getRelease());
 			}
-			// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®çŠ¶æ…‹
+			// ƒ†[ƒU[‚Ìó‘Ô
 			if(map.containsKey("state")){
-                pst.setString(8,(String)map.get("state"));
+                ps.setString(8,(String)map.get("state"));
             }else{
-                pst.setString(8,ub.getRelease());
+                ps.setString(8,ub.getRelease());
 			}
-			// WHEREå¥ãŒå­˜åœ¨ã—ãŸã‚‰UPDATEæ–‡ã‚’å®Ÿè¡Œã™ã‚‹
+			// WHERE‹å‚ª‘¶İ‚µ‚½‚çUPDATE•¶‚ğÀs‚·‚é
 			if(map.containsKey("where")){
                 sql.append((String)map.get("where"));
 			}
-			// å‡¦ç†åˆ—æ•°ã‚’è¿”ã™
+			// ˆ——ñ”‚ğ•Ô‚·
 			count=ps.executeUpdate();
 
 		}catch(SQLException e){
@@ -105,10 +105,10 @@ public class UsersDao implements AbstractDao{
 			
 			StringBuffer sql = new StringBuffer();
 
-			sql.append("INSERT INTO Users(managementID,userID,name,mailAddress,password) VALUES((SELECT COALESCE(MAX(managementID),0)+1 FROM Users),?,?,?,?)");
+			sql.append("INSERT INTO Users(managementID,userID,userName,mailAddress,password) VALUES((SELECT COALESCE(MAX(managementID),0)+1 FROM Users),?,?,?,?)");
 			ps=cn.prepareStatement(new String(sql));
 			ps.setString(1,(String)map.get("userId"));
-			ps.setString(2,(String)map.get("name"));
+			ps.setString(2,(String)map.get("userName"));
 			ps.setString(3,(String)map.get("mailAddress"));
 			ps.setString(4,(String)map.get("password"));
 			count=ps.executeUpdate();
@@ -143,20 +143,20 @@ public class UsersDao implements AbstractDao{
 			if(rs.next()){
 				ub.setManagementId(rs.getString(1));
 				ub.setUserId(rs.getString(2));
-				ub.setName(rs.getString(3));
+				ub.setUserName(rs.getString(3));
 				ub.setMailAddress(rs.getString(4));
 				ub.setPassword(rs.getString(5));
 				ub.setProfile(rs.getString(6));
 				ub.setProfilePicture(rs.getString(7));
 				ub.setRelease(rs.getString(8));
-				ub.setPostCount(rs.getString(9));
-				ub.setFollows(rs.getString(10));
-				ub.setFollowers(rs.getString(11));
+				ub.setFollows(rs.getString(9));
+				ub.setFollowers(rs.getString(10));
+				ub.setPostCount(rs.getString(11));
 				ub.setLikesCount(rs.getString(12));
 				ub.setState(rs.getString(13));
 				ub.setRegistredDate(rs.getString(14));
 			}else{
-				System.out.println("ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“");
+				System.out.println("ƒ†[ƒU[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
