@@ -30,10 +30,12 @@ public class UsersDao implements AbstractDao{
 			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,release=?,state=?");
 			ps=cn.prepareStatement(new String(sql));
 			// ユーザーIDの変更
-			if(map.containsKey("userID")){
+			if(map.containsKey("userId")){
                 ps.setString(1,(String)map.get("userId"));
+				System.out.println("true:"+(String)map.get("userId"));
             }else{
                 ps.setString(1,ub.getUserId());
+            	System.out.println("false");
 			}
 			// ユーザーネームの変更
 			if(map.containsKey("userName")){
@@ -137,7 +139,9 @@ public class UsersDao implements AbstractDao{
 			sql.append((String)map.get("where"));
 			System.out.println(sql);
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("value"));
+			if(map.containsKey("value")){
+				ps.setString(1,(String)map.get("value"));
+			}
 			
 			rs=ps.executeQuery();
 			if(rs.next()){
