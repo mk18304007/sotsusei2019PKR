@@ -1,10 +1,15 @@
 package bean;
 
-// Follow�\��Bean
+// Follow表のBean
 public class FollowBean extends Bean{
+    // フォローした、されたを管理するID
     private String followId;
+    // フォローされたユーザーの管理用ID
     private String followerManagementId;
+    // フォローしたユーザーの管理用ID
     private String followersManagementId;
+    // フォロー状態管理
+    private String state;
 
     public String getFollowId(){
         return followId;
@@ -23,5 +28,11 @@ public class FollowBean extends Bean{
     }
     public void setFollowersManagementId(String followersManagementId){
         this.followersManagementId = followersManagementId;
+    }
+    public String getState(){
+        return state;
+    }
+    public void setState(String state){
+        this.state = state;
     }
 }

@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import bean.Bean;
+import bean.DrictmailBean;
 import bean.PostBean;
-
 import util.OracleConnectionManager;
 
 public class PostDao implements AbstractDao{
@@ -18,48 +18,10 @@ public class PostDao implements AbstractDao{
 	PreparedStatement ps=null;
 	Connection cn=null;
 	ResultSet rs=null;
-	PostBean pb=new PostBean();
+	PostBean db=new PostBean();
 	
 	public int update(Map map){
-		int count=0;
-		try{
-			cn=OracleConnectionManager.getInstance().getConnection();
-
-			StringBuffer sql = new StringBuffer();
-			sql.append("UPDATE Post SET ");
-			sql.append("report=?,likesCount=?");
-			ps=cn.prepareStatement(new String(sql));
-			// 通報数の更新
-			if(map.containsKey("report")){
-                pst.setString(1,(String)map.get("report"));
-            }else{
-                pst.setString(1,pb.getReport());
-			}
-			// いいねされた数の更新
-			if(map.containsKey("likesCount")){
-                pst.setString(2,(String)map.get("likesCount"));
-            }else{
-                pst.setString(2,pb.getLikesCount());
-			}
-			// WHERE句が存在したらUPDATE文を実行する
-			if(map.containsKey("where")){
-                sql.append((String)map.get("where"));
-			}
-			// 処理列数を返す
-			count=ps.executeUpdate();
-
-		}catch(SQLException e){
-			throw new RuntimeException(e.getMessage(),e);
-		}finally{
-			try{
-				if(ps!=null){
-					ps.close();
-				}
-			}catch(SQLException e){
-				throw new RuntimeException(e.getMessage(),e);
-			}
-		}
-		return count;
+        return 0;
 	}
 
 	public int insert(Map map){
@@ -68,14 +30,19 @@ public class PostDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("INSERT INTO Post(postID,managementID,contents,text) VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),?,?,?)");
+			sql.append("INSERT INTO DrictMail(sendManagementID,sentManagementID,talk,contents) VALUES(?,?,?,?)");
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("managementId"));
-			ps.setString(2,(String)map.get("contents"));
+			ps.setString(1,(String)map.get("sendManagementId"));
+			ps.setString(2,(String)map.get("sentManagementId"));
 			if(map.containsKey("text")){
 				ps.setString(3,(String)map.get("text"));
 			}else{
 				ps.setString(3,"");
+			}
+			if(map.containsKey("contents")){
+				ps.setString(4,(String)map.get("contents"));
+			}else{
+				ps.setString(4,"");
 			}
 			count=ps.executeUpdate();
 		}catch(SQLException e){
@@ -106,12 +73,10 @@ public class PostDao implements AbstractDao{
 			
 			rs=ps.executeQuery();
 			if(rs.next()){
-				pb.setPostId(rs.getString(1));
-				pb.setManagementId(rs.getString(2));
-				pb.setContents(rs.getString(3));
-				pb.setText(rs.getString(4));
-				pb.setReport(rs.getString(5));
-				pb.setLikesCount(rs.getString(6));
+				db.setSendManagementId(rs.getString(1));
+				db.setSentManagementId(rs.getString(2));
+				db.setTalk(rs.getString(3));
+				db.setContents(rs.getString(4));
 			}else{
 				System.out.println("なし");
 			}
@@ -126,6 +91,6 @@ public class PostDao implements AbstractDao{
 				throw new RuntimeException(e.getMessage(),e);
 			}
 		}
-		return pb;
+		return db;
 	}
 }

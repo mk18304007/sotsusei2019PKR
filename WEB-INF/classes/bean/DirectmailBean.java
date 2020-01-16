@@ -1,10 +1,14 @@
 package bean;
 
-// Drirectmail�\��bean
-public class DirectmailBean extends Bean{
+// DrirectMail表のBean
+public class DirectMailBean extends Bean{
+    // DMを送るユーザーの管理用ID
     private String sendManagementId;
+    // DMを送られるユーザーの管理用ID
     private String sentManagementId;
+    // DMで送られる文章
     private String talk;
+    // DMで送られる写真/動画のパス
     private String contents;
 
     public String getSendManagementId(){

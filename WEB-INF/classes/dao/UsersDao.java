@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import bean.Bean;
-import bean.UserBean;
+import bean.UsersBean;
 
 import util.OracleConnectionManager;
 
@@ -18,7 +18,7 @@ public class UsersDao implements AbstractDao{
 	PreparedStatement ps=null;
 	Connection cn=null;
 	ResultSet rs=null;
-	UserBean ub=new UserBean();
+	UsersBean ub=new UsersBean();
 	
 	public int update(Map map){
 		int count=0;
@@ -27,63 +27,85 @@ public class UsersDao implements AbstractDao{
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE Users SET ");
-			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,release=?,state=?");
+			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,state=?,postCount=?,likesCount=?,follows=?,followers=?,report=?");
 			ps=cn.prepareStatement(new String(sql));
-			// ƒ†[ƒU[ID‚Ì•ÏX
-			if(map.containsKey("userId")){
-                ps.setString(1,(String)map.get("userId"));
-				System.out.println("true:"+(String)map.get("userId"));
+			// ãƒ¦ãƒ¼ã‚¶ãƒ¼IDã®å¤‰æ›´
+			if(map.containsKey("userID")){
+                pst.setString(1,(String)map.get("userId"));
             }else{
-                ps.setString(1,ub.getUserId());
-            	System.out.println("false");
+                pst.setString(1,ub.getUserId());
 			}
-			// ƒ†[ƒU[ƒl[ƒ€‚Ì•ÏX
+			// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒãƒ¼ãƒ ã®å¤‰æ›´
 			if(map.containsKey("userName")){
-                ps.setString(2,(String)map.get("userName"));
+                pst.setString(2,(String)map.get("userName"));
             }else{
-                ps.setString(2,ub.getUserName());
+                pst.setString(2,ub.getUserName());
 			}
-			// ƒ[ƒ‹ƒAƒhƒŒƒX‚Ì•ÏX
+			// ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å¤‰æ›´
 			if(map.containsKey("mailAddress")){
-                ps.setString(3,(String)map.get("mailAddress"));
+                pst.setString(3,(String)map.get("mailAddress"));
             }else{
-                ps.setString(3,ub.getMailAddress());
+                pst.setString(3,ub.getMailAddress());
 			}
-			// ƒpƒXƒ[ƒh‚Ì•ÏX
+			// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®å¤‰æ›´
 			if(map.containsKey("password")){
-                ps.setString(4,(String)map.get("password"));
+                pst.setString(4,(String)map.get("password"));
             }else{
-                ps.setString(4,ub.getPassword());
+                pst.setString(4,ub.getPassword());
 			}
-			// ƒvƒƒtƒB[ƒ‹•¶‚Ì•ÏX
+			// ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«æ–‡ã®å¤‰æ›´
 			if(map.containsKey("profile")){
-                ps.setString(5,(String)map.get("profile"));
+                pst.setString(5,(String)map.get("profile"));
             }else{
-                ps.setString(5,ub.getProfile());
+                pst.setString(5,ub.getProfile());
 			}
-			// ƒvƒƒtƒB[ƒ‹‚ÌÊ^•ÏX
+			// ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ã®å†™çœŸå¤‰æ›´
 			if(map.containsKey("profilePicture")){
-                ps.setString(6,(String)map.get("profilePicture"));
+                pst.setString(6,(String)map.get("profilePicture"));
             }else{
-                ps.setString(6,ub.getProfilePicture());
+                pst.setString(6,ub.getProfilePicture());
 			}
-			// ŒöŠJ”ñŒöŠJ‚Ì•ÏX
-			if(map.containsKey("release")){
-                ps.setString(7,(String)map.get("release"));
-            }else{
-                ps.setString(7,ub.getRelease());
-			}
-			// ƒ†[ƒU[‚Ìó‘Ô
+			// å…¬é–‹éå…¬é–‹ã®å¤‰æ›´
 			if(map.containsKey("state")){
-                ps.setString(8,(String)map.get("state"));
+                pst.setString(7,(String)map.get("state"));
             }else{
-                ps.setString(8,ub.getRelease());
+                pst.setString(7,ub.getState());
 			}
-			// WHERE‹å‚ª‘¶İ‚µ‚½‚çUPDATE•¶‚ğÀs‚·‚é
+			// è‡ªåˆ†ã®æŠ•ç¨¿æ•°ã®æ›´æ–°
+			if(map.containsKey("postCount")){
+                pst.setString(8,(String)map.get("postCount"));
+            }else{
+                pst.setString(8,ub.getPostCount());
+			}
+			// ã„ã„ã­ã®æ›´æ–°
+			if(map.containsKey("likesCount")){
+                pst.setString(9,(String)map.get("likesCount"));
+            }else{
+                pst.setString(9,ub.getLikesCount());
+			}
+			// ãƒ•ã‚©ãƒ­ãƒ¼æ•°ã®æ›´æ–°
+			if(map.containsKey("follows")){
+                pst.setString(10,(String)map.get("follows"));
+            }else{
+                pst.setString(10,ub.getFollows());
+			}
+			// ãƒ•ã‚©ãƒ­ãƒ¼ã•ã‚ŒãŸæ•°ã®æ›´æ–°
+			if(map.containsKey("followers")){
+                pst.setString(11,(String)map.get("followers"));
+            }else{
+                pst.setString(11,ub.getFollowers());
+			}
+			// é€šå ±æ•°ã®æ›´æ–°
+			if(map.containsKey("report")){
+                pst.setString(12,(String)map.get("report"));
+            }else{
+                pst.setString(12,ub.getReport());
+			}
+			// WHEREå¥ãŒå­˜åœ¨ã—ãŸã‚‰UPDATEæ–‡ã‚’å®Ÿè¡Œã™ã‚‹
 			if(map.containsKey("where")){
                 sql.append((String)map.get("where"));
 			}
-			// ˆ——ñ”‚ğ•Ô‚·
+			// å‡¦ç†åˆ—æ•°ã‚’è¿”ã™
 			count=ps.executeUpdate();
 
 		}catch(SQLException e){
@@ -127,21 +149,19 @@ public class UsersDao implements AbstractDao{
 		}
 		return count;
 	}
-	public List readAll(Map map){
-		return null;
-	}
 	public Bean read(Map map){
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql=new StringBuffer();
 			sql.append("SELECT * FROM Users ");
-			sql.append((String)map.get("where"));
+			// WHEREå¥ãŒå­˜åœ¨ã—ãŸã‚‰SELECTæ–‡ã‚’å®Ÿè¡Œã™ã‚‹
+			if(map.containsKey("where")){
+                sql.append((String)map.get("where"));
+			}
 			System.out.println(sql);
 			ps=cn.prepareStatement(new String(sql));
-			if(map.containsKey("value")){
-				ps.setString(1,(String)map.get("value"));
-			}
+			ps.setString(1,(String)map.get("value"));
 			
 			rs=ps.executeQuery();
 			if(rs.next()){
@@ -152,15 +172,15 @@ public class UsersDao implements AbstractDao{
 				ub.setPassword(rs.getString(5));
 				ub.setProfile(rs.getString(6));
 				ub.setProfilePicture(rs.getString(7));
-				ub.setRelease(rs.getString(8));
-				ub.setFollows(rs.getString(9));
-				ub.setFollowers(rs.getString(10));
-				ub.setPostCount(rs.getString(11));
-				ub.setLikesCount(rs.getString(12));
-				ub.setState(rs.getString(13));
+				ub.setState(rs.getString(8));
+				ub.setPostCount(rs.getString(9));
+				ub.setLikesCount(rs.getString(10));
+				ub.setFollows(rs.getString(11));
+				ub.setFollowers(rs.getString(12));
+				ub.setReport(rs.getString(13));
 				ub.setRegistredDate(rs.getString(14));
 			}else{
-				System.out.println("ƒ†[ƒU[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+				System.out.println("ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“");
 			}
 		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
