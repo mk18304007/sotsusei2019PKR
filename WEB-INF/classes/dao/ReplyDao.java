@@ -15,34 +15,39 @@ import util.OracleConnectionManager;
 
 public class ReplyDao implements AbstractDao{
 
-    PreparedStatement ps=null;
+	PreparedStatement ps=null;
 	Connection cn=null;
 	ResultSet rs=null;
-    ReplyBean rb =new ReplyBean();
+	ReplyBean rb =new ReplyBean();
     
-    public int update(Map map){
-        int count = 0;
-        try{
-            cn=OracleConnectionManager.getInstance().getConnection();
+	public int update(Map map){
+		int count = 0;
+		//更新前のデータをMapから取り出す
+		//変更がない(新しいデータがMapに格納されていない列はこのBeanが持つ値を入れる)
+		if(map.containsKey("Bean")){
+			rb=(ReplyBean)map.get("Bean");
+		}
+		try{
+			cn=OracleConnectionManager.getInstance().getConnection();
 			StringBuffer sql = new StringBuffer();
-            sql.append("UPDATE Reply SET ");
-            sql.append("likesCount=?");
-            ps=cn.prepareStatement(new String(sql));
+			sql.append("UPDATE Reply SET ");
+			sql.append("likesCount=?");
+			ps=cn.prepareStatement(new String(sql));
 
-            // リプライの状態
-            if(map.containsKey("likesCount")){
-                ps.setString(1,(String)map.get("likesCount"));
-            }else{
-                ps.setString(1,rb.getLikesCount());
-            }
+			// リプライの状態
+			if(map.containsKey("likesCount")){
+				ps.setString(1,(String)map.get("likesCount"));
+			}else{
+				ps.setString(1,rb.getLikesCount());
+			}
             // WHERE句が存在したらUPDATE文を実行する
 			if(map.containsKey("where")){
-                sql.append((String)map.get("where"));
+				sql.append((String)map.get("where"));
 			}
 			// 処理列数を返す
 			count=ps.executeUpdate();
 
-        }catch(SQLException e){
+		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{
 			try{
@@ -54,15 +59,15 @@ public class ReplyDao implements AbstractDao{
 			}
 		}
 		return count;
-    }
+	}
 	public int insert(Map map){
-        int count = 0;
-        try{
-            cn=OracleConnectionManager.getInstance().getConnection();
+		int count = 0;
+		try{
+			cn=OracleConnectionManager.getInstance().getConnection();
 
-            StringBuffer sql = new StringBuffer();
+			StringBuffer sql = new StringBuffer();
             
-            sql.append("INSERT INTO Reply(managementID,postID,replyID,reply,commenID,state) VALUES(?,?,(SELECT COALESCE(MAX(replyID),0)+1 FROM Reply),?,?,?)");
+			sql.append("INSERT INTO Reply(managementID,postID,replyID,reply,commenID,state) VALUES(?,?,(SELECT COALESCE(MAX(replyID),0)+1 FROM Reply),?,?,?)");
 			ps=cn.prepareStatement(new String(sql));
 			ps.setString(1,(String)map.get("managementId"));
 			ps.setString(2,(String)map.get("postId"));
@@ -70,7 +75,7 @@ public class ReplyDao implements AbstractDao{
 			ps.setString(4,(String)map.get("commentID"));
 			ps.setString(5,(String)map.get("state"));
 			count=ps.executeUpdate();
-        }catch(SQLException e){
+		}catch(SQLException e){
 			throw new RuntimeException(e.getMessage(),e);
 		}finally{
 			try{
@@ -82,21 +87,21 @@ public class ReplyDao implements AbstractDao{
 			}
 		}
 		return count;
-    }
+	}
 	public Bean read(Map map){
-        try{
-            cn=OracleConnectionManager.getInstance().getConnection();
+		try{
+			cn=OracleConnectionManager.getInstance().getConnection();
             
-            StringBuffer sql=new StringBuffer();
+			StringBuffer sql=new StringBuffer();
 			sql.append("SELECT * FROM Reply ");
 			// WHERE句が存在したらUPDATE文を実行する
 			if(map.containsKey("where")){
-                sql.append((String)map.get("where"));
-            }
+				sql.append((String)map.get("where"));
+			}
 			ps=cn.prepareStatement(new String(sql));
 			ps.setString(1,(String)map.get("value"));
 
-            rs=ps.executeQuery();
+			rs=ps.executeQuery();
 			if(rs.next()){
 				rb.setManagementId(rs.getString(1));
 				rb.setPostId(rs.getString(2));
@@ -121,8 +126,7 @@ public class ReplyDao implements AbstractDao{
 		}
 		return rb;
 	}
-    public List readAll(Map map){
+	public List readAll(Map map){
 		return null;
 	}
-    
 }

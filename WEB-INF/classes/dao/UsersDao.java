@@ -22,9 +22,14 @@ public class UsersDao implements AbstractDao{
 	
 	public int update(Map map){
 		int count=0;
+		//更新前のデータをMapから取り出す
+		//変更がない(新しいデータがMapに格納されていない列はこのBeanが持つ値を入れる)
+		if(map.containsKey("Bean")){
+			ub=(UsersBean)map.get("Bean");
+		}
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
-
+			
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE Users SET ");
 			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,state=?,postCount=?,likesCount=?,follows=?,followers=?,report=?");
