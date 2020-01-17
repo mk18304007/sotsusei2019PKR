@@ -1,0 +1,11 @@
+--既存FROMないデータを消す
+DELETE FROM Log;
+DELETE FROM Follow;
+DELETE FROM Directmail;
+DELETE FROM Riply_Like;
+DELETE FROM Riply;
+DELETE FROM Coment_Like;
+DELETE FROM Coment;
+DELETE FROM Post_Like;
+DELETE FROM Post;
+DELETE FROM Users;
