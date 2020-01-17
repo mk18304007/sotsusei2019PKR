@@ -31,75 +31,75 @@ public class UsersDao implements AbstractDao{
 			ps=cn.prepareStatement(new String(sql));
 			// ユーザーIDの変更
 			if(map.containsKey("userID")){
-                pst.setString(1,(String)map.get("userId"));
+                ps.setString(1,(String)map.get("userId"));
             }else{
-                pst.setString(1,ub.getUserId());
+                ps.setString(1,ub.getUserId());
 			}
 			// ユーザーネームの変更
 			if(map.containsKey("userName")){
-                pst.setString(2,(String)map.get("userName"));
+                ps.setString(2,(String)map.get("userName"));
             }else{
-                pst.setString(2,ub.getUserName());
+                ps.setString(2,ub.getUserName());
 			}
 			// メールアドレスの変更
 			if(map.containsKey("mailAddress")){
-                pst.setString(3,(String)map.get("mailAddress"));
+                ps.setString(3,(String)map.get("mailAddress"));
             }else{
-                pst.setString(3,ub.getMailAddress());
+                ps.setString(3,ub.getMailAddress());
 			}
 			// パスワードの変更
 			if(map.containsKey("password")){
-                pst.setString(4,(String)map.get("password"));
+                ps.setString(4,(String)map.get("password"));
             }else{
-                pst.setString(4,ub.getPassword());
+                ps.setString(4,ub.getPassword());
 			}
 			// プロフィール文の変更
 			if(map.containsKey("profile")){
-                pst.setString(5,(String)map.get("profile"));
+                ps.setString(5,(String)map.get("profile"));
             }else{
-                pst.setString(5,ub.getProfile());
+                ps.setString(5,ub.getProfile());
 			}
 			// プロフィールの写真変更
 			if(map.containsKey("profilePicture")){
-                pst.setString(6,(String)map.get("profilePicture"));
+                ps.setString(6,(String)map.get("profilePicture"));
             }else{
-                pst.setString(6,ub.getProfilePicture());
+                ps.setString(6,ub.getProfilePicture());
 			}
 			// 公開非公開の変更
 			if(map.containsKey("state")){
-                pst.setString(7,(String)map.get("state"));
+                ps.setString(7,(String)map.get("state"));
             }else{
-                pst.setString(7,ub.getState());
+                ps.setString(7,ub.getState());
 			}
 			// 自分の投稿数の更新
 			if(map.containsKey("postCount")){
-                pst.setString(8,(String)map.get("postCount"));
+                ps.setString(8,(String)map.get("postCount"));
             }else{
-                pst.setString(8,ub.getPostCount());
+                ps.setString(8,ub.getPostCount());
 			}
 			// いいねの更新
 			if(map.containsKey("likesCount")){
-                pst.setString(9,(String)map.get("likesCount"));
+                ps.setString(9,(String)map.get("likesCount"));
             }else{
-                pst.setString(9,ub.getLikesCount());
+                ps.setString(9,ub.getLikesCount());
 			}
 			// フォロー数の更新
 			if(map.containsKey("follows")){
-                pst.setString(10,(String)map.get("follows"));
+                ps.setString(10,(String)map.get("follows"));
             }else{
-                pst.setString(10,ub.getFollows());
+                ps.setString(10,ub.getFollows());
 			}
 			// フォローされた数の更新
 			if(map.containsKey("followers")){
-                pst.setString(11,(String)map.get("followers"));
+                ps.setString(11,(String)map.get("followers"));
             }else{
-                pst.setString(11,ub.getFollowers());
+                ps.setString(11,ub.getFollowers());
 			}
 			// 通報数の更新
 			if(map.containsKey("report")){
-                pst.setString(12,(String)map.get("report"));
+                ps.setString(12,(String)map.get("report"));
             }else{
-                pst.setString(12,ub.getReport());
+                ps.setString(12,ub.getReport());
 			}
 			// WHERE句が存在したらUPDATE文を実行する
 			if(map.containsKey("where")){

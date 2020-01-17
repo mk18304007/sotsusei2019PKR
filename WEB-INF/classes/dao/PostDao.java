@@ -31,15 +31,15 @@ public class PostDao implements AbstractDao{
 			ps=cn.prepareStatement(new String(sql));
 			// 通報数の更新
 			if(map.containsKey("report")){
-                pst.setString(1,(String)map.get("report"));
+                ps.setString(1,(String)map.get("report"));
             }else{
-                pst.setString(1,pb.getReport());
+                ps.setString(1,pb.getReport());
 			}
 			// いいねされた数の更新
 			if(map.containsKey("likesCount")){
-                pst.setString(2,(String)map.get("likesCount"));
+                ps.setString(2,(String)map.get("likesCount"));
             }else{
-                pst.setString(2,pb.getLikesCount());
+                ps.setString(2,pb.getLikesCount());
 			}
 			// WHERE句が存在したらUPDATE文を実行する
 			if(map.containsKey("where")){

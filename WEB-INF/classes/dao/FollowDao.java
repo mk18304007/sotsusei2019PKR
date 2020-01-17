@@ -88,7 +88,7 @@ public class FollowDao implements AbstractDao{
             rs=ps.executeQuery();
 			if(rs.next()){
 				fb.setFollowId(rs.getString(1));
-				fb.setFollowerManagementtId(rs.getString(2));
+				fb.setFollowerManagementId(rs.getString(2));
 				fb.setFollowersManagementId(rs.getString(3));   
 			}else{
 				System.out.println("FollowDao:read:error");

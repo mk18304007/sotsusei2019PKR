@@ -31,9 +31,9 @@ public class ReplyDao implements AbstractDao{
 
             // リプライの状態
             if(map.containsKey("likesCount")){
-                pst.setString(1,(String)map.get("likesCount"));
+                ps.setString(1,(String)map.get("likesCount"));
             }else{
-                pst.setString(1,rb.getLikesCount());
+                ps.setString(1,rb.getLikesCount());
             }
             // WHERE句が存在したらUPDATE文を実行する
 			if(map.containsKey("where")){
@@ -102,7 +102,7 @@ public class ReplyDao implements AbstractDao{
 				rb.setPostId(rs.getString(2));
 				rb.setReplyId(rs.getString(3));
 				rb.setReply(rs.getString(4));
-				rb.setCommentID(rs.getString(5));
+				rb.setCommentId(rs.getString(5));
 				rb.setLikesCount(rs.getString(6));
 				rb.setState(rs.getString(7));
 			}else{

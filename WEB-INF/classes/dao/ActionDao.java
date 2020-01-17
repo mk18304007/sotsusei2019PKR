@@ -64,11 +64,11 @@ public class ActionDao implements AbstractDao{
 
             rs=ps.executeQuery();
 			if(rs.next()){
-				ad.setActionId(rs.getString(1));
-				ad.setActiveManagementtId(rs.getString(2));
-				ad.setPassiveManagementId(rs.getString(3));
-                ad.setState(rs.getString(4));
-                ad.setTimeStamp(rs.getString(5));
+				ab.setActionId(rs.getString(1));
+				ab.setActiveManagementId(rs.getString(2));
+				ab.setPassiveManagementId(rs.getString(3));
+                ab.setState(rs.getString(4));
+                ab.setTimeStamp(rs.getString(5));
 			}else{
 				System.out.println("ないよ～");
 			}
@@ -83,7 +83,7 @@ public class ActionDao implements AbstractDao{
 				throw new RuntimeException(e.getMessage(),e);
 			}
 		}
-		return ad;
+		return ab;
 	}
     
 }

@@ -68,7 +68,7 @@ public class LikesDao implements AbstractDao{
             rs=ps.executeQuery();
 			if(rs.next()){
 				lb.setLikesId(rs.getString(1));
-				lb.setManagementtId(rs.getString(2));
+				lb.setManagementId(rs.getString(2));
 				lb.setPostId(rs.getString(3));
                 lb.setReplyId(rs.getString(4));
                 lb.setState(rs.getString(4));

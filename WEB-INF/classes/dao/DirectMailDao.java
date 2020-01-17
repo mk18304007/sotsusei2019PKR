@@ -9,16 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 import bean.Bean;
-import bean.DrictmailBean;
-import bean.PostBean;
+import bean.DirectMailBean;
 import util.OracleConnectionManager;
 
-public class PostDao implements AbstractDao{
+public class DirectMailDao implements AbstractDao{
 
 	PreparedStatement ps=null;
 	Connection cn=null;
 	ResultSet rs=null;
-	PostBean db=new PostBean();
+	DirectMailBean db=new DirectMailBean();
 	
 	public int update(Map map){
         return 0;

@@ -3,7 +3,7 @@ package bean;
 // Likes表のbean
 public class LikesBean extends Bean{
     // Likes表を管理するID
-    private String LikesId;
+    private String likesId;
     // 管理用のユーザーID
     private String managementId;
     // 投稿のID
@@ -17,7 +17,7 @@ public class LikesBean extends Bean{
     public String getLikesId(){
         return likesId;
     }
-    public void setLogId(String likesId){
+    public void setLikesId(String likesId){
         this.likesId = likesId;
     }
     public String getManagementId(){
@@ -33,10 +33,15 @@ public class LikesBean extends Bean{
         this.postId = postId;
     }
     public String getReplyId(){
-        return ReplyId;
+        return replyId;
+    }
+    public void setReplyId(String replyId){
+        this.replyId = replyId;
+    }
+    public String getState(){
+        return state;
     }
     public void setState(String state){
         this.state = state;
     }
-    
 }
