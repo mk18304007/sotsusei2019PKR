@@ -1,11 +1,7 @@
---既存TABLEを消す
-DROP TABLE Log;
-DROP TABLE Follow;
-DROP TABLE Directmail;
-DROP TABLE Riply_Like;
-DROP TABLE Riply;
-DROP TABLE Coment_Like;
-DROP TABLE Coment;
-DROP TABLE Post_Like;
+﻿--既存TABLEを消す
+DROP TABLE DirectMail;
+DROP TABLE Action;
+DROP TABLE Likes;
+DROP TABLE Reply;
 DROP TABLE Post;
 DROP TABLE Users;
