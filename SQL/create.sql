@@ -1,113 +1,74 @@
 
-
 -- Users表
 	CREATE TABLE Users(
-		managementID 	NUMBER(9)　CONSTRAINT PK_managementID PRIMARY KEY,
-		userID 			VARCHAR2(100) CONSTRAINT UQ_NN_userID UNIQUE NOT NULL,
-		name 			VARCHAR2(100) CONSTRAINT NN_name NOT NULL,
-		mailaddress 	VARCHAR2(30) CONSTRAINT UQ_NN_addres UNIQUE NOT NULL,
-		password 		VARCHAR2(20) CONSTRAINT NN_users_pass NOT NULL,
-		profile 		VARCHAR2(800),
-		profilepicture 	VARCHAR2(1000) DEFAULT 'C:\Piccture.jpg',
-		release 		NUMBER(1) DEFAULT 0, 
-		postcount 		NUMBER(9) DEFAULT 0,
-		follows 		NUMBER(9) DEFAULT 0,
-		followers 		NUMBER(9) DEFAULT 0,
-		likescount 		NUMBER(9) DEFAULT 0,
-		state			NUMBER(1) DEFAULT 0,
-		registereddate 	DATE DEFAULT SYSDATE
+		managementID 	NUMBER(10) CONSTRAINT PK_Users_managementID PRIMARY KEY,
+		userID 			VARCHAR2(100) CONSTRAINT UQ_NN_Users_userID UNIQUE NOT NULL,
+		userName 		VARCHAR2(100) CONSTRAINT NN_Users_userName NOT NULL,
+		mailAddress 	VARCHAR2(30) CONSTRAINT UQ_NN_Users_mailAddres UNIQUE NOT NULL,
+		password 		VARCHAR2(20) CONSTRAINT NN_Users_password NOT NULL,
+		profile 		VARCHAR2(800) DEFAULT '' CONSTRAINT NN_Users_profile NOT NULL,
+		profilePicture 	VARCHAR2(1000) DEFAULT '初期パス' CONSTRAINT NN_Users_profilePicture NOT NULL,
+		state 			NUMBER(1) DEFAULT 1 CONSTRAINT NN_Users_state NOT NULL,
+		postCount 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Users_postCount NOT NULL,
+		likesCount 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Users_likesCount NOT NULL,
+		follows 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Users_follows NOT NULL,
+		followers 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Users_followers NOT NULL,
+		report 			NUMBER(2) DEFAULT 0 CONSTRAINT NN_Users_report NOT NULL,
+		registeredDate 	DATE DEFAULT SYSDATE CONSTRAINT NN_Users_registeredDate NOT NULL
 	);
 
 -- Post表
 	CREATE TABLE Post(
-		postID 			NUMBER(9) CONSTRAINT PK_postID PRIMARY KEY,
-		managementID 	NUMBER(9),
-		contents 		VARCHAR2(1000) CONSTRAINT NN_picture NOT NULL,
-		text 			VARCHAR2(4000) DEFAULT NULL,
-		report 			NUMBER(2) DEFAULT 0,
-		state			NUMBER(1) DEFAULT 0,
+		postID 			NUMBER(12) CONSTRAINT PK_Post_postID PRIMARY KEY,
+		managementID 	NUMBER(10),
+		contents 		VARCHAR2(1000) DEFAULT 'エラー画像' CONSTRAINT NN_Post_contents NOT NULL,
+		text 			VARCHAR2(4000) DEFAULT '',
+		report 			NUMBER(2) DEFAULT 0 CONSTRAINT NN_Post_report NOT NULL,
+		likesCount 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Post_likesCount NOT NULL,
 		CONSTRAINT FK_Post_managementID FOREIGN KEY(managementID) REFERENCES Users(managementID)
-	);
-
--- Post_Like表
-	CREATE TABLE Post_Like(
-		managementID 	NUMBER(9),
-		postID 			NUMBER(9),	
-		good 			NUMBER(1) DEFAULT(1),
-		CONSTRAINT FK_Post_Like_managementID FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Post_Like_postID 		 FOREIGN KEY(postID) 		REFERENCES Post(postID)
-	);
-
--- Coment表
-	CREATE TABLE Coment(
-		managementID 	NUMBER(9),
-		postID 			NUMBER(9),
-		comentID 		NUMBER(9) CONSTRAINT UQ_NN_post_comentID UNIQUE,
-		coment 			VARCHAR2(2000),
-		state			NUMBER(1) DEFAULT 0,
-		CONSTRAINT FK_Coment_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Coment_postID 		FOREIGN KEY(postID) 		REFERENCES Post(postID)
-	);
-
--- Coment_Like表
-	CREATE TABLE Coment_Like(
-		managementID 	NUMBER(9),
-		comentID 		NUMBER(9),
-		good 			NUMBER(1) DEFAULT(1),
-		CONSTRAINT FK_Coment_Like_managementID 		FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Coment_Like_comentID 			FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
 	);
 
 -- Reply表
 	CREATE TABLE Reply(
-		managementID 	NUMBER(9),
-		comentID 		NUMBER(9),
-		replyID 		NUMBER(9) CONSTRAINT UQ_NN_coment_replyID UNIQUE,
-		reply 			VARCHAR2(2000),
-		state			NUMBER(1) DEFAULT 0,
+		replyID 	 NUMBER(12) CONSTRAINT PK_Reply_replyID PRIMARY KEY,
+		managementID NUMBER(9),
+		postID 		 NUMBER(9),
+		reply 	 	 VARCHAR2(2000) DEFAULT'' CONSTRAINT NN_Reoly_reply NOT NULL,
+		commentID 	 NUMBER(12),
+		likesCount 	 NUMBER(10) DEFAULT 0 CONSTRAINT NN_Reply_likesCount NOT NULL,
+		state 		 NUMBER(1) DEFAULT 0, --投稿に対するリプライ(0)/リプライに対するリプライ(1)
 		CONSTRAINT FK_Reply_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Reply_comentID 		FOREIGN KEY(comentID) 		REFERENCES Coment(comentID)
+		CONSTRAINT FK_Reply_postID 			FOREIGN KEY(postID) 		REFERENCES Post(postID),
+		CONSTRAINT SK_Reply_commentID 		FOREIGN KEY(commentID) 		REFERENCES Reply(replyID)
 	);
-	
--- Reply_Like表
-	CREATE TABLE Reply_Like(
-		managementID 	NUMBER(9),
-		replyID 		NUMBER(9),
-		good 			NUMBER(1) DEFAULT(1),
-		CONSTRAINT FK_Reply_Like_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
-		CONSTRAINT FK_Reply_Like_replyID 		FOREIGN KEY(replyID) 		REFERENCES Reply(replyID)		
+-- Likes表
+	CREATE TABLE Likes(
+		likeID			NUMBER(14) CONSTRAINT PK_Likes_likeID PRIMARY KEY,
+		managementID 	NUMBER(10),
+		postID			NUMBER(12),
+		ReplyID 		NUMBER(12),
+		state 			NUMBER(1) DEFAULT(0), --投稿に対する(0)/リプライに対する(1)
+		CONSTRAINT FK_Likes_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),
+		CONSTRAINT FK_Likes_postID 			FOREIGN KEY(postID) 		REFERENCES Post(postID),
+		CONSTRAINT FK_Likes_replyID 		FOREIGN KEY(replyID) 		REFERENCES Reply(replyID)
 	);
-
--- Follow表
-	CREATE TABLE Follow(
-		followID 				NUMBER(9) CONSTRAINT PK_followID PRIMARY KEY,
-		followerManagementID 	NUMBER(9),
-		followersManagementID 	NUMBER(9),
-		CONSTRAINT FK_Follow_followerID  FOREIGN KEY(followerManagementID)  REFERENCES Users(managementID),
-		CONSTRAINT FK_Follow_followersID FOREIGN KEY(followersManagementID) REFERENCES Users(managementID)
+-- Action表
+	CREATE TABLE Action(
+		actionID 			NUMBER(15) CONSTRAINT FK_Action_actionID PRIMARY KEY,
+		activeManagementID 	NUMBER(15),
+		passiveManagementID NUMBER(15),
+		state 				NUMBER(1) CONSTRAINT NN_Action_state NOT NULL, --フォロー(0)/ブロック(1)/いいね(2)/リプライ(3)/投稿(4)/DM(5)
+		timeStamp 			DATE DEFAULT SYSDATE CONSTRAINT NN_Action_timeStamp NOT NULL,
+		CONSTRAINT FK_Action_activeManagementID  FOREIGN KEY(activeManagementID)  REFERENCES Users(managementID),
+		CONSTRAINT FK_Action_passiveManagementID FOREIGN KEY(passiveManagementID) REFERENCES Users(managementID)
 	);
-
 -- Directmail表
 	CREATE TABLE Directmail(
-		sendManagementID NUMBER(9),
-		sentManagementID NUMBER(9),
+		sendManagementID NUMBER(10),
+		sentManagementID NUMBER(10),
 		talk 			 VARCHAR2(4000),
 		contents 		 VARCHAR2(1000),
 		state			 NUMBER(1) DEFAULT 0,
 		CONSTRAINT FK_Directmail_sendManagementID FOREIGN KEY(sendManagementID) REFERENCES Users(managementID),
 		CONSTRAINT FK_Directmail_sentManagementID FOREIGN KEY(sentManagementID) REFERENCES Users(managementID)
 	);
-
--- Log表
-	CREATE TABLE Log(
-		logID 					NUMBER(9) CONSTRAINT PK_logID PRIMARY KEY,
-		activeManagementID　	NUMBER(9),
-		passiveManagementID 	NUMBER(9),
-		--アクション(フォロー(0)orいいね(1)orコメント(2)or投稿(3))
-		action 					NUMBER(1) CONSTRAINT NN_action NOT NULL,
-		time 					DATE DEFAULT SYSDATE,
-		CONSTRAINT FK_Log_activeManagementID  FOREIGN KEY(activeManagementID)  REFERENCES Users(managementID),
-		CONSTRAINT FK_Log_passiveManagementID FOREIGN KEY(passiveManagementID) REFERENCES Users(managementID)
-	);
-
-
