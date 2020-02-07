@@ -12,8 +12,10 @@
 		</style>
 		<script>
 			window.onload=function(){
+				console.log(${sessionScope.user.state});
+				var state=${sessionScope.user.state}
 				//データベースから取得した値をもとに、ラジオボタンの初期値を設定する
-				if(${sessionScope.user.release}==0){
+				if(state==1){
 					document.getElementById("public").checked=true;
 				}else{
 					document.getElementById("private").checked=true;
@@ -72,8 +74,8 @@
 				</tr>
 				<tr>
 					<td>アカウントの公開範囲</td>
-					<td><label>すべてのユーザー<input type="radio" name="release" id="public" value="0"><label></td>
-					<td>フォロワーのみ<input type="radio" name="release" id="private" value="1"></td>
+					<td><label>すべてのユーザー<input type="radio" name="state" id="public" value="0"><label></td>
+					<td><label>フォロワーのみ<input type="radio" name="state" id="private" value="1"><label></td>
 				</tr>
 			</table>
 			<input type="submit" value="変更を保存する">

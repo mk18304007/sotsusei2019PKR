@@ -14,6 +14,15 @@
 	</filter-mapping>
 	
 	<servlet>
+		<servlet-name>LikeAjax</servlet-name>
+		<servlet-class>main.LikeAjaxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LikeAjax</servlet-name>
+		<url-pattern>/LikeAjaxServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>main.FrontServlet</servlet-class>
 	</servlet>

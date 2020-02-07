@@ -1,12 +1,23 @@
-package command;
+/**
+ * Command pattern
+ * 
+ * @see <a href="https://www.oracle.com/webfolder/technetwork/jp/javamagazine/Java_MJ18_CommandDesignPattern.pdf">RFC Oracle, Inc</a>
+ * @version  4.0
+ * @author   Hideki Iizuka
+ * @since    JDK5.0,
+ */
 
-import java.io.IOException;
+package command;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.text.SimpleDateFormat;
 
@@ -14,46 +25,60 @@ import context.RequestContext;
 import context.ResponseContext;
 
 import bean.Bean;
-import bean.UserBean;
+import bean.UsersBean;
 import bean.PostBean;
+
+import command.ToHomeCommand;
 
 import util.OracleConnectionManager;
 import util.SessionManager;
+import util.PostManager;
 import util.factory.AbstractDaoFactory;
 
 import dao.AbstractDao;
 
-public class PostCommand extends AbstractCommand{
-	public ResponseContext execute(ResponseContext resc){
-		//RequestContext‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é
-		RequestContext reqc=getRequestContext();
+public class PostCommand extends AbstractCommand
+{
+	public ResponseContext execute(ResponseContext resc)
+	{
+		//RequestContextã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹
+		RequestContext reqc = getRequestContext();
 		
-		//SessionManager‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬‚µAƒZƒbƒVƒ‡ƒ“‚Ì‚Âƒ†[ƒU[î•ñ‚ğæ“¾‚·‚é
-		SessionManager session=new SessionManager(reqc);
-		String managementId=((UserBean)session.getAttribute("user")).getManagementId();
+		//SessionManagerã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã—ã€ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®æŒã¤ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+		SessionManager session = new SessionManager(reqc);
+		String managementId = ((UsersBean)session.getAttribute("user")).getManagementId();
 		
-		//RequestContext‚©‚çƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
-		String contents=reqc.getParameter("contents")[0];
-		String text=reqc.getParameter("text")[0];
-		
-		//DB‚ÉŠi”[‚·‚é“à—e‚ğMap‚ÉŠi”[
-		Map<String,String> palams=new HashMap<String,String>();
-		palams.put("managementID",managementId);
-		palams.put("contents",contents);
-		palams.put("text",text);
-		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğŠJn‚·‚é
+		PostManager postmanager = new PostManager(reqc);
+		String contents = postmanager.getContentsPath();
+
+		//RequestContextã‹ã‚‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+		//String contents=reqc.getParameter("contents")[0];
+		String text = reqc.getParameter("text")[0];
+
+		//DBã«æ ¼ç´ã™ã‚‹å†…å®¹ã‚’Mapã«æ ¼ç´
+		Map<String,String> palams = new HashMap<String,String>();
+		palams.put("where","where managementId=?");
+		palams.put("value", managementId);
+		palams.put("contents", contents);
+		palams.put("text", text);
+		palams.put("managementId",managementId);
+
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
 		OracleConnectionManager.getInstance().beginTransaction();
-		
-		//ƒCƒ“ƒeƒOƒŒ[ƒVƒ‡ƒ“ƒŒƒCƒ„‚Ìˆ—‚ğŒÄ‚Ño‚·
-		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
-		AbstractDao dao=factory.getAbstractDao();
+
+		//ã‚¤ãƒ³ãƒ†ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¬ã‚¤ãƒ¤ã®å‡¦ç†ã‚’å‘¼ã³å‡ºã™
+		AbstractDaoFactory factory = AbstractDaoFactory.getFactory("post");
+		AbstractDao dao = factory.getAbstractDao();
 		dao.insert(palams);
 		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğI—¹‚·‚é
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’çµ‚äº†ã™ã‚‹
 		OracleConnectionManager.getInstance().commit();
 		
-		resc.setTarget("home");
+		//Homeã¸ç§»å‹•ã™ã‚‹éš›ã®å‡¦ç†ã‚’ToHomeCommandã«ä¸€ä»»ã™ã‚‹
+		ToHomeCommand thc=new ToHomeCommand();
+		thc.init(reqc);
+		resc=thc.execute(resc);
+		
 		return resc;
 	}
 }

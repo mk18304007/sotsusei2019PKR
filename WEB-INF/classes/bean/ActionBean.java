@@ -11,9 +11,9 @@ public class ActionBean extends Bean{
     private String passiveManagementId;
     // フォロー(0)/ブロック(1)/いいね(2)/リプライ(3)/投稿(4)/DM(5)
     private String state;
-    // アクション発生日時 
+    // アクション発生日時
     private String timeStamp;
-    
+
     public String getActionId(){
         return actionId;
     }

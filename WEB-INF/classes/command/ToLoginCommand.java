@@ -1,11 +1,11 @@
-/*-----------ƒƒOƒCƒ“‰æ–Ê‚ÖˆÚ“®‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh-----------*/
+/*-----------ãƒ­ã‚°ã‚¤ãƒ³ç”»é¢ã¸ç§»å‹•ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰-----------*/
 package command;
 
 import context.ResponseContext;
 
 public class ToLoginCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//“]‘—æî•ñ‚ğƒZƒbƒg‚·‚é
+		//è»¢é€å…ˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		resc.setTarget("login");
 		return resc;
 	}

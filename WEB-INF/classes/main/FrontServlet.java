@@ -6,9 +6,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.annotation.MultipartConfig;
+
 import controller.*;
 import context.RequestContext;
 import context.ResponseContext;
+
+@MultipartConfig(maxFileSize=100000000)
 
 public class FrontServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException{

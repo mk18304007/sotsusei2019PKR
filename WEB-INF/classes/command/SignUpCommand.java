@@ -1,14 +1,16 @@
-/*----------ƒ†[ƒU[“o˜^‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh---------*/
+/*----------ãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰---------*/
 package command;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 import context.RequestContext;
 import context.ResponseContext;
 
 import bean.Bean;
-import bean.UserBean;
+import bean.UsersBean;
 
 import util.OracleConnectionManager;
 import util.factory.AbstractDaoFactory;
@@ -19,46 +21,43 @@ public class SignUpCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
 		RequestContext reqc=getRequestContext();
 		
-		//RequestContext‚©‚ç“ü—Í
+		//RequestContextã‹ã‚‰å…¥åŠ›
 		String userName=reqc.getParameter("userName")[0];
 		String userId=reqc.getParameter("userId")[0];
 		String mailAddress=reqc.getParameter("mailAddress")[0];
 		String password=reqc.getParameter("password")[0];
 		String confilm=reqc.getParameter("password")[1];
 		
-		//ƒpƒXƒ[ƒh‚ÆŠm”F—pƒpƒXƒ[ƒh‚ªˆê’v‚µ‚È‚¢‚Æ‚«
+		//ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¨ç¢ºèªç”¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ãªã„ã¨ã
 		/*if(password.equals(confilm)==false){
-			//–{—ˆ‚Í—áŠO‚ğ‘—o‚·‚é
-			System.out.println("ƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ü‚¹‚ñ");
+			//æœ¬æ¥ã¯ä¾‹å¤–ã‚’é€å‡ºã™ã‚‹
+			System.out.println("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“");
 		}*/
-		//“o˜^‚·‚é’l‚ğƒ}ƒbƒv‚ÉŠi”[
+		//ç™»éŒ²ã™ã‚‹å€¤ã‚’ãƒãƒƒãƒ—ã«æ ¼ç´
 		Map<String,String> palams=new HashMap<String,String>();
 		palams.put("userName",userName);
 		palams.put("userId",userId);
 		palams.put("mailAddress",mailAddress);
 		palams.put("password",password);
 		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğŠJn‚·‚é
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
 		OracleConnectionManager.getInstance().beginTransaction();
 		
-		//ƒCƒ“ƒeƒOƒŒ[ƒVƒ‡ƒ“ƒŒƒCƒ„‚Ìˆ—‚ğŒÄ‚Ño‚·
+		//ã‚¤ãƒ³ãƒ†ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¬ã‚¤ãƒ¤ã®å‡¦ç†ã‚’å‘¼ã³å‡ºã™
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
 		AbstractDao dao=factory.getAbstractDao();
 		dao.insert(palams);
 		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğI—¹‚·‚é
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’çµ‚äº†ã™ã‚‹
 		OracleConnectionManager.getInstance().commit();
 		
-		//ƒRƒlƒNƒVƒ‡ƒ“‚ğØ’f‚·‚é
-		//OracleConnectionManager.getInstance().closeConnection();
-		
-		//“o˜^‚ªŠ®—¹‚µ‚½‚ç©“®‚ÅƒƒOƒCƒ“‚µ‚½‚¢‚Ì‚ÅALoginCommand‚ğŒÄ‚Ô
+		//ç™»éŒ²ãŒå®Œäº†ã—ãŸã‚‰è‡ªå‹•ã§ãƒ­ã‚°ã‚¤ãƒ³ã—ãŸã„ã®ã§ã€LoginCommandã‚’å‘¼ã¶
 		LoginCommand lc=new LoginCommand();
 		lc.init(reqc);
 		resc=lc.execute(resc);
 		
-		Map<String,Object> result=new HashMap<String,Object>();
-		result.put("user",resc.getResult());
+		List<Object> result=new ArrayList<Object>();
+		result.add(resc.getResult());
 		resc.setResult(result);
 		return resc;
 	}

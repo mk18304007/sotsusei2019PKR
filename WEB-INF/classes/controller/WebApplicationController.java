@@ -40,11 +40,6 @@ public class WebApplicationController implements ApplicationController{
 		HttpServletResponse res=(HttpServletResponse)resc.getResponse();
 		
 		req.setAttribute("data",resc.getResult());
-		
-		//使用したコマンドを判別するためにCommandPathを取得
-		String path=reqc.getCommandPath();
-		
-		System.out.println(resc.getTarget());
 		RequestDispatcher dis=req.getRequestDispatcher(resc.getTarget());
 		try{
 			dis.forward(req,res);

@@ -1,4 +1,4 @@
-/*----------ƒvƒƒtƒB[ƒ‹î•ñ‚ğ•ÒW‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh----------*/
+/*----------ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«æƒ…å ±ã‚’ç·¨é›†ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰----------*/
 package command;
 
 import java.util.Map;
@@ -8,7 +8,7 @@ import context.RequestContext;
 import context.ResponseContext;
 
 import bean.Bean;
-import bean.UserBean;
+import bean.UsersBean;
 
 import util.OracleConnectionManager;
 import util.factory.AbstractDaoFactory;
@@ -18,15 +18,15 @@ import dao.AbstractDao;
 
 public class ProfileEditCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//RequestContext‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é
+		//RequestContextã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹
 		RequestContext reqc=getRequestContext();
 		
-		//ˆêˆÓ‚È’l‚ğXV‚·‚éê‡‚Å‚à•ÏX‚Å‚«‚é‚æ‚¤‚É
-		//ƒZƒbƒVƒ‡ƒ“‚©‚çåƒL[‚ğæ“¾‚·‚é
+		//ä¸€æ„ãªå€¤ã‚’æ›´æ–°ã™ã‚‹å ´åˆã§ã‚‚å¤‰æ›´ã§ãã‚‹ã‚ˆã†ã«
+		//ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‹ã‚‰ä¸»ã‚­ãƒ¼ã‚’å–å¾—ã™ã‚‹
 		SessionManager session=new SessionManager(reqc);
-		String managementId=((UserBean)session.getAttribute("user")).getManagementId();
+		String managementId=((UsersBean)session.getAttribute("user")).getManagementId();
 		
-		//RequestContext‚©‚ç“ü—Íƒpƒ‰ƒ[ƒ^‚ğó‚¯æ‚é
+		//RequestContextã‹ã‚‰å…¥åŠ›ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å—ã‘å–ã‚‹
 		String userName=reqc.getParameter("userName")[0];
 		String userId=reqc.getParameter("userId")[0];
 		String profile=reqc.getParameter("profile")[0];
@@ -36,46 +36,58 @@ public class ProfileEditCommand extends AbstractCommand{
 		String mailAddress=reqc.getParameter("mailAddress")[0];
 		String password=reqc.getParameter("password")[0];
 		String confirm=reqc.getParameter("password")[1];
-		String release=reqc.getParameter("release")[0];
+		String state=reqc.getParameter("state")[0];
 		
-		//ƒpƒXƒ[ƒh‚ÆŠm”F—pƒpƒXƒ[ƒh‚ªˆê’v‚µ‚È‚¢‚Æ‚«
+		//ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¨ç¢ºèªç”¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ãªã„ã¨ã
 		/*if(password.equals(confilm)==false){
-			//–{—ˆ‚Í—áŠO‚ğ‘—o‚·‚é
-			System.out.println("ƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ü‚¹‚ñ");
+			//æœ¬æ¥ã¯ä¾‹å¤–ã‚’é€å‡ºã™ã‚‹
+			System.out.println("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“");
 		}*/
-		//XV‚·‚é’l‚ğƒ}ƒbƒv‚ÉŠi”[
-		Map<String,String> palams=new HashMap<String,String>();
+		
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
+		OracleConnectionManager.getInstance().beginTransaction();
+		
+		//ã‚¤ãƒ³ãƒ†ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¬ã‚¤ãƒ¤ã®å‡¦ç†ã‚’å‘¼ã³å‡ºã™
+		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
+		AbstractDao dao=factory.getAbstractDao();
+		
+		//æ›´æ–°å‰ã®å€¤ã‚’å–å¾—ã—ã€Mapã«æ ¼ç´ã™ã‚‹
+		//æ›´æ–°ãŒãªã„åˆ—ã¯daoã‹ã‚‰ã“ã®Beanã®å€¤ã‚’å‚ç…§ã™ã‚‹
+		//whereå¥ä»¥é™ã¯åŒã˜ã‚‚ã®ã‚’ä½¿ãˆã‚‹
+		Map<String,Object> palams=new HashMap<String,Object>();
+		palams.put("where","WHERE managementID=?");
+		palams.put("value",managementId);
+		System.out.println("1 start");
+		UsersBean ub=(UsersBean)dao.read(palams);
+		System.out.println("1 end");
+		palams.put("Bean",ub);
+		
+		//æ›´æ–°ã™ã‚‹å€¤ã‚’ãƒãƒƒãƒ—ã«æ ¼ç´
 		palams.put("userName",userName);
 		palams.put("userId",userId);
 		palams.put("profile",profile);
 		palams.put("mailAddress",mailAddress);
 		palams.put("password",password);
-		palams.put("release",release);
+		palams.put("state",state);
+		/*palams.put("profilePicture",profilePicture);*/
 		
-		//XV”»’è—p‚Ìwhere‹å‚ğMap‚ÉŠi”[
-		palams.put("where","where managementId="+managementId);
-		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğŠJn‚·‚é
-		OracleConnectionManager.getInstance().beginTransaction();
-		
-		//ƒCƒ“ƒeƒOƒŒ[ƒVƒ‡ƒ“ƒŒƒCƒ„‚Ìˆ—‚ğŒÄ‚Ño‚·
-		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
-		AbstractDao dao=factory.getAbstractDao();
-		//XVˆ—
+		//æ›´æ–°å‡¦ç†
 		dao.update(palams);
 		
-		//XVŒã‚Ìƒf[ƒ^‚ğæ“¾‚·‚é
-		//where‹å‚Í“¯‚¶‚à‚Ì‚ğg‚¦‚é
-		UserBean ub=(UserBean)dao.read(palams);
+		//æ›´æ–°å¾Œã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+		//whereå¥ã¯åŒã˜ã‚‚ã®ã‚’ä½¿ãˆã‚‹
+		System.out.println("2 start");
+		ub=(UsersBean)dao.read(palams);
+		System.out.println("2 end");
 		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğI—¹‚·‚é
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’çµ‚äº†ã™ã‚‹
 		OracleConnectionManager.getInstance().commit();
 		
-		//ƒZƒbƒVƒ‡ƒ“‚Ì‚à‚Âî•ñ‚ğÅV‚Ì‚à‚Ì‚É‚·‚é
+		//ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®ã‚‚ã¤æƒ…å ±ã‚’æœ€æ–°ã®ã‚‚ã®ã«ã™ã‚‹
 		session=new SessionManager(reqc);
 		session.setAttribute("user",ub);
 		
-		//XVŒã‚ÍƒvƒƒtƒB[ƒ‹ƒy[ƒW‚Ö”ò‚Î‚·
+		//æ›´æ–°å¾Œã¯ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ãƒšãƒ¼ã‚¸ã¸é£›ã°ã™
 		Map<String,Bean> result=new HashMap<String,Bean>();
 		result.put("user",ub);
 		resc.setResult(result);

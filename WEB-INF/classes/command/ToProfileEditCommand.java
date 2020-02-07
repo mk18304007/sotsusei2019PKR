@@ -1,11 +1,11 @@
-/*----------ƒvƒƒtƒB[ƒ‹•ÒW‰æ–Ê‚ÖˆÚ“®‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh----------*/
+/*----------ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ç·¨é›†ç”»é¢ã¸ç§»å‹•ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰----------*/
 package command;
 
 import context.ResponseContext;
 
 public class ToProfileEditCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//“]‘—æî•ñ‚ğƒZƒbƒg‚·‚é
+		//è»¢é€å…ˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		resc.setTarget("profileEdit");
 		return resc;
 	}

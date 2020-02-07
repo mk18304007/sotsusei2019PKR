@@ -1,11 +1,11 @@
-/*----------ƒƒOƒCƒ“‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh---------*/
+/*----------ãƒ­ã‚°ã‚¤ãƒ³ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰---------*/
 package command;
 
 import context.ResponseContext;
 
 public class ToProfileCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//“]‘—æî•ñ‚ğƒZƒbƒg‚·‚é
+		//è»¢é€å…ˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		resc.setTarget("profile");
 		return resc;
 	}

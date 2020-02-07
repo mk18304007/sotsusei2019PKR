@@ -1,11 +1,11 @@
-/*----------“Še‰æ–Ê‚ÉˆÚ“®‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh----------*/
+/*----------æŠ•ç¨¿ç”»é¢ã«ç§»å‹•ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰----------*/
 package command;
 
 import context.ResponseContext;
 
 public class ToPostCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//“]‘—æî•ñ‚ğƒZƒbƒg‚·‚é
+		//è»¢é€å…ˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		resc.setTarget("post");
 		return resc;
 	}

@@ -1,11 +1,11 @@
-/*----------ƒ†[ƒU[“o˜^‰æ–Ê‚ÉˆÚ“®‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh----------*/
+/*----------ãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²ç”»é¢ã«ç§»å‹•ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰----------*/
 package command;
 
 import context.ResponseContext;
 
 public class ToSignUpCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//“]‘—æî•ñ‚ğƒZƒbƒg‚·‚é
+		//è»¢é€å…ˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		resc.setTarget("signup");
 		return resc;
 	}

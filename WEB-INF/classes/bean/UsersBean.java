@@ -30,56 +30,56 @@ public class UsersBean extends Bean{
 	private String report;
 	// 登録した日付
 	private String registredDate;
-	
+
 	public String getManagementId(){
 		return managementId;
 	}
 	public void setManagementId(String managementId){
 		this.managementId=managementId;
 	}
-	
+
 	public String getUserId(){
 		return userId;
 	}
 	public void setUserId(String userId){
 		this.userId=userId;
 	}
-	
+
 	public String getUserName(){
 		return userName;
 	}
 	public void setUserName(String userName){
 		this.userName=userName;
 	}
-	
+
 	public String getMailAddress(){
 		return mailAddress;
 	}
 	public void setMailAddress(String mailAddress){
 		this.mailAddress=mailAddress;
 	}
-	
+
 	public String getPassword(){
 		return password;
 	}
 	public void setPassword(String password){
 		this.password=password;
 	}
-	
+
 	public String getProfile(){
 		return profile;
 	}
 	public void setProfile(String profile){
 		this.profile=profile;
 	}
-	
+
 	public String getProfilePicture(){
 		return profilePicture;
 	}
 	public void setProfilePicture(String profilePicture){
 		this.profilePicture=profilePicture;
 	}
-	
+
 	public String getState(){
 		return state;
 	}
@@ -92,7 +92,7 @@ public class UsersBean extends Bean{
 	public void setFollows(String follows){
 		this.follows=follows;
 	}
-	
+
 	public String getFollowers(){
 		return followers;
 	}
@@ -117,7 +117,7 @@ public class UsersBean extends Bean{
 	public void setReport(String report){
 		this.report=report;
 	}
-	
+
 	public String getRegistredDate(){
 		return registredDate;
 	}

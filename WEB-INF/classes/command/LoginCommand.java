@@ -1,14 +1,16 @@
-/*----------ƒƒOƒCƒ“‚·‚é‚½‚ß‚ÌƒRƒ}ƒ“ƒh---------*/
+/*----------ãƒ­ã‚°ã‚¤ãƒ³ã™ã‚‹ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰---------*/
 package command;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 import context.RequestContext;
 import context.ResponseContext;
 
 import bean.Bean;
-import bean.UserBean;
+import bean.UsersBean;
 
 import util.OracleConnectionManager;
 import util.factory.AbstractDaoFactory;
@@ -18,52 +20,52 @@ import dao.AbstractDao;
 
 public class LoginCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
-		//RequestContext‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é
+		//RequestContextã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹
 		RequestContext reqc=getRequestContext();
 		
-		//RequestContext‚©‚ç“ü—Íƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+		//RequestContextã‹ã‚‰å…¥åŠ›ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 		String userId=reqc.getParameter("userId")[0];
 		String password=reqc.getParameter("password")[0];
 		
-		//”»’è—p‚Ìwhere‹å‚ÆuserID‚ğMap‚ÉŠi”[‚·‚é
+		//åˆ¤å®šç”¨ã®whereå¥ã¨userIDã‚’Mapã«æ ¼ç´ã™ã‚‹
 		Map<String,String> palams=new HashMap<String,String>();
 		palams.put("value",userId);
 		palams.put("where","where userId=?");
 		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğŠJn‚·‚é
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
 		OracleConnectionManager.getInstance().beginTransaction();
 		
-		//ƒCƒ“ƒeƒOƒŒ[ƒVƒ‡ƒ“ƒŒƒCƒ„‚Ìˆ—‚ğŒÄ‚Ño‚·
+		//ã‚¤ãƒ³ãƒ†ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¬ã‚¤ãƒ¤ã®å‡¦ç†ã‚’å‘¼ã³å‡ºã™
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
 		AbstractDao dao=factory.getAbstractDao();
-		UserBean ub=(UserBean)dao.read(palams);
+		UsersBean ub=(UsersBean)dao.read(palams);
 		
-		//“ü—Íƒpƒ‰ƒ[ƒ^‚ÆDB‚©‚çæ“¾‚µ‚½ƒpƒXƒ[ƒh‚ª³‚µ‚¢‚©”»’è
+		//å…¥åŠ›ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¨DBã‹ã‚‰å–å¾—ã—ãŸãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒæ­£ã—ã„ã‹åˆ¤å®š
 		if(password.equals(ub.getPassword())){
-			//ˆê’v‚·‚éê‡Home‚Ö“]‘—
-			Map<String,Bean> result=new HashMap<String,Bean>();
-			result.put("user",ub);
+			//ä¸€è‡´ã™ã‚‹å ´åˆHomeã¸è»¢é€
+			List<Bean> result=new ArrayList<Bean>();
+			result.add(ub);
 			resc.setResult(result);
-			resc.setTarget("home");
+			//ãƒ›ãƒ¼ãƒ ç”»é¢ã«ç§»å‹•ã™ã‚‹éš›ã€æŠ•ç¨¿ã‚’è¡¨ç¤ºã—ãŸã„ã®ã§ã€ãƒ›ãƒ¼ãƒ ç”»é¢ç§»å‹•ç”¨ã®ã‚³ãƒãƒ³ãƒ‰ã«é·ç§»ã‚’ä»»ã›ã‚‹
+			ToHomeCommand thc=new ToHomeCommand();
+			thc.init(reqc);
+			resc=thc.execute(resc);
 			
 		}else{
-			//ˆê’v‚µ‚È‚¢ê‡AƒƒOƒCƒ“ƒy[ƒW‚Ö(‰¼)–{—ˆ‚Í—áŠO‚ğ‘—o‚·‚é
-			Map<String,String> result=new HashMap<String,String>();
-			result.put("user","failed");
+			//ä¸€è‡´ã—ãªã„å ´åˆã€ãƒ­ã‚°ã‚¤ãƒ³ãƒšãƒ¼ã‚¸ã¸(ä»®)æœ¬æ¥ã¯ä¾‹å¤–ã‚’é€å‡ºã™ã‚‹
+			List<String> result=new ArrayList<String>();
+			result.add("failed");
 			resc.setResult(result);
 			resc.setTarget("login");
-			System.out.println("ID‚©ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·");
+			System.out.println("LoginCommand.execute.else.IDã‹ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™");
 		}
 		
-		//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğI—¹‚·‚é
+		//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’çµ‚äº†ã™ã‚‹
 		OracleConnectionManager.getInstance().commit();
 		
-		//ƒRƒlƒNƒVƒ‡ƒ“‚ğØ’f‚·‚é
-		//OracleConnectionManager.getInstance().closeConnection();
-		
-		//ƒZƒbƒVƒ‡ƒ“‚Éƒ†[ƒU[î•ñ‚ğ‚½‚¹‚é
+		//ã‚»ãƒƒã‚·ãƒ§ãƒ³ã«ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’æŒãŸã›ã‚‹
 		SessionManager session=new SessionManager(reqc);
-		session.setAttribute("user",((Map)resc.getResult()).get("user"));
+		session.setAttribute("user",ub);
 		
 		return resc;
 	}
