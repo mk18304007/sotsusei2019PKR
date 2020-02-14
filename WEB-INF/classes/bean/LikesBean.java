@@ -12,6 +12,10 @@ public class LikesBean extends Bean{
     private String replyId;
     // 投稿に対する(0)/リプライに対する(1)
     private String state;
+	//いいねされていることを表す変数
+	//このBeanを参照するときは必ずいいねされているので
+	//static finalで書き換え不可にする
+	private static final String likeFlag="checked";
 
 
     public String getLikeId(){
@@ -44,4 +48,7 @@ public class LikesBean extends Bean{
     public void setState(String state){
         this.state = state;
     }
+	public String getLikeFlag(){
+		return likeFlag;
+	}
 }

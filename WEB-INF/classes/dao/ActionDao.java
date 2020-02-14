@@ -31,11 +31,11 @@ public class ActionDao implements AbstractDao{
 			StringBuffer sql = new StringBuffer();
 			
 			sql.append("INSERT INTO Action(actionID,activeManagementID,passiveManagementID,state) VALUES((SELECT COALESCE(MAX(actionID),0)+1 FROM Action),?,?,?)");
+			System.out.println("ActionDao.insert.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("actionID"));
-			ps.setString(2,(String)map.get("activeManagementID"));
-			ps.setString(3,(String)map.get("passiveManagementID"));
-			ps.setString(4,(String)map.get("state"));
+			ps.setString(1,(String)map.get("activeManagementID"));
+			ps.setString(2,(String)map.get("passiveManagementID"));
+			ps.setString(3,(String)map.get("state"));
 			
 			count=ps.executeUpdate();
 		}catch(SQLException e){
@@ -63,8 +63,12 @@ public class ActionDao implements AbstractDao{
 			sql.append((String)map.get("where"));
 			System.out.println("ActionDao.read.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("value"));
 			
+			
+			ps.setString(1,(String)map.get("state"));
+			ps.setString(2,(String)map.get("activeManagementID"));
+			ps.setString(3,(String)map.get("passiveManagementID"));
+
 			rs=ps.executeQuery();
 			if(rs.next()){
 				ab.setActionId(rs.getString(1));
@@ -144,9 +148,9 @@ public class ActionDao implements AbstractDao{
 			System.out.println("ActionDao.delete.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
 			
-			if(map.containsKey("value")){
-				ps.setString(1,(String)map.get("value"));
-			}
+			ps.setString(1,(String)map.get("state"));
+			ps.setString(2,(String)map.get("activeManagementID"));
+			ps.setString(3,(String)map.get("passiveManagementID"));
 			
 			count=ps.executeUpdate();
 			System.out.println("Action表から"+count+"行削除しました");

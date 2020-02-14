@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Map;
+import java.util.List;
 
 import java.io.IOException;
 
@@ -39,7 +40,13 @@ public class WebApplicationController implements ApplicationController{
 		HttpServletRequest req=(HttpServletRequest)reqc.getRequest();
 		HttpServletResponse res=(HttpServletResponse)resc.getResponse();
 		
-		req.setAttribute("data",resc.getResult());
+		List list=(List)resc.getResult();
+		if(list!=null){
+			for(int i=0;i<list.size();i++){
+				List result=(List)list.get(i);
+				req.setAttribute((String)result.get(0),result.get(1));
+			}
+		}
 		RequestDispatcher dis=req.getRequestDispatcher(resc.getTarget());
 		try{
 			dis.forward(req,res);

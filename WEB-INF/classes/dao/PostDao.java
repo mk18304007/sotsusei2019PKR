@@ -33,6 +33,9 @@ public class PostDao implements AbstractDao{
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE Post SET ");
 			sql.append("report=?,likesCount=?");
+			if(map.containsKey("where")){
+				sql.append((String)map.get("where"));
+			}
 			System.out.println("PostDao.update.sql:"+sql);
 			
 			ps=cn.prepareStatement(new String(sql));
@@ -46,10 +49,12 @@ public class PostDao implements AbstractDao{
 			}else{
 				ps.setString(2,pb.getLikesCount());
 			}
-			if(map.containsKey("where")){
-				sql.append((String)map.get("where"));
+			
+			if(map.containsKey("value")){
+				ps.setString(3,(String)map.get("value"));
 			}
 			count=ps.executeUpdate();
+			cn.commit();
 		}catch(SQLException e){
 			System.out.println("PostDao.update.catch:失敗");
 			e.printStackTrace();
@@ -160,6 +165,7 @@ public class PostDao implements AbstractDao{
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
+			sql.append("ORDER BY postID DESC");
 			System.out.println("PostDao.readAll.sql:"+sql);
 			
 			ps=cn.prepareStatement(new String(sql));

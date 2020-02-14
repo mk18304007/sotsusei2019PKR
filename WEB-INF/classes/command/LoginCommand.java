@@ -43,9 +43,6 @@ public class LoginCommand extends AbstractCommand{
 		//入力パラメータとDBから取得したパスワードが正しいか判定
 		if(password.equals(ub.getPassword())){
 			//一致する場合Homeへ転送
-			List<Bean> result=new ArrayList<Bean>();
-			result.add(ub);
-			resc.setResult(result);
 			//ホーム画面に移動する際、投稿を表示したいので、ホーム画面移動用のコマンドに遷移を任せる
 			ToHomeCommand thc=new ToHomeCommand();
 			thc.init(reqc);
@@ -53,8 +50,11 @@ public class LoginCommand extends AbstractCommand{
 			
 		}else{
 			//一致しない場合、ログインページへ(仮)本来は例外を送出する
-			List<String> result=new ArrayList<String>();
-			result.add("failed");
+			List<String> first=new ArrayList<String>();
+			first.add("not");
+			first.add("found");
+			List<List> result=new ArrayList<>();
+			result.add(first);
 			resc.setResult(result);
 			resc.setTarget("login");
 			System.out.println("LoginCommand.execute.else.IDかパスワードが違います");

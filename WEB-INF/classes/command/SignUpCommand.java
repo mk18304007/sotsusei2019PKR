@@ -56,9 +56,6 @@ public class SignUpCommand extends AbstractCommand{
 		lc.init(reqc);
 		resc=lc.execute(resc);
 		
-		List<Object> result=new ArrayList<Object>();
-		result.add(resc.getResult());
-		resc.setResult(result);
 		return resc;
 	}
 }

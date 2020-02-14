@@ -30,6 +30,9 @@ public class UsersDao implements AbstractDao{
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE Users SET ");
 			sql.append("userID=?,userName=?,mailAddress=?,password=?,profile=?,profilePicture=?,state=?,postCount=?,likesCount=?,follows=?,followers=?,report=?");
+			if(map.containsKey("where")){
+				sql.append((String)map.get("where"));
+			}
 			ps=cn.prepareStatement(new String(sql));
 			System.out.println("UsersDao.update.sql:"+sql);
 			
@@ -93,8 +96,8 @@ public class UsersDao implements AbstractDao{
 			}else{
 				ps.setString(12,ub.getReport());
 			}
-			if(map.containsKey("where")){
-				sql.append((String)map.get("where"));
+			if(map.containsKey("value")){
+				ps.setString(13,(String)map.get("value"));
 			}
 			count=ps.executeUpdate();
 		}catch(SQLException e){

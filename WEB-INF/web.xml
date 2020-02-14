@@ -14,12 +14,12 @@
 	</filter-mapping>
 	
 	<servlet>
-		<servlet-name>LikeAjax</servlet-name>
-		<servlet-class>main.LikeAjaxServlet</servlet-class>
+		<servlet-name>FollowAjaxServlet</servlet-name>
+		<servlet-class>main.FollowAjaxServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>LikeAjax</servlet-name>
-		<url-pattern>/LikeAjaxServlet</url-pattern>
+		<servlet-name>FollowAjaxServlet</servlet-name>
+		<url-pattern>/FollowAjaxServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

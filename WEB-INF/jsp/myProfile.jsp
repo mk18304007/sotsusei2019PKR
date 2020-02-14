@@ -3,27 +3,6 @@
 <html>
 	<head>
 		<title>プロフィール</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script>
-			window.onload=function(){
-				$('.fbtn').on('click',function() {
-					var managementId=${user.managementId}
-					
-					$.ajax({
-						url:"FollowAjaxServlet",
-						type:"POST",
-						data:{managementId:managementId}
-					}).done(function(result){
-						//通信成功
-					}).fail(function(){
-						//通信失敗
-						console.log("読み込み失敗");
-					}).always(function(result){
-						//常に実行する処理
-					})
-				});
-			}
-		</script>
 		<style>
 			#icon{
 				 border-radius:50px;
@@ -31,9 +10,10 @@
 		</style>
 	</head>
 	<body>
+		<p><a href="profileEdit">編集</a></p>
 		<p><a href="home">ホームへ</a></p>
 		<p><a href="logout">ログアウト</a></p>
-		<h1>プロフィールページ</h1>
+		<h1>Myプロフィールページ</h1>
 		<table border="0">
 			<tr>
 				<td><img src="${pageContext.request.contextPath}${user.profilePicture}" title="プロフィール画像" width="100px" height="100px" id="icon"></td>
@@ -42,7 +22,6 @@
 				<td>${user.profile}</td>
 			</tr>
 		</table>
-		フォローする<input type="checkbox" class="fbtn"><br>
 		投稿
 		<table border="0">
 			<tr>

@@ -5,29 +5,30 @@ import java.util.Map;
 import dao.AbstractDao;
 
 import bean.Bean;
-import bean.LikesBean;
+import bean.ActionBean;
 
 import util.OracleConnectionManager;
 import util.factory.AbstractDaoFactory;
 
-public class LikeCheck{
-	public boolean checkLikeUser(Map palams){
-		//いいねされているかどうかのフラグ
+public class FollowCheck{
+	public boolean checkFollow(Map map){
+		//フォローしているかどうかのフラグ
 		boolean flag=false;
+		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
 		
 		//インテグレーションレイヤの処理を呼び出す
-		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("likes");
+		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("action");
 		AbstractDao dao=factory.getAbstractDao();
-		LikesBean lb=(LikesBean)dao.read(palams);
+		ActionBean ab=(ActionBean)dao.read(map);
 		
 		//トランザクションを終了する
 		OracleConnectionManager.getInstance().commit();
 		
-		//いいねされているかの判定
-		//Likes表の主キーがNULLでない、かつ空文字でない場合TUREを返す
-		if(lb.getLikeId()!=null && lb.getLikeId().equals("")!=true){
+		//フォローしているかの判定
+		//Likes表の主キーがNULLでない、かつ空文字でない場合TRUEを返す
+		if(ab.getActionId()!=null && ab.getActionId().equals("")!=true){
 			flag=true;
 		}else{
 			flag=false;

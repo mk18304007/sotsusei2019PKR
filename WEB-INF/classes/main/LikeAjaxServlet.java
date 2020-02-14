@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Bean;
 import bean.LikesBean;
+import bean.PostBean;
 
 import dao.AbstractDao;
 
@@ -32,8 +33,8 @@ public class LikeAjaxServlet extends HttpServlet{
 		String state="0";
 		System.out.println("LikeAjaxServlet.doPost.postId:"+postId+",managementId:"+managementId);
 		
-		//いいね判定用のMapを作り、取得した値を格納する
-		Map<String,String> palams=new HashMap<String,String>();
+		//いいねされているかどうかを判定するのに使用する値をMapに格納する
+		Map<String,Object> palams=new HashMap<>();
 		palams.put("postId",postId);
 		palams.put("managementId",managementId);
 		palams.put("where","WHERE managementId=? AND postId=?");
@@ -41,21 +42,52 @@ public class LikeAjaxServlet extends HttpServlet{
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
 		
-		//インテグレーションレイヤの処理を呼び出す
+		//likes表からデータを取得
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("likes");
 		AbstractDao dao=factory.getAbstractDao();
 		LikesBean lb=(LikesBean)dao.read(palams);
 		
+		//いいねされている場合
 		if(lb.getLikeId()!=null && lb.getLikeId().equals("")!=true){
-			String likeId=((LikesBean)dao.read(palams)).getLikeId();
-			System.out.println("LikeCheckServlet.doPost.if.ture.likeId:"+likeId);
-			
+			//likes表から該当する列を削除
 			dao.delete(palams);
+			
+			//Mapを初期化し、Post表のデータを取得
+			palams.clear();
+			palams.put("where","WHERE postId=?");
+			palams.put("value",postId);
+			
+			factory=AbstractDaoFactory.getFactory("post");
+			dao=factory.getAbstractDao();
+			PostBean pb=(PostBean)dao.read(palams);
+			
+			//LikesCountを1減らすupdate文を実行する
+			//更新のない列は同じデータで上書きする
+			palams.put("Bean",pb);
+			palams.put("likesCount",String.valueOf(Integer.parseInt(pb.getLikesCount())-1));
+			dao.update(palams);
 			System.out.println("いいねを取り消しました！");
+		//いいねされていない場合
 		}else{
+			//新しくLikes表に登録する
 			palams.put("replyId",replyId);
 			palams.put("state",state);
 			dao.insert(palams);
+			
+			//Mapを初期化し、Post表のデータを取得
+			palams.clear();
+			palams.put("where","WHERE postId=?");
+			palams.put("value",postId);
+			
+			factory=AbstractDaoFactory.getFactory("post");
+			dao=factory.getAbstractDao();
+			PostBean pb=(PostBean)dao.read(palams);
+			
+			//LikesCountを1増やすupdate文を実行する
+			//更新のない列は同じデータで上書きする
+			palams.put("Bean",pb);
+			palams.put("likesCount",String.valueOf(Integer.parseInt(pb.getLikesCount())+1));
+			dao.update(palams);
 			System.out.println("いいねしました！");
 		}
 		//トランザクションを終了する

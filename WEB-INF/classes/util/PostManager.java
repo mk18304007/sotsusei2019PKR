@@ -5,11 +5,11 @@
  * @author   Hideki Iizuka
  * @since    JDK5.0,
  * 
- * <p><b>BLOBg—p‚É‚æ‚éƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒh•‰‰×‚ğ”ğ‚¯‚é‚½‚ßPart API‚ğg—p</b></p>
+ * <p><b>BLOBä½¿ç”¨ã«ã‚ˆã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰è² è·ã‚’é¿ã‘ã‚‹ãŸã‚Part APIã‚’ä½¿ç”¨</b></p>
  * @see <a href="https://www.oracle.com/technetwork/java/frontcontroller-135648.html">RFC Sun Microsystems, Inc</a>
  * 
- * <p><b>Attention: ServletRequest.getRealPath()‚Íƒtƒ@ƒCƒ‹“Ç‚İ‚İnull‚ğ•Ô‚·ƒoƒO‚ğˆø‚«‹N‚±‚·ŠëŒ¯«‚ª‚ ‚é‚½‚ß”ñ„§
- * Solution: “Æ©getRealPath()‚ğì¬‚µgetResourcePaths()‚Ü‚½‚ÍgetResourceAsStream()‚ğÀ‘•</b></p>
+ * <p><b>Attention: ServletRequest.getRealPath()ã¯ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿æ™‚nullã‚’è¿”ã™ãƒã‚°ã‚’å¼•ãèµ·ã“ã™å±é™ºæ€§ãŒã‚ã‚‹ãŸã‚éæ¨å¥¨
+ * Solution: ç‹¬è‡ªgetRealPath()ã‚’ä½œæˆã—getResourcePaths()ã¾ãŸã¯getResourceAsStream()ã‚’å®Ÿè£…</b></p>
  * @see <a href="">RFC , Inc</a>
  * 
  * @return the collection of path, not null
@@ -30,11 +30,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//import javax.faces.component.UIViewRoot;
-//import javax.faces.context.FacesContext;
-
-//import javax.inject.Named;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -42,201 +37,91 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-// ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒhAPI
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰API
 import javax.servlet.http.Part;
 
 import context.RequestContext;
 import context.ResponseContext;
 
-public class PostManager extends HttpServlet
-{
+public class PostManager extends HttpServlet{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-//	private HttpSession session;
-
-	// ƒAƒbƒvƒ[ƒhƒtƒ@ƒCƒ‹•Ï”
+	//ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«å¤‰æ•°
 	private Part file;
-	
 	private String contentsPath;
 
-	public PostManager(RequestContext reqc)// throws ServletException, IOException
-	{
+	public PostManager(RequestContext reqc){
 		request = (HttpServletRequest)reqc.getRequest();
-		
-		try
-		{
-			System.out.println("requestF" + request);	//nullƒ`ƒFƒbƒN
-			
-			// •Û‘¶æ‚ÌƒfƒBƒŒƒNƒ^[‚ğæ“¾
-			//String contents = reqc.getParameter("contents")[0];
-
-			// <input type="file" name="contents">‚©‚ç’l‚ğæ“¾
-			System.out.println("request.getPart()F" + request.getPart("contents"));	//nullƒ`ƒFƒbƒN
+		try{
+			//<input type="file" name="contents">ã‹ã‚‰å€¤ã‚’å–å¾—
 			file = request.getPart("contents");
 			
-			//String contents = null;
-			
-			for (String cd : file.getHeader("Content-Disposition").split(";")) 
-			{
-				if (cd.trim().startsWith("filename")) 
-				{
-					//contents = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-					contentsPath = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+			for (String cd : file.getHeader("Content-Disposition").split(";")){
+				if (cd.trim().startsWith("filename")){
+					contentsPath = "/images/" + cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
 				}
 			}
-			
-			System.out.println("file‚Ì’†g‚Í " + file);
-
-			// ƒAƒbƒvƒ[ƒh‚µ‚½ƒtƒ@ƒCƒ‹iƒoƒCƒiƒŠƒf[ƒ^j‚ğ“Ç‚İ‚Ş‚½‚ß‚ÌƒXƒgƒŠ[ƒ€‚ğæ“¾
+			//ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆãƒã‚¤ãƒŠãƒªãƒ‡ãƒ¼ã‚¿ï¼‰ã‚’èª­ã¿è¾¼ã‚€ãŸã‚ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å–å¾—
 			InputStream inputstream = file.getInputStream();
-
-			// ƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç¦‚³‚ê‚½ƒtƒ@ƒCƒ‹‚Ì–¼‘O‚ğæ“¾
-//			String fileName = Paths.get(file.getSubmittedFileName()).getFileName().toString();
-
+			
 			String filename = file.getSubmittedFileName();
 			
-			System.out.println("filename‚Ì’†g‚Í " + file);	//nullƒ`ƒFƒbƒN
-
-			//Šg’£q‚ğæ“¾
+			//æ‹¡å¼µå­ã‚’å–å¾—
 			String extension = filename.substring(filename.lastIndexOf("."));
 			
-			System.out.println("if•¶‘O‚Ìextension‚Ì’†g‚Í " + extension);	//nullƒ`ƒFƒbƒN
-			
-			//â‘ÎƒpƒX‚É•ÏŠ·
-//			String filepath = getRealPath("/GraduationWork/images");
+			//çµ¶å¯¾ãƒ‘ã‚¹ã«å¤‰æ›
 			String filepath = "C:/webapps/impaku/images/";
-				
-			System.out.println("realpath‚Ì’†g‚Í " + filepath);
-
-			//‚·‚×‚Ä‚ÌƒoƒCƒg‚ğ“ü—ÍƒXƒgƒŠ[ƒ€‚©‚çƒtƒ@ƒCƒ‹‚ÉƒRƒs[‚·‚éƒtƒ@ƒCƒ‹•ÛŠÇˆ—
-//			Files.copy(inputstream, new File(filepath ,filename).toPath(), StandardCopyOption.REPLACE_EXISTING);
 			
 			file.write(filepath+filename);
-			
-			System.out.println("if•¶images“à‚Ìextension‚Ì’†g‚Í " + extension);	//nullƒ`ƒFƒbƒN
-
-			//inputƒ^ƒO‚Ìaccept‘®«‚Å§ŒÀ‚µ‚Ä‚¢‚éMIME‚Í
-			//image/gifAimage/jpegAimage/pngAvideo/mp4Avideo/webmAvideo/ogg ‚Ì‚Uí—Ş
-			//Šg’£q‚Åimage‚Ævideo‚ÌƒRƒs[æƒtƒ@ƒCƒ‹‚Ì‚Ó‚é‚¢•ª‚¯‚·‚é
-/*			if(extension == ".gif" || extension == ".jpg" || extension == ".jpeg" || extension == ".png")
-			{
-				System.out.println("if•¶“à‚Ìextension‚Ì’†g‚Í " + extension);	//nullƒ`ƒFƒbƒN
-				
-				//â‘ÎƒpƒX‚É•ÏŠ·
-				String filepath = getRealPath("/GraduationWork/images");
-				
-				System.out.println("realpath‚Ì’†g‚Í " + filepath);
-
-				//‚·‚×‚Ä‚ÌƒoƒCƒg‚ğ“ü—ÍƒXƒgƒŠ[ƒ€‚©‚çƒtƒ@ƒCƒ‹‚ÉƒRƒs[‚·‚éƒtƒ@ƒCƒ‹•ÛŠÇˆ—
-				Files.copy(inputstream, new File(filepath ,filename).toPath(), StandardCopyOption.REPLACE_EXISTING);
-				
-				System.out.println("if•¶images“à‚Ìextension‚Ì’†g‚Í " + extension);	//nullƒ`ƒFƒbƒN
-			}
-			else if(extension == ".mp4" || extension == ".m4v" || extension == ".ogv" || extension == ".webm")
-			{
-				//ƒAƒbƒvƒ[ƒh‚µ‚½ƒtƒ@ƒCƒ‹‚ğæ“¾‚µ‚Ä•Û‘¶‚·‚é‚½‚ß‚ÌƒXƒgƒŠ[ƒ€‚ğ“¾‚é
-//				InputStream inputstream = file.getInputStream();
-
-				//â‘ÎƒpƒX‚É•ÏŠ·
-				String filepath = getRealPath("/GraduationWork/videos");
-				
-				System.out.println("filepath‚Ì’†g‚Í " + filepath);	//nullƒ`ƒFƒbƒN
-				
-				//ƒAƒbƒvƒ[ƒh‚µ‚½ƒtƒ@ƒCƒ‹‚ğæ“¾‚µ‚Ä•Û‘¶
-//				InputStream fileContent = file.getInputStream();
-
-				//‚·‚×‚Ä‚ÌƒoƒCƒg‚ğ“ü—ÍƒXƒgƒŠ[ƒ€‚©‚çƒtƒ@ƒCƒ‹‚ÉƒRƒs[‚·‚éƒtƒ@ƒCƒ‹•ÛŠÇˆ—
-				Files.copy(inputstream, new File(filepath ,filename).toPath(), StandardCopyOption.REPLACE_EXISTING);
-				
-				System.out.println("if•¶videos“à‚ÌFiles.copy(inputstream, new File(filepath ,filename).toPath(), StandardCopyOption.REPLACE_EXISTING)‚Ì’†g‚Í " + Files.copy(inputstream, new File(filepath ,filename).toPath(), StandardCopyOption.REPLACE_EXISTING));	//nullƒ`ƒFƒbƒN
-			}*/
-		}
-		catch(IOException e)
-		{
+		}catch(IOException e){
 			e.printStackTrace();
-			System.out.println("“üo—ÍƒGƒ‰[");
-			System.out.println("ˆÈ‰ºURL‚ğQÆ‚µException‚Ì‘Îˆ‚ğs‚Á‚Ä‚­‚¾‚³‚¢");
+			System.out.println("å…¥å‡ºåŠ›ã‚¨ãƒ©ãƒ¼");
+			System.out.println("ä»¥ä¸‹URLã‚’å‚ç…§ã—Exceptionã®å¯¾å‡¦ã‚’è¡Œã£ã¦ãã ã•ã„");
 			System.out.println("https://software.fujitsu.com/jp/manual/manualfiles/M050000/B1WN5031/03/msg45/msg09934.htm");
 			Logger.getLogger(PostManager.class.getName()).log(Level.SEVERE, e.toString());
-		}
-		catch(IllegalStateException e)
-		{
-			//ƒtƒ@ƒCƒ‹‚Ü‚½‚ÍƒŠƒNƒGƒXƒg‚ª‘å‚«‚·‚¬‚½ê‡‚Ìcatch‹å
-			//ƒNƒ‰ƒCƒAƒ“ƒg‚Éƒtƒ@ƒCƒ‹‚Ü‚½‚ÍƒŠƒNƒGƒXƒg‚ª•¶–@“I‚ÉŠÔˆá‚Á‚Ä‚¢‚é‚±‚Æ‚ğ¦‚·ƒXƒe[ƒ^ƒXƒR[ƒh(400)‚ÌƒGƒ‰[ƒy[ƒW‚ğ•Ô‚·
+		}catch(IllegalStateException e){
+			//ãƒ•ã‚¡ã‚¤ãƒ«ã¾ãŸã¯ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤§ãã™ããŸå ´åˆã®catchå¥
+			//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«ãƒ•ã‚¡ã‚¤ãƒ«ã¾ãŸã¯ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæ–‡æ³•çš„ã«é–“é•ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¤ºã™ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰(400)ã®ã‚¨ãƒ©ãƒ¼ãƒšãƒ¼ã‚¸ã‚’è¿”ã™
 			e.printStackTrace();
-			System.out.println("ƒtƒ@ƒCƒ‹‚Ü‚½‚ÍƒŠƒNƒGƒXƒgƒGƒ‰[");
-			System.out.println("ˆÈ‰ºURL‚ğQÆ‚µException‚Ì‘Îˆ‚ğs‚Á‚Ä‚­‚¾‚³‚¢");
+			System.out.println("ãƒ•ã‚¡ã‚¤ãƒ«ã¾ãŸã¯ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚¨ãƒ©ãƒ¼");
+			System.out.println("ä»¥ä¸‹URLã‚’å‚ç…§ã—Exceptionã®å¯¾å‡¦ã‚’è¡Œã£ã¦ãã ã•ã„");
 			System.out.println("https://software.fujitsu.com/jp/manual/manualfiles/M050000/B1WN5031/03/index.htm");
 			
-			try
-			{
+			try{
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			}catch(IOException ex){
+				ex.printStackTrace();
 			}
-			catch(IOException ee)
-			{
-				System.out.println(ee.getMessage());
-			}
-
-        return;
-		}
-		catch(ServletException e)
-		{
+			return;
+		}catch(ServletException e){
 			e.printStackTrace();
-			System.out.println("ƒT[ƒuƒŒƒbƒg“à•”‚ÌƒGƒ‰[");
-			System.out.println("ˆÈ‰ºURL‚ğQÆ‚µException‚Ì‘Îˆ‚ğs‚Á‚Ä‚­‚¾‚³‚¢");
+			System.out.println("ã‚µãƒ¼ãƒ–ãƒ¬ãƒƒãƒˆå†…éƒ¨ã®ã‚¨ãƒ©ãƒ¼");
+			System.out.println("ä»¥ä¸‹URLã‚’å‚ç…§ã—Exceptionã®å¯¾å‡¦ã‚’è¡Œã£ã¦ãã ã•ã„");
 			System.out.println("https://software.fujitsu.com/jp/manual/manualfiles/M050000/B1WN5031/03/msg45/msg09934.htm");
 			Logger.getLogger(PostManager.class.getName()).log(Level.SEVERE, e.toString());
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
-
-	//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒ‹[ƒg‚©‚ç‚Ì‘Š‘ÎƒpƒX‚ğâ‘ÎƒpƒX‚É•ÏŠ·‚·‚é
-	//path ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒ‹[ƒg‚ÌƒŠƒ\[ƒX‚©‚ç‚Ì‘Š‘ÎƒpƒXiex. /resources/`j
-    public String getRealPath(String path)
-    {
-//    	System.out.println("getServletConfig()‚Í " + getServletConfig());
-    	
-//        ServletConfig servletconfig = getServletConfig();
-    	
-//    	System.out.println("servletconfig‚Í " + servletconfig);
-
-//        ServletContext servletcontext = servletconfig.getServletContext();
-    	
-//    	ServletContext servletcontext = getServletConfig().getServletContext();
-    	
-    	//System.out.println("getServletConfig().getServletContext()‚Í " + getServletConfig().getServletContext());
-
-//    	System.out.println("servletcontext‚Í " + servletcontext);
-    	
-//      ServletContext realpath = servletcontext.getRealPath(path);
-//        String realpath = servletcontext.getResourcePaths(path).toString();
-    	
-    	String realpath = getServletContext().getRealPath(path).toString();
-    	
-    	System.out.println("realpath‚Ì’†g‚Í " + realpath);	//nullƒ`ƒFƒbƒN
-
-        return realpath;
-    }    
-    
-    //getter
-    public Part getFile()
-    {
-        return file;
-    }
-
-    //setter
-    public void setFile(Part file)
-    {
-        this.file = file;
-    }
+	//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹ã‚’çµ¶å¯¾ãƒ‘ã‚¹ã«å¤‰æ›ã™ã‚‹
+	//path ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆã®ãƒªã‚½ãƒ¼ã‚¹ã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹ï¼ˆex. /resources/ï½ï¼‰
+	public String getRealPath(String path){
+		String realpath = getServletContext().getRealPath(path).toString();
+		
+		return realpath;
+	}
 	//getter
-    public String getContentsPath()
-    {
-        return contentsPath;
-    }
-
-    //setter
-    public void setContentsPath(String contentsPath)
-    {
-        this.contentsPath = contentsPath;
-    }
+	public Part getFile(){
+		return file;
+	}
+	public String getContentsPath(){
+		return contentsPath;
+	}
+	//setter
+	public void setFile(Part file){
+		this.file = file;
+	}
+	public void setContentsPath(String contentsPath){
+		this.contentsPath = contentsPath;
+	}
 }

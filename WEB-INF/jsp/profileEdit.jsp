@@ -12,7 +12,6 @@
 		</style>
 		<script>
 			window.onload=function(){
-				console.log(${sessionScope.user.state});
 				var state=${sessionScope.user.state}
 				//データベースから取得した値をもとに、ラジオボタンの初期値を設定する
 				if(state==1){
@@ -38,7 +37,7 @@
 		<label><input type="radio" name="target" value="profile" onchange="showPublic();" checked>公開情報の編集</label><br>
 		<label><input type="radio" name="target" value="password" onchange="showPrivate();">非公開情報の編集</label>
 		
-		<form action="edit" method="post">
+		<form action="edit" enctype="multipart/form-data" method="post">
 			<table id="public_area" class="active">
 				<tr>
 					<td>名前</td>
@@ -55,7 +54,7 @@
 				<tr>
 					<td>プロフィール画像</td>
 					<td><img src="${pageContext.request.contextPath}${sessionScope.user.profilePicture}"></td>
-					<td><input type="file" name="profilePicuture"></td>
+					<td><input type="file" name="contents" accept="image/*" /></td>
 				<tr>
 			</table>
 			

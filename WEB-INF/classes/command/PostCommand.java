@@ -37,24 +37,21 @@ import util.factory.AbstractDaoFactory;
 
 import dao.AbstractDao;
 
-public class PostCommand extends AbstractCommand
-{
-	public ResponseContext execute(ResponseContext resc)
-	{
-		//RequestContextのインスタンスを取得する
+public class PostCommand extends AbstractCommand{
+	public ResponseContext execute(ResponseContext resc){
 		RequestContext reqc = getRequestContext();
 		
 		//SessionManagerのインスタンスを生成し、セッションの持つユーザー情報を取得する
 		SessionManager session = new SessionManager(reqc);
 		String managementId = ((UsersBean)session.getAttribute("user")).getManagementId();
 		
+		//PostManagerを利用し、画像を保存、保存先のパスを取得する
 		PostManager postmanager = new PostManager(reqc);
 		String contents = postmanager.getContentsPath();
-
+		
 		//RequestContextからパラメータを取得する
-		//String contents=reqc.getParameter("contents")[0];
 		String text = reqc.getParameter("text")[0];
-
+		
 		//DBに格納する内容をMapに格納
 		Map<String,String> palams = new HashMap<String,String>();
 		palams.put("where","where managementId=?");
@@ -62,10 +59,10 @@ public class PostCommand extends AbstractCommand
 		palams.put("contents", contents);
 		palams.put("text", text);
 		palams.put("managementId",managementId);
-
+		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
-
+		
 		//インテグレーションレイヤの処理を呼び出す
 		AbstractDaoFactory factory = AbstractDaoFactory.getFactory("post");
 		AbstractDao dao = factory.getAbstractDao();

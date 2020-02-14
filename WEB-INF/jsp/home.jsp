@@ -12,12 +12,11 @@
 					console.log("postId:"+postId+"\n managementId:"+managementId);
 					
 					$.ajax({
-						url:"LikeAjaxServlet",
+						url:"like",
 						type:"POST",
 						data:{managementId:managementId,postId:postId}
 					}).done(function(result){
 						//通信成功
-						console.log("成功");
 					}).fail(function(){
 						//通信失敗
 						console.log("読み込み失敗");
@@ -28,15 +27,13 @@
 			}
 		</script>
 		<style>
-			.on{
-				background:url(${pageContext.request.contextPath}/images/default_icon.jpg);
-				width:50px;
-				height:50px;
-			}
-			.off{
-				background:url(${pageContext.request.contextPath}/images/8bqmz0oH_normal.jpg);
-				width:50px;
-				height:50px;
+			input#submit_btn{
+				background:none;
+				border:none;
+				outline: none;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
 			}
 		</style>
 	</head>
@@ -49,18 +46,22 @@
 		<p><a href="post">投稿</a></p>
 		<p><a href="logout">ログアウト</a></p>
 		<br><br>
-		<table border="1">
-			<th>icon</th><th>userName</th><th>userId</th><th>postId</th><th>contents</th><th>text</th><th>like</th><th>likesCount</th>
-			<c:forEach var="post" items="${data}">
-				<tr>
-					<td id="profilePicture"><img src="${pageContext.request.contextPath}${post.usersBean.profilePicture}" width="50px" height="50px"></td>
-					<td id="userName">${post.usersBean.userName}</td>
-					<td id="userId">${post.usersBean.userId}</td>
-					<td id="${post.postBean.postId}">${post.postBean.postId}</td>
-					<td id="contents"><img src="${pageContext.request.contextPath}/images/${post.postBean.contents}" width="50px" height="50px"></td>
-					<td id="text">${post.postBean.text}</td>
-					<td id="like"><input type="checkbox" class="like_btn" id="${post.postBean.postId}"></td>
-					<td id="likesCount"><p>わるいね${post.postBean.likesCount}</p></td>
+		<table border="0">
+			<th>icon</th><th>userName</th><th>userId</th><th>contents</th><th>text</th><th>like</th>
+			<c:forEach var="post" items="${posts}">
+				<tr id="${post.postBean.postId}">
+					
+					<td><img src="${pageContext.request.contextPath}${post.usersBean.profilePicture}" width="50px" height="50px" id="icon"></td>
+					<td>
+						<form method="post" action="profile">
+							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
+							<input type="submit" value="${post.usersBean.userName}" id="submit_btn">
+						</form>
+					</td>
+					<td>${post.usersBean.userId}</td>
+					<td><img src="${pageContext.request.contextPath}${post.postBean.contents}" width="50px" height="50px"></td>
+					<td>${post.postBean.text}</td>
+					<td><input type="checkbox" class="like_btn" id="${post.postBean.postId}" ${post.likesBean.likeFlag}></td>
 				</tr>
 			</c:forEach>
 		</table>
