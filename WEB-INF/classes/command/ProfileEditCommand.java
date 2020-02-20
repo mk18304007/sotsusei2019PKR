@@ -28,10 +28,8 @@ public class ProfileEditCommand extends AbstractCommand{
 		String managementId=((UsersBean)session.getAttribute("user")).getManagementId();
 		
 		//PostManagerを利用し、画像を保存、保存先のパスを取得する
-		PostManager postmanager = new PostManager(reqc);
-		String profilePicture = postmanager.getContentsPath();
-		System.out.println("profilePicture:"+profilePicture);
-		
+		PostManager pm= new PostManager(reqc);
+		String profilePicture = pm.getContentsPath();
 		//RequestContextから入力パラメータを受け取る
 		String userName=reqc.getParameter("userName")[0];
 		String userId=reqc.getParameter("userId")[0];
@@ -64,7 +62,11 @@ public class ProfileEditCommand extends AbstractCommand{
 		palams.put("mailAddress",mailAddress);
 		palams.put("password",password);
 		palams.put("state",state);
-		palams.put("profilePicture",profilePicture);
+		if(profilePicture.equals("") || profilePicture==null || profilePicture.equals("/images/")){
+			palams.put("profilePicture",ub.getProfilePicture());
+		}else{
+			palams.put("profilePicture",profilePicture);
+		}
 		
 		//更新処理
 		dao.update(palams);
@@ -81,8 +83,9 @@ public class ProfileEditCommand extends AbstractCommand{
 		session.setAttribute("user",ub);
 		
 		//更新後はプロフィールページへ飛ばす
-		Map<String,Bean> result=new HashMap<String,Bean>();
-		resc.setTarget("profile");
+		ToProfileCommand tpc=new ToProfileCommand();
+		tpc.init(reqc);
+		resc=tpc.execute(resc);
 		
 		return resc;
 	}

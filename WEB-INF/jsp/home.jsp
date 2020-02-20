@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<title>home</title>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script>
 			window.onload=function(){
@@ -26,42 +27,55 @@
 				});
 			}
 		</script>
-		<style>
-			input#submit_btn{
-				background:none;
-				border:none;
-				outline: none;
-				-webkit-appearance: none;
-				-moz-appearance: none;
-				appearance: none;
-			}
-		</style>
 	</head>
 	<body>
 		<h1>ほーむ</h1>
-		<p>ログイン成功</p>
-		<p>ID:${sessionScope.user.userId}</p>
-		<p>pass:${sessionScope.user.password}</p>
-		<p><a href="profile">プロフィール</a></p>
-		<p><a href="post">投稿</a></p>
-		<p><a href="logout">ログアウト</a></p>
+		<form method="post" action="sarch">
+			<input type="text" name="keyword" placeholder="検索ゥ">
+			<input type="submit" value="検索" id="submit_btn">
+		</form>
+		<form method="post" action="profile">
+			<input type="text" value="${sessionScope.user.managementId}" name="managementId" style="display:none;">
+			<input type="submit" value="プロフィール" id="submit_btn">
+		</form>
+		<form method="post" action="post">
+			<input type="submit" value="投稿" id="submit_btn"><br>
+		</form>
+		<form method="post" action="logout">
+			<input type="submit" value="ログアウト" id="submit_btn">
+		</form>
 		<br><br>
 		<table border="0">
 			<th>icon</th><th>userName</th><th>userId</th><th>contents</th><th>text</th><th>like</th>
 			<c:forEach var="post" items="${posts}">
 				<tr id="${post.postBean.postId}">
-					
-					<td><img src="${pageContext.request.contextPath}${post.usersBean.profilePicture}" width="50px" height="50px" id="icon"></td>
+					<td>
+						<form method="post" action="profile">
+							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
+							<input type="image" src="${pageContext.request.contextPath}${post.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
+						</form>
+					</td>
 					<td>
 						<form method="post" action="profile">
 							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
 							<input type="submit" value="${post.usersBean.userName}" id="submit_btn">
 						</form>
 					</td>
-					<td>${post.usersBean.userId}</td>
-					<td><img src="${pageContext.request.contextPath}${post.postBean.contents}" width="50px" height="50px"></td>
-					<td>${post.postBean.text}</td>
-					<td><input type="checkbox" class="like_btn" id="${post.postBean.postId}" ${post.likesBean.likeFlag}></td>
+					<td>
+						<form method="post" action="profile">
+							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
+							<input type="submit" value="${post.usersBean.userId}" id="submit_btn">
+						</form>
+					</td>
+					<td>
+						<img src="${pageContext.request.contextPath}${post.postBean.contents}" width="50px" height="50px">
+					</td>
+					<td>
+						${post.postBean.text}
+					</td>
+					<td>
+						<input type="checkbox" class="like_btn" id="${post.postBean.postId}" ${post.likesBean.likeFlag}>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

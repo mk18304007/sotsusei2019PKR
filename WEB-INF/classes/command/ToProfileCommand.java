@@ -40,12 +40,13 @@ public class ToProfileCommand extends AbstractCommand{
 			OracleConnectionManager.getInstance().beginTransaction();
 			
 			//インテグレーションレイヤの処理を呼び出す
+			palams.put("where","WHERE managementId=?");
+			palams.put("value",sessionUserId);
+			
 			AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
 			AbstractDao dao=factory.getAbstractDao();
 			ArrayList postList = (ArrayList)dao.readAll(palams);
 			
-			palams.put("where","WHERE managementId=?");
-			palams.put("value",sessionUserId);
 			factory=AbstractDaoFactory.getFactory("users");
 			dao=factory.getAbstractDao();
 			UsersBean ub=(UsersBean)dao.read(palams);
@@ -57,15 +58,15 @@ public class ToProfileCommand extends AbstractCommand{
 			//トランザクションを終了する
 			OracleConnectionManager.getInstance().commit();
 			
-			List first=new ArrayList();
+			List<Object> first=new ArrayList<>();
 			first.add("post");
 			first.add(postList);
 			
-			List second=new ArrayList();
+			List<Object> second=new ArrayList<>();
 			second.add("user");
 			second.add(ub);
 			
-			List third=new ArrayList();
+			List<Object> third=new ArrayList<>();
 			third.add("like");
 			third.add(likesList);
 			
@@ -86,12 +87,13 @@ public class ToProfileCommand extends AbstractCommand{
 			OracleConnectionManager.getInstance().beginTransaction();
 			
 			//インテグレーションレイヤの処理を呼び出す
+			palams.put("where","WHERE managementId=?");
+			palams.put("value",selectedUserId);
+			
 			AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
 			AbstractDao dao=factory.getAbstractDao();
 			ArrayList postList = (ArrayList)dao.readAll(palams);
 			
-			palams.put("where","WHERE managementId=?");
-			palams.put("value",selectedUserId);
 			factory=AbstractDaoFactory.getFactory("users");
 			dao=factory.getAbstractDao();
 			UsersBean ub=(UsersBean)dao.read(palams);
@@ -124,15 +126,15 @@ public class ToProfileCommand extends AbstractCommand{
 			//トランザクションを終了する
 			OracleConnectionManager.getInstance().commit();
 			
-			List first=new ArrayList();
+			List<Object> first=new ArrayList<>();
 			first.add("post");
 			first.add(postList);
 			
-			List second=new ArrayList();
+			List<Object> second=new ArrayList<>();
 			second.add("user");
 			second.add(ub);
 			
-			List third=new ArrayList();
+			List<Object> third=new ArrayList<>();
 			third.add("like");
 			third.add(likesList);
 			

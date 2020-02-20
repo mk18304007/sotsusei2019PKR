@@ -65,7 +65,9 @@ public class PostManager extends HttpServlet{
 			InputStream inputstream = file.getInputStream();
 			
 			String filename = file.getSubmittedFileName();
-			
+			if(filename.equals("")){
+				filename+=".jpg";
+			}
 			//拡張子を取得
 			String extension = filename.substring(filename.lastIndexOf("."));
 			

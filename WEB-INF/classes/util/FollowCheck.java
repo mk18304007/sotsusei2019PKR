@@ -28,7 +28,7 @@ public class FollowCheck{
 		
 		//フォローしているかの判定
 		//Likes表の主キーがNULLでない、かつ空文字でない場合TRUEを返す
-		if(ab.getActionId()!=null && ab.getActionId().equals("")!=true){
+		if(ab.getActionId()!=null && ab.getActionId().equals("")==false){
 			flag=true;
 		}else{
 			flag=false;

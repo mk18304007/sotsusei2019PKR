@@ -209,6 +209,9 @@ public class UsersDao implements AbstractDao{
 			ps=cn.prepareStatement(new String(sql));
 			if(map.containsKey("value")&&map.containsKey("where")){
 				ps.setString(1,(String)map.get("value"));
+				if(map.containsKey("value2")){
+				ps.setString(2,(String)map.get("value2"));
+				}
 			}
 			rs=ps.executeQuery();
 			while(rs.next()){

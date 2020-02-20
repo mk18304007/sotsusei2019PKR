@@ -38,6 +38,7 @@
 		<label><input type="radio" name="target" value="password" onchange="showPrivate();">非公開情報の編集</label>
 		
 		<form action="edit" enctype="multipart/form-data" method="post">
+			<input type="text" value="${sessionScope.user.managementId}" name="managementId" style="display:none;">
 			<table id="public_area" class="active">
 				<tr>
 					<td>名前</td>
@@ -54,7 +55,7 @@
 				<tr>
 					<td>プロフィール画像</td>
 					<td><img src="${pageContext.request.contextPath}${sessionScope.user.profilePicture}"></td>
-					<td><input type="file" name="contents" accept="image/*" /></td>
+					<td><input type="file" name="contents" value="${sessionScope.user.profilePicture}" accept="image/*" /></td>
 				<tr>
 			</table>
 			

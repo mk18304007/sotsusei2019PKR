@@ -41,11 +41,13 @@ public class ToHomeCommand extends AbstractCommand{
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
+		palams.put("where","ORDER BY postID DESC");
 		
 		//インテグレーションレイヤの処理を呼び出す
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
 		AbstractDao dao=factory.getAbstractDao();
 		ArrayList postList = (ArrayList)dao.readAll(palams);
+		palams.clear();
 		
 		factory=AbstractDaoFactory.getFactory("users");
 		dao=factory.getAbstractDao();
@@ -84,8 +86,9 @@ public class ToHomeCommand extends AbstractCommand{
 			palams.put("passiveManagementID",pb.getManagementId());
 			palams.put("where","WHERE state=? AND activeManagementID=? AND passiveManagementID=?");
 			
-			check.checkFollow(palams);
+			followFlag=check.checkFollow(palams);
 			palams.clear();
+			System.out.println("postManagementId:"+pb.getManagementId()+" followFlag:"+followFlag);
 			//フォローしているとき もしくは 投稿したユーザーが自分のとき
 			if(followFlag || pb.getManagementId().equals(managementId)){
 				UsersPostLikesBean uplb=new UsersPostLikesBean();

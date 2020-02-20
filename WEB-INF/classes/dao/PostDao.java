@@ -165,7 +165,6 @@ public class PostDao implements AbstractDao{
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
-			sql.append("ORDER BY postID DESC");
 			System.out.println("PostDao.readAll.sql:"+sql);
 			
 			ps=cn.prepareStatement(new String(sql));
