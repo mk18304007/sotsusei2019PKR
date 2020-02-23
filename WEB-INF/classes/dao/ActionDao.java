@@ -103,7 +103,7 @@ public class ActionDao implements AbstractDao{
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
-			System.out.println(sql);
+			System.out.println("ActionDao.readAll.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
 			if(map.containsKey("value")&&map.containsKey("where")){
 				ps.setString(1,(String)map.get("value"));

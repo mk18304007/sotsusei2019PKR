@@ -1,7 +1,7 @@
 --既存FROMないデータを消す
-DROP TABLE Drectmail;
+DROP TABLE Directmail;
 DROP TABLE Action;
 DROP TABLE Likes;
-DROP TABLE Riply;
+DROP TABLE Reply;
 DROP TABLE Post;
 DROP TABLE Users;

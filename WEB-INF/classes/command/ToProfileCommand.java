@@ -112,7 +112,7 @@ public class ToProfileCommand extends AbstractCommand{
 				}
 			}
 			for(int i=0;i<likesList.size();i++){
-				LikesBean lb=(LikesBean)postList.get(i);
+				LikesBean lb=(LikesBean)likesList.get(i);
 				if(selectedUserId.equals(lb.getManagementId())){
 					UsersPostLikesBean uplb=new UsersPostLikesBean();
 					uplb.setLikesBean(lb);

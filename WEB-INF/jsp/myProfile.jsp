@@ -37,6 +37,12 @@
 			<input type="submit" formaction="followList" value="フォロー ${user.follows}">
 			<input type="submit" formaction="followerList" value="フォロワー ${user.followers}">
 		</from>
+		
+		<form method="post" action="blockList">
+			<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
+			<input type="submit" formaction="blockList" value="ブロックしたユーザー">
+		</from>
+		
 		投稿
 		<table border="0">
 			<tr>

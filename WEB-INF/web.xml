@@ -23,6 +23,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>BlockAjaxServlet</servlet-name>
+		<servlet-class>main.BlockAjaxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlockAjaxServlet</servlet-name>
+		<url-pattern>/BlockAjaxServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>main.FrontServlet</servlet-class>
 	</servlet>

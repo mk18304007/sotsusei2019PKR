@@ -27,6 +27,8 @@ public class FollowerListCommand extends AbstractCommand{
 		
 		//判定用のMap
 		Map<String,String> palams=new HashMap<>();
+		palams.put("value","0");
+		palams.put("where","WHERE state=?");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
@@ -35,6 +37,8 @@ public class FollowerListCommand extends AbstractCommand{
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("action");
 		AbstractDao dao=factory.getAbstractDao();
 		ArrayList followList = (ArrayList)dao.readAll(palams);
+		
+		palams.clear();
 		
 		//インテグレーションレイヤの処理を呼び出す
 		factory=AbstractDaoFactory.getFactory("users");

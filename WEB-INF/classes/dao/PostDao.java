@@ -78,7 +78,7 @@ public class PostDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("INSERT INTO Post(postID,managementID,contents,text) VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),?,?,?)");
+			sql.append("INSERT INTO Post(postID,managementID,contents1,contents2, contents3, contents4, contents5, contents6, contents7, contents8, contents9, contents10, text) VALUES((SELECT coalesce(MAX(postID),0)+1 FROM Post),?,?,?,?,?,?,?,?,?,?,?,?)");
 			System.out.println("PostDao.insert.sql:"+sql);
 			
 			ps=cn.prepareStatement(new String(sql));
@@ -87,15 +87,60 @@ public class PostDao implements AbstractDao{
 			}else{
 				System.out.println("PostDao.insert:managementIdがないよ");
 			}
-			if(map.containsKey("contents")){
-				ps.setString(2,(String)map.get("contents"));
+			if(map.containsKey("contents1")){
+				ps.setString(2,(String)map.get("contents1"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents2")){
+				ps.setString(3,(String)map.get("contents2"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents3")){
+				ps.setString(4,(String)map.get("contents3"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents4")){
+				ps.setString(5,(String)map.get("contents4"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents5")){
+				ps.setString(6,(String)map.get("contents5"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents6")){
+				ps.setString(7,(String)map.get("contents6"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents7")){
+				ps.setString(8,(String)map.get("contents7"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents8")){
+				ps.setString(9,(String)map.get("contents8"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents9")){
+				ps.setString(10,(String)map.get("contents9"));
+			}else{
+				System.out.println("PostDao.insert:contentsがないよ");
+			}
+			if(map.containsKey("contents10")){
+				ps.setString(11,(String)map.get("contents10"));
 			}else{
 				System.out.println("PostDao.insert:contentsがないよ");
 			}
 			if(map.containsKey("text")){
-				ps.setString(3,(String)map.get("text"));
+				ps.setString(12,(String)map.get("text"));
 			}else{
-				ps.setString(3,"");
+				ps.setString(12,"");
 			}
 			count=ps.executeUpdate();
 		}catch(SQLException e){
@@ -119,12 +164,11 @@ public class PostDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql=new StringBuffer();
-			sql.append("SELECT * FROM Post ");
+			sql.append( "SELECT  postId,managementId,NVL(CONTENTS1,''),NVL(CONTENTS2,''),NVL(CONTENTS3,''),NVL(CONTENTS4,''),NVL(CONTENTS5,''),NVL(CONTENTS6,''),NVL(CONTENTS7,''),NVL(CONTENTS8,''),NVL(CONTENTS9,''),NVL(CONTENTS10,''),TEXT,REPORT,LIKESCOUNT FROM Post");
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
-			System.out.println("PostDao.read.sql:"+sql);
-			
+			System.out.println("PostDao.readAll.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
 			if(map.containsKey("value") && map.containsKey("where")){
 				ps.setString(1,(String)map.get("value"));
@@ -133,10 +177,19 @@ public class PostDao implements AbstractDao{
 			if(rs.next()){
 				pb.setPostId(rs.getString(1));
 				pb.setManagementId(rs.getString(2));
-				pb.setContents(rs.getString(3));
-				pb.setText(rs.getString(4));
-				pb.setReport(rs.getString(5));
-				pb.setLikesCount(rs.getString(6));
+				pb.setContents1(rs.getString(3));
+				pb.setContents2(rs.getString(4));
+				pb.setContents3(rs.getString(5));
+				pb.setContents4(rs.getString(6));
+				pb.setContents5(rs.getString(7));
+				pb.setContents6(rs.getString(8));
+				pb.setContents7(rs.getString(9));
+				pb.setContents8(rs.getString(10));
+				pb.setContents9(rs.getString(11));
+				pb.setContents10(rs.getString(12));
+				pb.setText(rs.getString(13));
+				pb.setReport(rs.getString(14));
+				pb.setLikesCount(rs.getString(15));
 			}else{
 				System.out.println("PostDao.read.else:失敗");
 			}
@@ -161,7 +214,7 @@ public class PostDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql=new StringBuffer();
-			sql.append("SELECT * FROM Post ");
+			sql.append("SELECT  postId,managementId,NVL(CONTENTS1,''),NVL(CONTENTS2,''),NVL(CONTENTS3,''),NVL(CONTENTS4,''),NVL(CONTENTS5,''),NVL(CONTENTS6,''),NVL(CONTENTS7,''),NVL(CONTENTS8,''),NVL(CONTENTS9,''),NVL(CONTENTS10,''),TEXT,REPORT,LIKESCOUNT FROM Post");
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
@@ -176,10 +229,19 @@ public class PostDao implements AbstractDao{
 				PostBean pb=new PostBean();
 				pb.setPostId(rs.getString(1));
 				pb.setManagementId(rs.getString(2));
-				pb.setContents(rs.getString(3));
-				pb.setText(rs.getString(4));
-				pb.setReport(rs.getString(5));
-				pb.setLikesCount(rs.getString(6));
+				pb.setContents1(rs.getString(3));
+				pb.setContents2(rs.getString(4));
+				pb.setContents3(rs.getString(5));
+				pb.setContents4(rs.getString(6));
+				pb.setContents5(rs.getString(7));
+				pb.setContents6(rs.getString(8));
+				pb.setContents7(rs.getString(9));
+				pb.setContents8(rs.getString(10));
+				pb.setContents9(rs.getString(11));
+				pb.setContents10(rs.getString(12));
+				pb.setText(rs.getString(13));
+				pb.setReport(rs.getString(14));
+				pb.setLikesCount(rs.getString(15));
 				list.add(pb);
 			}
 		}catch(SQLException e){

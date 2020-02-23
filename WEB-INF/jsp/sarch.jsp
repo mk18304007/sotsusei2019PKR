@@ -25,7 +25,7 @@
 			<tr>
 				<c:forEach var="user" items="${user}">
 					<td>
-						<form method="user" action="profile">
+						<form method="POST" action="profile">
 							<input type="text" value="${user.usersBean.managementId}" name="managementId" style="display:none;">
 							<input type="image" src="${pageContext.request.contextPath}${user.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
 							<input type="submit" value="${user.usersBean.userName}" id="submit_btn">

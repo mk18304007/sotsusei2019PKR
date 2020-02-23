@@ -41,7 +41,7 @@ public class ToHomeCommand extends AbstractCommand{
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
-		palams.put("where","ORDER BY postID DESC");
+		palams.put("where"," ORDER BY postID DESC");
 		
 		//インテグレーションレイヤの処理を呼び出す
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
@@ -59,7 +59,7 @@ public class ToHomeCommand extends AbstractCommand{
 		
 		
 		//managementId(セッションユーザー)が空なら
-		if(managementId.equals("")){
+		if(managementId.equals("") || managementId==null){
 			//ユーザーリストを一件ずつ取得し
 			for(int i=0; i<usersList.size();i++){
 				UsersBean ub=(UsersBean)usersList.get(i);

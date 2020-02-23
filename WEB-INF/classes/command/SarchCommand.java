@@ -49,7 +49,7 @@ public class SarchCommand extends AbstractCommand{
 		
 		palams.clear();
 		
-		List<Bean> list=new ArrayList<>();
+		List<Bean> newUserList=new ArrayList<>();
 		for(int i=0;i<usersList.size();i++){
 			UsersBean ub=(UsersBean)usersList.get(i);
 			UsersActionBean uab=new UsersActionBean();
@@ -64,7 +64,7 @@ public class SarchCommand extends AbstractCommand{
 			}else{
 				uab.setState("0");
 			}
-			list.add(uab);
+			newUserList.add(uab);
 		}
 		
 		//トランザクションを終了する
@@ -72,7 +72,7 @@ public class SarchCommand extends AbstractCommand{
 		
 		List<Object> first=new ArrayList<>();
 		first.add("user");
-		first.add(list);
+		first.add(newUserList);
 		
 		List<Object> second=new ArrayList<>();
 		second.add("post");

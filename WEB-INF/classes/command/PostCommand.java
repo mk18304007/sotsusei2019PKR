@@ -47,18 +47,32 @@ public class PostCommand extends AbstractCommand{
 		
 		//PostManagerを利用し、画像を保存、保存先のパスを取得する
 		PostManager postmanager = new PostManager(reqc);
-		String contents = postmanager.getContentsPath();
+		String[] string = new String[10];
+		ArrayList contents = postmanager.getContentsPath();
+		Iterator it = contents.iterator();
+		
+		while(it.hasNext()){
+			String path = (String)it.next();
+		}
 		
 		//RequestContextからパラメータを取得する
 		String text = reqc.getParameter("text")[0];
 		
 		//DBに格納する内容をMapに格納
-		Map<String,String> palams = new HashMap<String,String>();
+		Map<String, Object> palams = new HashMap<String, Object>();
 		palams.put("where","where managementId=?");
-		palams.put("value", managementId);
-		palams.put("contents", contents);
+		palams.put("managementId", managementId);
+		palams.put("contents1", contents.get(0));
+		palams.put("contents2", contents.get(1));
+		palams.put("contents3", contents.get(2));
+		palams.put("contents4", contents.get(3));
+		palams.put("contents5", contents.get(4));
+		palams.put("contents6", contents.get(5));
+		palams.put("contents7", contents.get(6));
+		palams.put("contents8", contents.get(7));
+		palams.put("contents9", contents.get(8));
+		palams.put("contents10", contents.get(9));
 		palams.put("text", text);
-		palams.put("managementId",managementId);
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();

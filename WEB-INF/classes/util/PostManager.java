@@ -29,6 +29,10 @@ import java.nio.file.StandardOpenOption;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Enumeration;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -37,7 +41,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-// ファイルアップロードAPI
+
 import javax.servlet.http.Part;
 
 import context.RequestContext;
@@ -46,36 +50,37 @@ import context.ResponseContext;
 public class PostManager extends HttpServlet{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	//アップロードファイル変数
-	private Part file;
-	private String contentsPath;
-
+//private Part file;
+	private Collection<Part> files;
+	//クラス構造のハッシュ値を定義することで型同一性チェック
+	private static final long serialVersionUID = 1L;
+	
+	private ArrayList contentsPath = new ArrayList((Arrays.asList(null,null,null,null,null,null,null,null,null,null)));
 	public PostManager(RequestContext reqc){
 		request = (HttpServletRequest)reqc.getRequest();
 		try{
-			//<input type="file" name="contents">から値を取得
-			file = request.getPart("contents");
-			
-			for (String cd : file.getHeader("Content-Disposition").split(";")){
-				if (cd.trim().startsWith("filename")){
-					contentsPath = "/images/" + cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+			files = request.getParts();
+			int i = 0;
+			for(Part file : files){
+				InputStream inputstream = file.getInputStream();
+				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+file);
+				String filename = getFileName(file);
+				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaab"+filename);
+				if(filename != null){
+					//拡張子を取得
+					String extension = filename.substring(filename.lastIndexOf("."));
+
+					contentsPath.remove(i);
+					contentsPath.add(i,filename);
+
+					//絶対パスに変換
+					String filepath = "C:/webapps/impaku/images/";
+					file.write(filepath + filename);
 				}
+				i++;
 			}
-			//アップロードしたファイル（バイナリデータ）を読み込むためのストリームを取得
-			InputStream inputstream = file.getInputStream();
-			
-			String filename = file.getSubmittedFileName();
-			if(filename.equals("")){
-				filename+=".jpg";
-			}
-			//拡張子を取得
-			String extension = filename.substring(filename.lastIndexOf("."));
-			
-			//絶対パスに変換
-			String filepath = "C:/webapps/impaku/images/";
-			
-			file.write(filepath+filename);
-		}catch(IOException e){
+		}
+		catch(IOException e){
 			e.printStackTrace();
 			System.out.println("入出力エラー");
 			System.out.println("以下URLを参照しExceptionの対処を行ってください");
@@ -91,8 +96,8 @@ public class PostManager extends HttpServlet{
 			
 			try{
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			}catch(IOException ex){
-				ex.printStackTrace();
+			}catch(IOException ee){
+				System.out.println(ee.getMessage());
 			}
 			return;
 		}catch(ServletException e){
@@ -101,29 +106,46 @@ public class PostManager extends HttpServlet{
 			System.out.println("以下URLを参照しExceptionの対処を行ってください");
 			System.out.println("https://software.fujitsu.com/jp/manual/manualfiles/M050000/B1WN5031/03/msg45/msg09934.htm");
 			Logger.getLogger(PostManager.class.getName()).log(Level.SEVERE, e.toString());
-		}catch(Exception e){
-			e.printStackTrace();
 		}
 	}
+
 	//アプリケーションルートからの相対パスを絶対パスに変換する
 	//path アプリケーションルートのリソースからの相対パス（ex. /resources/～）
-	public String getRealPath(String path){
-		String realpath = getServletContext().getRealPath(path).toString();
-		
-		return realpath;
-	}
+    public String getRealPath(String path)
+    {
+    	String realpath = getServletContext().getRealPath(path).toString();
+    	
+    	System.out.println("realpathの中身は " + realpath);	//nullチェック
+
+        return realpath;
+    }    
+    
+
 	//getter
-	public Part getFile(){
-		return file;
-	}
-	public String getContentsPath(){
-		return contentsPath;
-	}
-	//setter
-	public void setFile(Part file){
-		this.file = file;
-	}
-	public void setContentsPath(String contentsPath){
-		this.contentsPath = contentsPath;
+    public ArrayList getContentsPath()
+    {
+    	System.out.println("contentsPathの中身は " + contentsPath);	//nullチェック
+        return contentsPath;
+    }
+	
+	private String getFileName(Part files)
+	{
+		for(String cd : files.getHeader("Content-Disposition").split(";")) 
+		{
+			
+				if (cd.trim().startsWith("filename")) 
+				{
+					//contentsPath = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+					String filePath = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+				 
+					System.out.println("contentsPathの中身は " + filePath );
+					
+					File file = new File(filePath);
+					//ファイルパスからファイル名を取得
+					return file.getName();
+				}
+			
+		}
+		return null;
 	}
 }

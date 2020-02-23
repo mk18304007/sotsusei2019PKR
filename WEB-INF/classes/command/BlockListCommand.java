@@ -1,4 +1,4 @@
-/*----------フォローリストを表示するためのコマンド----------*/
+/*----------ブロックリストを表示するためのコマンド----------*/
 package command;
 
 import context.RequestContext;
@@ -20,14 +20,14 @@ import util.FollowCheck;
 
 import dao.AbstractDao;
 
-public class FollowListCommand extends AbstractCommand{
+public class BlockListCommand extends AbstractCommand{
 	public ResponseContext execute(ResponseContext resc){
 		RequestContext reqc=getRequestContext();
 		String managementId=reqc.getParameter("managementId")[0];
 		
 		//判定用のMap
 		Map<String,String> palams=new HashMap<>();
-		palams.put("value","0");
+		palams.put("value","1");
 		palams.put("where","WHERE state=?");
 		
 		//トランザクションを開始する
@@ -36,9 +36,10 @@ public class FollowListCommand extends AbstractCommand{
 		//インテグレーションレイヤの処理を呼び出す
 		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("action");
 		AbstractDao dao=factory.getAbstractDao();
-		ArrayList followList = (ArrayList)dao.readAll(palams);
+		ArrayList blockList = (ArrayList)dao.readAll(palams);
 		
 		palams.clear();
+		
 		
 		//インテグレーションレイヤの処理を呼び出す
 		factory=AbstractDaoFactory.getFactory("users");
@@ -46,8 +47,8 @@ public class FollowListCommand extends AbstractCommand{
 		ArrayList usersList = (ArrayList)dao.readAll(palams);
 		
 		List<UsersBean> list=new ArrayList<>();
-		for(int i=0;i<followList.size();i++){
-			ActionBean ab=(ActionBean)followList.get(i);
+		for(int i=0;i<blockList.size();i++){
+			ActionBean ab=(ActionBean)blockList.get(i);
 			if(ab.getActiveManagementId().equals(managementId)){
 				for(int j=0;j<usersList.size();j++){
 					UsersBean ub=(UsersBean)usersList.get(j);
@@ -62,13 +63,13 @@ public class FollowListCommand extends AbstractCommand{
 		OracleConnectionManager.getInstance().commit();
 		
 		List<Object> first=new ArrayList<>();
-		first.add("follow");
+		first.add("block");
 		first.add(list);
 		List<List> result=new ArrayList<>();
 		result.add(first);
 		
 		//転送先情報をセットする
-		resc.setTarget("followList");
+		resc.setTarget("blockList");
 		resc.setResult(result);
 		return resc;
 		

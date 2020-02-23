@@ -68,13 +68,25 @@
 						</form>
 					</td>
 					<td>
-						<img src="${pageContext.request.contextPath}${post.postBean.contents}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents1}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents2}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents3}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents4}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents5}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents6}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents7}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents8}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents9}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents10}" width="50px" height="50px">
 					</td>
 					<td>
 						${post.postBean.text}
 					</td>
 					<td>
 						<input type="checkbox" class="like_btn" id="${post.postBean.postId}" ${post.likesBean.likeFlag}>
+					</td>
+					<td>
+						<a href="reply?post_id=${post.postBean.postId}">...詳細を表示</a>
 					</td>
 				</tr>
 			</c:forEach>

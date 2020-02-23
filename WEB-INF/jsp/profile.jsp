@@ -23,7 +23,25 @@
 						//常に実行する処理
 					})
 				});
+				
+				$('.bbtn').on('click',function() {
+					var managementId=${user.managementId}
+					
+					$.ajax({
+						url:"BlockAjaxServlet",
+						type:"POST",
+						data:{managementId:managementId}
+					}).done(function(result){
+						//通信成功
+					}).fail(function(){
+						//通信失敗
+						console.log("読み込み失敗");
+					}).always(function(result){
+						//常に実行する処理
+					})
+				});
 			}
+			
 		</script>
 	</head>
 	<body>
@@ -52,7 +70,8 @@
 			<input type="submit" formaction="followerList" value="フォロワー ${user.followers}">
 		</from>
 		
-		フォローする<input type="checkbox" class="fbtn"><br>
+		フォローする<input type="checkbox" class="fbtn">
+		ブロック<input type="checkbox" class="bbtn"><br>
 		投稿
 		<table border="0">
 			<tr>
