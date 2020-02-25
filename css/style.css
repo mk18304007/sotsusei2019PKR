@@ -11,3 +11,6 @@ input#submit_btn
 	-moz-appearance: none;
 	appearance: none;
 }
+body{
+	width: 100%;
+}

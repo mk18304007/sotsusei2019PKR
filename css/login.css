@@ -1,0 +1,63 @@
+body{
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+.loginBox{
+    margin-top:100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30 70 70 70;
+    background-color:rgb(255, 255, 255);
+    border:solid 1px #ccc;
+
+}
+td{
+    text-align: center;
+    padding-top: 12px;
+}
+.ite{
+    border-radius: 0.3em;
+    padding: 10px;
+    font-size: 15px;
+    border:solid 1px #ccc;
+    margin: 0 0 20px;
+    width: 300px;
+}
+.isub{
+    border-radius: 0.3em;
+    border: 0;
+    padding: 10px;
+    font-size: 17px;
+    color:white;
+    margin: 0 0 20px;
+    width: 300px;
+    background-color: dodgerblue;
+}
+.isub[disabled]{
+    border-radius: 0.3em;
+    border: 0;
+    padding: 10px;
+    font-size: 17px;
+    color:white;
+    margin: 0 0 20px;
+    width: 300px;
+    background-color:rgb(154, 230, 255);
+}
+a{
+    /* 下線部を消す */
+    text-decoration: none;
+}
+/* .line{
+    display: flex;
+    align-items: center;
+}
+.line:before,.line:after{
+    border-top: 1px solid;
+    content: "";
+    flex-grow: 1;
+}
+.line:before,.line:after{
+    margin-right: 2px;
+} */

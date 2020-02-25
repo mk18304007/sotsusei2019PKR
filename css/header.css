@@ -1,0 +1,52 @@
+/* ヘッダー固定 */
+#head{
+    position:fixed;
+    width: 100%;
+    height: 70px;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+    background-color:whitesmoke;
+}
+/* ヘッダーに合わせたBody */
+body{
+    width:100%;
+    margin-top: 71px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+/* ヘッダーの中 */
+li{
+    width: 200px;
+    list-style: none;
+    float: left;
+    overflow: hidden;
+}
+/* 投稿 */
+.post{
+    margin:0 auto;
+    border-color:gainsboro;
+}
+.icon{
+    text-align: left;
+    width:60px;
+    margin: 0px;
+}
+.name{
+    position:relative;
+    margin-left:70px;
+    margin-top:-60px;
+}
+.nameform{
+    font-size:20px;
+}
+.id{
+    position: relative;
+    margin-left:70px;
+    margin-top:-15px;
+}
+.idform{
+    font-size:18px;
+}

@@ -1,0 +1,28 @@
+#icon{
+    border-radius:50px;
+}
+
+body{
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+td{
+    text-align: center;
+    padding-top: 10px;
+}
+.ut{
+    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.uname{
+    font-size:35px;
+}
+.uid{
+    font-size: 30px;
+}
+.pebtn{}
+.fl{}
+.ftl{}

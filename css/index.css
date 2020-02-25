@@ -1,0 +1,52 @@
+@media screen and (min-width: 1200px){
+
+    body{
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+    table{
+        position: static;
+        margin-top: 100px;
+        margin-left: 60%;
+        padding-left: 5%;
+    }
+    
+    td{
+        padding-top: 50px;
+        text-align: center;
+    }
+    a{
+        /* 下線部を消す */
+        text-decoration: none;
+        font-size: 20px;
+        color:rgb(30, 218, 252);
+    }
+}
+
+
+@media screen  and (max-width:1200px){
+    ul li span{display: none}
+
+    body{
+        width: auto;
+    }
+    table{
+        margin-top: 100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    td{
+        padding-top: 50px;
+        text-align: center;
+    }
+    a{
+        /* 下線部を消す */
+        text-decoration: none;
+        font-size: 20px;
+
+    }
+
+} 
