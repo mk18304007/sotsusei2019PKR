@@ -9,7 +9,6 @@
 		$(function(){
 			if($('#na').val().length==0 || $('#id').val().length == 0 || $('#ma').val().length == 0 || $('#p1').val().length == 0 || $('#p2').val().length == 0){
 				$('#submit').prop("disabled",true);
-				console.log("true");
 			}
 		});
 
@@ -33,8 +32,8 @@
 				<tr><td><input type="text" name="userName" placeholder="ユーザー名" class="ite" id="na" ></td></tr>
 				<tr><td><input type="text" name="userId" placeholder="ID" class="ite" id="id"></td></tr>
 				<tr><td><input type="email" name="mailAddress" placeholder="メールアドレス" class="ite" id="ma"></td></tr>
-				<tr><td><input type="password" name="password" placeholder="パスワード" class="ite" id="p1" onchange="sb()"></td></tr>
-				<tr><td><input type="password" name="password" placeholder="確認用パスワード" class="ite" id="p2" onchange="sb()"></td></tr>
+				<tr><td><input type="password" name="password" placeholder="パスワード" class="ite" id="p1" onkeyup="sb()"></td></tr>
+				<tr><td><input type="password" name="password" placeholder="確認用パスワード" class="ite" id="p2" onkeyup="sb()"></td></tr>
 				<tr><td><input type="submit" value="新規登録" class="isub" id="submit"></td></tr>
 			</form>
 			<tr><td><hr></td></tr>

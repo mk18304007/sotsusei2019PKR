@@ -31,10 +31,7 @@ public class FollowCommand extends AbstractCommand{
 		
 		//フォローされているかどうかを判定するのに使用する値をMapに格納する
 		Map<String,Object> palams=new HashMap<>();
-		palams.put("state","0");
-		palams.put("activeManagementID",sessionUserId);
-		palams.put("passiveManagementID",selectedUserId);
-		palams.put("where","WHERE state=? AND activeManagementID=? AND passiveManagementID?");
+		palams.put("where","WHERE state=0 AND activeManagementID="+sessionUserId+" AND passiveManagementID="+selectedUserId);
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
@@ -49,8 +46,7 @@ public class FollowCommand extends AbstractCommand{
 			
 			//セッションユーザーの更新前情報を取得する
 			palams.clear();
-			palams.put("where","WHERE managementId=?");
-			palams.put("value",sessionUserId);
+			palams.put("where","WHERE managementId="+sessionUserId);
 			
 			factory=AbstractDaoFactory.getFactory("users");
 			dao=factory.getAbstractDao();
@@ -63,8 +59,7 @@ public class FollowCommand extends AbstractCommand{
 			
 			//選択されたユーザーの更新前情報を取得する
 			palams.clear();
-			palams.put("where","WHERE managementId=?");
-			palams.put("value",selectedUserId);
+			palams.put("where","WHERE managementId="+selectedUserId);
 			ub=(UsersBean)dao.read(palams);
 			
 			//セッションユーザーのフォロワー数を減らす
@@ -81,8 +76,7 @@ public class FollowCommand extends AbstractCommand{
 			
 			//セッションユーザーの更新前情報を取得する
 			palams.clear();
-			palams.put("where","WHERE managementId=?");
-			palams.put("value",sessionUserId);
+			palams.put("where","WHERE managementId="+sessionUserId);
 			
 			factory=AbstractDaoFactory.getFactory("users");
 			dao=factory.getAbstractDao();
@@ -95,8 +89,7 @@ public class FollowCommand extends AbstractCommand{
 			
 			//選択されたユーザーの更新前情報を取得する
 			palams.clear();
-			palams.put("where","WHERE managementId=?");
-			palams.put("value",selectedUserId);
+			palams.put("where","WHERE managementId="+selectedUserId);
 			ub=(UsersBean)dao.read(palams);
 			
 			//セッションユーザーのフォロワー数を増やす

@@ -9,6 +9,13 @@
 				 border-radius:50px;
 			}
 		</style>
+		<script>
+			function showUsers(a,b){
+				if(b==2){
+					document.getElementById(a).setAttribute("style","display:none;")
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<form method="post" action="home">
@@ -25,12 +32,14 @@
 			<tr>
 				<c:forEach var="user" items="${user}">
 					<td>
-						<form method="POST" action="profile">
-							<input type="text" value="${user.usersBean.managementId}" name="managementId" style="display:none;">
-							<input type="image" src="${pageContext.request.contextPath}${user.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
-							<input type="submit" value="${user.usersBean.userName}" id="submit_btn">
-							<input type="submit" value="${user.usersBean.userId}" id="submit_btn">
-						</form>
+						<div id="user${user.usersBean.managementId}">
+							<form method="POST" action="profile">
+								<input type="hidden" value="${user.usersBean.managementId}" name="managementId">
+								<input type="image" src="${pageContext.request.contextPath}/images/${user.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;" onload="showUsers('user${user.usersBean.managementId}','${user.state}');">
+								<input type="submit" value="${user.usersBean.userName}" id="submit_btn">
+								<input type="submit" value="${user.usersBean.userId}" id="submit_btn">
+							</form>
+						</div>
 					</td>
 				</c:forEach>
 			</tr>
@@ -39,7 +48,7 @@
 		<table border="0">
 			<tr>
 				<c:forEach var="post" items="${post}">
-					<td><img src="${pageContext.request.contextPath}${post.contents}" width="100px" height="100px"></td>
+					<td><img src="${pageContext.request.contextPath}/images/${post.contents1}" width="100px" height="100px"></td>
 				</c:forEach>
 			</tr>
 			<tr>

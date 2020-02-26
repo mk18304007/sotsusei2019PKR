@@ -164,11 +164,11 @@ public class PostDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql=new StringBuffer();
-			sql.append( "SELECT  postId,managementId,NVL(CONTENTS1,''),NVL(CONTENTS2,''),NVL(CONTENTS3,''),NVL(CONTENTS4,''),NVL(CONTENTS5,''),NVL(CONTENTS6,''),NVL(CONTENTS7,''),NVL(CONTENTS8,''),NVL(CONTENTS9,''),NVL(CONTENTS10,''),TEXT,REPORT,LIKESCOUNT FROM Post");
+			sql.append( "SELECT  postId,managementId,NVL(CONTENTS1,''),NVL(CONTENTS2,''),NVL(CONTENTS3,''),NVL(CONTENTS4,''),NVL(CONTENTS5,''),NVL(CONTENTS6,''),NVL(CONTENTS7,''),NVL(CONTENTS8,''),NVL(CONTENTS9,''),NVL(CONTENTS10,''),TEXT,REPORT,LIKESCOUNT,timeStamp FROM Post");
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
-			System.out.println("PostDao.readAll.sql:"+sql);
+			System.out.println("PostDao.read.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
 			if(map.containsKey("value") && map.containsKey("where")){
 				ps.setString(1,(String)map.get("value"));
@@ -190,6 +190,7 @@ public class PostDao implements AbstractDao{
 				pb.setText(rs.getString(13));
 				pb.setReport(rs.getString(14));
 				pb.setLikesCount(rs.getString(15));
+				pb.setTimeStamp(rs.getString(16));
 			}else{
 				System.out.println("PostDao.read.else:失敗");
 			}
@@ -214,7 +215,7 @@ public class PostDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql=new StringBuffer();
-			sql.append("SELECT  postId,managementId,NVL(CONTENTS1,''),NVL(CONTENTS2,''),NVL(CONTENTS3,''),NVL(CONTENTS4,''),NVL(CONTENTS5,''),NVL(CONTENTS6,''),NVL(CONTENTS7,''),NVL(CONTENTS8,''),NVL(CONTENTS9,''),NVL(CONTENTS10,''),TEXT,REPORT,LIKESCOUNT FROM Post");
+			sql.append("SELECT  postId,managementId,NVL(CONTENTS1,''),NVL(CONTENTS2,''),NVL(CONTENTS3,''),NVL(CONTENTS4,''),NVL(CONTENTS5,''),NVL(CONTENTS6,''),NVL(CONTENTS7,''),NVL(CONTENTS8,''),NVL(CONTENTS9,''),NVL(CONTENTS10,''),TEXT,REPORT,LIKESCOUNT,timeStamp FROM Post");
 			if(map.containsKey("where")){
 				sql.append((String)map.get("where"));
 			}
@@ -242,6 +243,7 @@ public class PostDao implements AbstractDao{
 				pb.setText(rs.getString(13));
 				pb.setReport(rs.getString(14));
 				pb.setLikesCount(rs.getString(15));
+				pb.setTimeStamp(rs.getString(16));
 				list.add(pb);
 			}
 		}catch(SQLException e){

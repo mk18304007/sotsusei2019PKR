@@ -67,7 +67,7 @@ public class ReplyDao implements AbstractDao{
 			cn=OracleConnectionManager.getInstance().getConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("INSERT INTO Reply(managementID,postID,replyID,reply,commenID,state) VALUES(?,?,(SELECT COALESCE(MAX(replyID),0)+1 FROM Reply),?,?,?)");
+			sql.append("INSERT INTO Reply(managementID,postID,replyID,reply,commentID,state) VALUES(?,?,(SELECT COALESCE(MAX(replyID),0)+1 FROM Reply),?,?,?)");
 			ps=cn.prepareStatement(new String(sql));
 			System.out.println("ReplyDao.insert.sql:"+sql);
 			
@@ -108,9 +108,9 @@ public class ReplyDao implements AbstractDao{
 			ps.setString(1,(String)map.get("value"));
 			rs=ps.executeQuery();
 			if(rs.next()){
-				rb.setManagementId(rs.getString(1));
-				rb.setPostId(rs.getString(2));
-				rb.setReplyId(rs.getString(3));
+				rb.setReplyId(rs.getString(1));
+				rb.setManagementId(rs.getString(2));
+				rb.setPostId(rs.getString(3));
 				rb.setReply(rs.getString(4));
 				rb.setCommentId(rs.getString(5));
 				rb.setLikesCount(rs.getString(6));
@@ -151,9 +151,9 @@ public class ReplyDao implements AbstractDao{
 			rs=ps.executeQuery();
 			while(rs.next()){
 				ReplyBean rb =new ReplyBean();
-				rb.setManagementId(rs.getString(1));
-				rb.setPostId(rs.getString(2));
-				rb.setReplyId(rs.getString(3));
+				rb.setReplyId(rs.getString(1));
+				rb.setManagementId(rs.getString(2));
+				rb.setPostId(rs.getString(3));
 				rb.setReply(rs.getString(4));
 				rb.setCommentId(rs.getString(5));
 				rb.setLikesCount(rs.getString(6));

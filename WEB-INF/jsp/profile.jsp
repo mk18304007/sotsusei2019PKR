@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title>プロフィール</title>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/profile.css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script>
 			window.onload=function(){
@@ -41,49 +41,56 @@
 					})
 				});
 			}
-			
 		</script>
 	</head>
 	<body>
 		<form method="post" action="home">
-			<input type="submit" value="ホームへ" id="submit_btn"><br>
+			<input type="submit" value="ホームへ" id="submit_btn">
 		</form>
 		<form method="post" action="post">
-			<input type="submit" value="投稿" id="submit_btn"><br>
+			<input type="submit" value="投稿" id="submit_btn">
 		</form>
 		<form method="post" action="logout">
 			<input type="submit" value="ログアウト" id="submit_btn">
 		</form>
+
 		<h1>プロフィールページ</h1>
-		<table border="0">
+		<table class="ut">
 			<tr>
-				<td><img src="${pageContext.request.contextPath}${user.profilePicture}" title="プロフィール画像" width="100px" height="100px" style="border-radius:50px;"></td>
-				<td>${user.userName}</td>
-				<td>${user.userId}</td>
-				<td>${user.profile}</td>
+				<td rowspan="3"><img src="${pageContext.request.contextPath}/images/${user.profilePicture}" title="プロフィール画像" width="200px" height="200px" id="icon"></td>
+				<td class="uname"><p class="puname">${user.userName}</p></td>
+				<td class="uid"><p class="puid">${user.userId}</p></td>
+			</tr>
+			<tr>
+				<form method="post" action="followList">
+					<input type="hidden" name="managementId" value="${user.managementId}">
+					<td><input type="submit" formaction="followList" value="フォロー中 ${user.follows} 人"  class="list"></td>
+					<td><input type="submit" formaction="followerList" value="フォロワー ${user.followers} 人"  class="list"></td>
+				</form>
+				<td>フォローする<input type="checkbox" class="fbtn" ></td>
+				<td>ブロックする<input type="checkbox" class="bbtn" ></td>
+			</tr>
+			<tr>
+				<td colspan="3">${user.profile}</td>
 			</tr>
 		</table>
+
+		<table class="ht">
+			<tr><td width="400"><hr></td><td class="t">投稿</td><td width="400"><hr></td></tr>
+		</table>
 		
-		<form method="post" action="followList">
-			<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
-			<input type="submit" formaction="followList" value="フォロー ${user.follows}">
-			<input type="submit" formaction="followerList" value="フォロワー ${user.followers}">
-		</from>
-		
-		フォローする<input type="checkbox" class="fbtn">
-		ブロック<input type="checkbox" class="bbtn"><br>
-		投稿
-		<table border="0">
+		<table class="pt">
 			<tr>
 				<c:forEach var="post" items="${post}">
-					<td><img src="${pageContext.request.contextPath}${post.contents}" width="100px" height="100px"></td>
+					<td><img src="${pageContext.request.contextPath}/images/${post.contents1}" width="400px" height="400px"></td>
 				</c:forEach>
 			</tr>
 			<tr>
 				<c:forEach var="post" items="${post}">
-						<td>${post.likesCount}</td>
+					<td>${post.likesCount}</td>
 				</c:forEach>
 			</tr>
 		</table>
+
 	</body>
 </html>

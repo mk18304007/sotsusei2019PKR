@@ -31,7 +31,7 @@ public class LikeCommand extends AbstractCommand{
 		Map<String,Object> palams=new HashMap<>();
 		palams.put("postId",postId);
 		palams.put("managementId",managementId);
-		palams.put("where","WHERE managementId=? AND postId=?");
+		palams.put("where"," WHERE managementId=? AND postId=?");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();

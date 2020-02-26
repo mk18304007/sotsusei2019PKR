@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 	<head>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/profile.css" />
 		<title>プロフィール</title>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/profile.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	</head>
 	<body>
 
@@ -17,45 +18,63 @@
 			<input type="submit" value="ログアウト" id="submit_btn">
 		</form>
 
-		<h1>Myプロフィールページ</h1>
-		<table border="1" class="ut">
+		<h1 >Myプロフィールページ</h1>
+		<table class="ut">
 			<tr>
-				<td rowspan="3"><img src="${pageContext.request.contextPath}${user.profilePicture}" title="プロフィール画像" width="200px" height="200px" id="icon"></td>
-				<td class="uname">ユーザー名:${user.userName}</td>
-				<td class="uid">ユーザーID:${user.userId}</td>
-				<td><form method="post" action="profileEdit">
-					<input type="submit" value="プロフィールを編集" id="submit_btn" class="pebtn">
-				</form></td>
+				<td rowspan="3"><img src="${pageContext.request.contextPath}/images/${user.profilePicture}" title="プロフィール画像" width="200px" height="200px" id="icon"></td>
+				<td class="uname"><p class="puname">${user.userName}</p></td>
+				<td class="uid"><p class="puid">${user.userId}</p></td>
+				<form method="post" action="profileEdit">
+					<td><input type="submit" value="プロフィールを編集" id="submit_btn" class="pebtn"></td>
+				</form>
 			</tr>
 			<tr>
 				<form method="post" action="followList">
-				<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
-					<td><input type="submit" formaction="followList" value="フォロー中${user.follows}人" class="fl"></td>
-					<td><input type="submit" formaction="followerList" value="フォロワー${user.followers}人" class="frl"></td>
+				<input type="hidden" name="managementId" value="${user.managementId}">
+					<td><input type="submit" formaction="followList" value="フォロー中 ${user.follows} 人" class="list"></td>
+					<td><input type="submit" formaction="followerList" value="フォロワー ${user.followers} 人" class="list"></td>
 				</from>
 				
 				<form method="post" action="blockList">
-					<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
-					<td><input type="submit" formaction="blockList" value="ブロックしたユーザー"></td>
-				</from>
+					<input type="hidden" name="managementId" value="${user.managementId}">
+					<td><input type="submit" formaction="blockList" value="ブロックしたユーザー" class="list"></td>
+				</form>
 			</tr>
 			<tr>
 				<td colspan="3">${user.profile}</td>
 			</tr>
+			<tr>
+				<td><a href="userDelete">アカウントを削除</a></td>
+			</tr>
 		</table>
-		
-		投稿
-		<table border="0">
+
+		<table class="ht">
+			<tr><td width="400"><hr></td><td class="t">投稿</td><td width="400"><hr></td></tr>
+		</table>
+
+		<table class="pt">
 			<tr>
 				<c:forEach var="post" items="${post}">
-						<td><img src="${pageContext.request.contextPath}${post.contents}" width="100px" height="100px"></td></tr>
+					<td><img src="${pageContext.request.contextPath}/images/${post.contents1}" width="400px" height="400px"></td>
 				</c:forEach>
 			</tr>
 			<tr>
 				<c:forEach var="post" items="${post}">
-						<td>${post.likesCount}</td>
+					<td>${post.likesCount}</td>
+					
+				</c:forEach>
+			</tr>
+			<tr>
+				<c:forEach var="post" items="${post}">
+					<td>
+						<form action="comment" method="POST">
+							<input type="hidden" name="postId" value="${post.postId}">
+							<input type="submit" value="詳細">
+						</form>
+					</td>
 				</c:forEach>
 			</tr>
 		</table>
+
 	</body>
 </html>

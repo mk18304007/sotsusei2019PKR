@@ -33,19 +33,19 @@
 				<tr>
 					<td>
 						<form method="post" action="profile">
-							<input type="text" value="${follow.managementId}" name="managementId" style="display:none;">
-							<input type="image" src="${pageContext.request.contextPath}${follow.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
+							<input type="hidden" value="${follow.managementId}" name="managementId">
+							<input type="image" src="${pageContext.request.contextPath}/images/${follow.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
 						</form>
 					</td>
 					<td>
 						<form method="post" action="profile">
-							<input type="text" value="${follow.managementId}" name="managementId" style="display:none;">
+							<input type="hidden" value="${follow.managementId}" name="managementId">
 							<input type="submit" value="${follow.userName}" id="submit_btn">
 						</form>
 					</td>
 					<td>
 						<form method="post" action="profile">
-							<input type="text" value="${follow.managementId}" name="managementId" style="display:none;">
+							<input type="hidden" value="${follow.managementId}" name="managementId">
 							<input type="submit" value="${follow.userId}" id="submit_btn">
 						</form>
 					</td>

@@ -63,9 +63,8 @@ public class PostManager extends HttpServlet{
 			int i = 0;
 			for(Part file : files){
 				InputStream inputstream = file.getInputStream();
-				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+file);
-				String filename = getFileName(file);
-				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaab"+filename);
+				
+				String filename =getFileName(file);
 				if(filename != null){
 					//拡張子を取得
 					String extension = filename.substring(filename.lastIndexOf("."));
@@ -115,8 +114,6 @@ public class PostManager extends HttpServlet{
     {
     	String realpath = getServletContext().getRealPath(path).toString();
     	
-    	System.out.println("realpathの中身は " + realpath);	//nullチェック
-
         return realpath;
     }    
     
@@ -124,28 +121,22 @@ public class PostManager extends HttpServlet{
 	//getter
     public ArrayList getContentsPath()
     {
-    	System.out.println("contentsPathの中身は " + contentsPath);	//nullチェック
         return contentsPath;
     }
 	
-	private String getFileName(Part files)
-	{
-		for(String cd : files.getHeader("Content-Disposition").split(";")) 
-		{
-			
-				if (cd.trim().startsWith("filename")) 
-				{
-					//contentsPath = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+	private String getFileName(Part files){
+		String fileName=null;
+		for(String cd : files.getHeader("Content-Disposition").split(";")){
+				if (cd.trim().startsWith("filename")){
 					String filePath = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
 				 
-					System.out.println("contentsPathの中身は " + filePath );
+					System.out.println("filePathの中身は " + filePath );
 					
 					File file = new File(filePath);
 					//ファイルパスからファイル名を取得
-					return file.getName();
+					fileName= file.getName();
 				}
-			
 		}
-		return null;
+		return fileName;
 	}
 }

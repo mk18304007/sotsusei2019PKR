@@ -160,7 +160,9 @@ public class UsersDao implements AbstractDao{
 			System.out.println("UsersDao.read.sql:"+sql);
 			
 			ps=cn.prepareStatement(new String(sql));
-			ps.setString(1,(String)map.get("value"));
+			if(map.containsKey("value")){
+				ps.setString(1,(String)map.get("value"));
+			}
 			rs=ps.executeQuery();
 			if(rs.next()){
 				ub.setManagementId(rs.getString(1));

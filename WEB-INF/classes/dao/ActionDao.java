@@ -65,9 +65,15 @@ public class ActionDao implements AbstractDao{
 			ps=cn.prepareStatement(new String(sql));
 			
 			
-			ps.setString(1,(String)map.get("state"));
-			ps.setString(2,(String)map.get("activeManagementID"));
-			ps.setString(3,(String)map.get("passiveManagementID"));
+			if(map.containsKey("state")){
+				ps.setString(1,(String)map.get("state"));
+			}
+			if(map.containsKey("activeManagementID")){
+				ps.setString(2,(String)map.get("activeManagementID"));
+			}
+			if(map.containsKey("passiveManagementID")){
+				ps.setString(3,(String)map.get("passiveManagementID"));
+			}
 
 			rs=ps.executeQuery();
 			if(rs.next()){
@@ -148,10 +154,15 @@ public class ActionDao implements AbstractDao{
 			System.out.println("ActionDao.delete.sql:"+sql);
 			ps=cn.prepareStatement(new String(sql));
 			
-			ps.setString(1,(String)map.get("state"));
-			ps.setString(2,(String)map.get("activeManagementID"));
-			ps.setString(3,(String)map.get("passiveManagementID"));
-			
+			if(map.containsKey("state")){
+				ps.setString(1,(String)map.get("state"));
+			}
+			if(map.containsKey("activeManagementID")){
+				ps.setString(2,(String)map.get("activeManagementID"));
+			}
+			if(map.containsKey("passiveManagementID")){
+				ps.setString(3,(String)map.get("passiveManagementID"));
+			}
 			count=ps.executeUpdate();
 			System.out.println("Action表から"+count+"行削除しました");
 			

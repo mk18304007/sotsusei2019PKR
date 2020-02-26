@@ -10,6 +10,7 @@ import context.ResponseContext;
 import context.RequestContext;
 
 import bean.Bean;
+import bean.ActionBean;
 import bean.UsersBean;
 import bean.PostBean;
 import bean.LikesBean;
@@ -40,12 +41,14 @@ public class ToProfileCommand extends AbstractCommand{
 			OracleConnectionManager.getInstance().beginTransaction();
 			
 			//インテグレーションレイヤの処理を呼び出す
-			palams.put("where","WHERE managementId=?");
+			palams.put("where"," WHERE managementId=? ORDER BY postId DESC");
 			palams.put("value",sessionUserId);
 			
 			AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
 			AbstractDao dao=factory.getAbstractDao();
 			ArrayList postList = (ArrayList)dao.readAll(palams);
+			
+			palams.put("where"," WHERE managementId=?");
 			
 			factory=AbstractDaoFactory.getFactory("users");
 			dao=factory.getAbstractDao();
@@ -87,7 +90,7 @@ public class ToProfileCommand extends AbstractCommand{
 			OracleConnectionManager.getInstance().beginTransaction();
 			
 			//インテグレーションレイヤの処理を呼び出す
-			palams.put("where","WHERE managementId=?");
+			palams.put("where"," WHERE managementId=?");
 			palams.put("value",selectedUserId);
 			
 			AbstractDaoFactory factory=AbstractDaoFactory.getFactory("post");
@@ -123,9 +126,6 @@ public class ToProfileCommand extends AbstractCommand{
 			uplb.setUsersBean(ub);
 			list.add(uplb);
 			
-			//トランザクションを終了する
-			OracleConnectionManager.getInstance().commit();
-			
 			List<Object> first=new ArrayList<>();
 			first.add("post");
 			first.add(postList);
@@ -145,8 +145,23 @@ public class ToProfileCommand extends AbstractCommand{
 			
 			resc.setResult(result);
 			
-			//転送先情報をセットする
-			resc.setTarget("profile");
+			palams.clear();
+			palams.put("where","WHERE state=1 AND ((activeManagementId="+sessionUserId+" AND passiveManagementId="+selectedUserId+") OR (activeManagementId="+selectedUserId+" AND passiveManagementId="+sessionUserId+"))");
+			//ブロックされているかどうかを確認
+			factory=AbstractDaoFactory.getFactory("action");
+			dao=factory.getAbstractDao();
+			ActionBean ab=(ActionBean)dao.read(palams);
+			
+			//トランザクションを終了する
+			OracleConnectionManager.getInstance().commit();
+			
+			if(ab==null||ab.getActionId()==null){
+				//ブロックしている・もしくはされている場合
+				resc.setTarget("profile");
+			}else{
+				//転送先情報をセットする
+				resc.setTarget("blockProfile");
+			}
 		}
 		
 		return resc;

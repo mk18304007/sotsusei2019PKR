@@ -1,0 +1,30 @@
+body{
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    background-color:rgb(250,250,250);
+}
+h1{
+    text-align: center;
+}
+table{
+    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+label {
+    color:whitesmoke;  
+    background-color:dodgerblue;
+    padding: 6px;
+    border-radius: 12px;
+}
+td{
+    text-align: center;
+    margin:0 0 0 0;
+    padding:10 10 10 10;
+}
+#preview{
+    width: 700px;
+    height: 600px;
+}

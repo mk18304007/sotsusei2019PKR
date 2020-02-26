@@ -27,8 +27,7 @@ public class BlockListCommand extends AbstractCommand{
 		
 		//判定用のMap
 		Map<String,String> palams=new HashMap<>();
-		palams.put("value","1");
-		palams.put("where","WHERE state=?");
+		palams.put("where","WHERE state=1");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();

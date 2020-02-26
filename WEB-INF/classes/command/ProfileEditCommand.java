@@ -28,8 +28,13 @@ public class ProfileEditCommand extends AbstractCommand{
 		String managementId=((UsersBean)session.getAttribute("user")).getManagementId();
 		
 		//PostManagerを利用し、画像を保存、保存先のパスを取得する
-		PostManager pm= new PostManager(reqc);
-		String profilePicture = pm.getContentsPath();
+		String profilePicture="";
+		try{
+			PostManager pm= new PostManager(reqc);
+			profilePicture = (String)pm.getContentsPath().get(4);
+		}catch(StringIndexOutOfBoundsException e){
+			profilePicture="";
+		}
 		//RequestContextから入力パラメータを受け取る
 		String userName=reqc.getParameter("userName")[0];
 		String userId=reqc.getParameter("userId")[0];

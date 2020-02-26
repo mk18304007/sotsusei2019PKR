@@ -3,7 +3,7 @@ package bean;
 
 public class UsersActionBean extends Bean{
 	private UsersBean ub;
-	//フォローさいれいているい(1)/ふぉろーされていいいいいないいいいい(0)
+	//フォローされてる(1)/ふぉろーされてない(0)/ブロックされてる(2)
 	private String state;
 	
 	public UsersBean getUsersBean(){

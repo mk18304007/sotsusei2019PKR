@@ -6,6 +6,10 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script>
+			function test(b){
+				//console.log(document.getElementById(b));
+				document.getElementById(b).removeAttribute("style");
+			}
 			window.onload=function(){
 				$('.like_btn').on('click',function() {
 					var postId=$(this).attr("id");
@@ -31,11 +35,11 @@
 	<body>
 		<h1>ほーむ</h1>
 		<form method="post" action="sarch">
-			<input type="text" name="keyword" placeholder="検索ゥ">
+			<input type="text" name="keyword" placeholder="検索するワードを入力">
 			<input type="submit" value="検索" id="submit_btn">
 		</form>
 		<form method="post" action="profile">
-			<input type="text" value="${sessionScope.user.managementId}" name="managementId" style="display:none;">
+			<input type="hidden" value="${sessionScope.user.managementId}" name="managementId">
 			<input type="submit" value="プロフィール" id="submit_btn">
 		</form>
 		<form method="post" action="post">
@@ -51,33 +55,33 @@
 				<tr id="${post.postBean.postId}">
 					<td>
 						<form method="post" action="profile">
-							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
-							<input type="image" src="${pageContext.request.contextPath}${post.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
+							<input type="hidden" value="${post.usersBean.managementId}" name="managementId">
+							<input type="image" src="${pageContext.request.contextPath}/images/${post.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;">
 						</form>
 					</td>
 					<td>
 						<form method="post" action="profile">
-							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
+							<input type="hidden" value="${post.usersBean.managementId}" name="managementId">
 							<input type="submit" value="${post.usersBean.userName}" id="submit_btn">
 						</form>
 					</td>
 					<td>
 						<form method="post" action="profile">
-							<input type="text" value="${post.usersBean.managementId}" name="managementId" style="display:none;">
+							<input type="hidden" value="${post.usersBean.managementId}" name="managementId">
 							<input type="submit" value="${post.usersBean.userId}" id="submit_btn">
 						</form>
 					</td>
 					<td>
 						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents1}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents2}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents3}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents4}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents5}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents6}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents7}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents8}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents9}" width="50px" height="50px">
-						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents10}" width="50px" height="50px">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents2}" width="50px" height="50px" id="${post.postBean.postId}content2" onload="test('${post.postBean.postId}content2');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents3}" width="50px" height="50px" id="${post.postBean.postId}content3" onload="test('${post.postBean.postId}content3');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents4}" width="50px" height="50px" id="${post.postBean.postId}content4" onload="test('${post.postBean.postId}content4');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents5}" width="50px" height="50px" id="${post.postBean.postId}content5" onload="test('${post.postBean.postId}content5');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents6}" width="50px" height="50px" id="${post.postBean.postId}content6" onload="test('${post.postBean.postId}content6');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents7}" width="50px" height="50px" id="${post.postBean.postId}content7" onload="test('${post.postBean.postId}content7');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents8}" width="50px" height="50px" id="${post.postBean.postId}content8" onload="test('${post.postBean.postId}content8');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents9}" width="50px" height="50px" id="${post.postBean.postId}content9" onload="test('${post.postBean.postId}content9');" style="display:none;">
+						<img src="${pageContext.request.contextPath}/images/${post.postBean.contents10}" width="50px" height="50px" id="${post.postBean.postId}content10" onload="test('${post.postBean.postId}content10');" style="display:none;">
 					</td>
 					<td>
 						${post.postBean.text}
@@ -86,7 +90,10 @@
 						<input type="checkbox" class="like_btn" id="${post.postBean.postId}" ${post.likesBean.likeFlag}>
 					</td>
 					<td>
-						<a href="reply?post_id=${post.postBean.postId}">...詳細を表示</a>
+						<form action="comment" method="POST">
+							<input type="hidden" name="postId" value="${post.postBean.postId}">
+							<input type="submit" value="詳細">
+						</form>
 					</td>
 				</tr>
 			</c:forEach>

@@ -1,28 +1,62 @@
 #icon{
-    border-radius:50px;
+    border-radius:50%;
 }
-
+h1{
+    text-align: center;
+}
 body{
     width: 100%;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
+    background-color:rgb(250,250,250);
 }
+
 td{
     text-align: center;
-    padding-top: 10px;
+    margin:0 0 0 0;
+    padding:10 10 10 10;
 }
+
 .ut{
     margin-top:50px;
     margin-left: auto;
     margin-right: auto;
 }
-.uname{
+.puname{    
     font-size:35px;
 }
-.uid{
+.puid{
+    color:rgb(75, 75, 75);
     font-size: 30px;
 }
-.pebtn{}
-.fl{}
-.ftl{}
+.pebtn{
+    font-size: 17px;
+}
+.list{
+    font-size: 17px;
+    background:none;
+	border:none;
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.ht{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 投稿のほう */
+hr{
+    color:#cecece;
+}
+.pt{
+    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.t{
+    color:rgb(90, 90, 90);
+}

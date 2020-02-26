@@ -30,7 +30,7 @@ public class SarchCommand extends AbstractCommand{
 		
 		String keyword=reqc.getParameter("keyword")[0];
 		Map<String,String> palams=new HashMap<>();
-		palams.put("where","WHERE userName LIKE '%"+keyword+"%'OR userId LIKE '%"+keyword+"%'");
+		palams.put("where"," WHERE userName LIKE '%"+keyword+"%'OR userId LIKE '%"+keyword+"%'");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
@@ -41,7 +41,7 @@ public class SarchCommand extends AbstractCommand{
 		ArrayList usersList = (ArrayList)dao.readAll(palams);
 		
 		palams.clear();
-		palams.put("where","WHERE text LIKE '%"+keyword+"%'");
+		palams.put("where"," WHERE text LIKE '%"+keyword+"%'");
 		
 		factory=AbstractDaoFactory.getFactory("post");
 		dao=factory.getAbstractDao();
@@ -53,18 +53,44 @@ public class SarchCommand extends AbstractCommand{
 		for(int i=0;i<usersList.size();i++){
 			UsersBean ub=(UsersBean)usersList.get(i);
 			UsersActionBean uab=new UsersActionBean();
+			uab.setUsersBean(ub);
+			//フォローチェック
 			palams.put("state","0");
 			palams.put("activeManagementID",sessionManagementId);
 			palams.put("passiveManagementID",ub.getManagementId());
 			palams.put("where","WHERE state=? AND activeManagementID=? AND passiveManagementID=?");
-			FollowCheck check=new FollowCheck();
-			uab.setUsersBean(ub);
-			if(check.checkFollow(palams)){
-				uab.setState("1");
+			factory=AbstractDaoFactory.getFactory("action");
+			dao=factory.getAbstractDao();
+			ActionBean ab=(ActionBean)dao.read(palams);
+			if(ab==null||ab.getActionId()==null){
+				//ブロック状態を確認する
+				palams.put("state","1");
+				ab=(ActionBean)dao.read(palams);
+				if(ab==null||ab.getActionId()==null){
+					uab.setState("0");
+				}else{
+					uab.setState("2");
+				}
 			}else{
-				uab.setState("0");
+				uab.setState("1");
 			}
 			newUserList.add(uab);
+		}
+		
+		List<Bean> newPostList=new ArrayList<>();
+		for(int i=0;i<postList.size();i++){
+			PostBean pb=(PostBean)postList.get(i);
+			//ブロック確認
+			palams.put("state","1");
+			palams.put("activeManagementID",sessionManagementId);
+			palams.put("passiveManagementID",pb.getManagementId());
+			palams.put("where","WHERE state=? AND activeManagementID=? AND passiveManagementID=?");
+			factory=AbstractDaoFactory.getFactory("action");
+			dao=factory.getAbstractDao();
+			ActionBean ab=(ActionBean)dao.read(palams);
+			if(ab==null||ab.getActionId()==null){
+				newPostList.add(pb);
+			}
 		}
 		
 		//トランザクションを終了する
@@ -76,7 +102,7 @@ public class SarchCommand extends AbstractCommand{
 		
 		List<Object> second=new ArrayList<>();
 		second.add("post");
-		second.add(postList);
+		second.add(newPostList);
 		
 		List<List> result=new ArrayList<>();
 		result.add(first);

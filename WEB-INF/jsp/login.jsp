@@ -16,7 +16,6 @@
 		function sb(){
 			if($('#id').val().length !=0 && $('#pas').val().length != 0){
 				$('#submit').prop("disabled",false);
-				console.log("false");
 			}
 		}
 	</script>
@@ -24,8 +23,8 @@
 		<table class="loginBox">
 			<tr><td><h1>ログイン</h1></td></tr>
 			<form action="login_check" method="post" >
-				<tr><td><input type="text" name="userId" placeholder="ID" class="ite" id="id" onchange="sb()"></td></tr>
-				<tr><td><input type="password" name="password" placeholder="パスワード" class="ite" id="pas" onchange="sb()"></td></tr>
+				<tr><td><input type="text" name="userId" placeholder="ID" class="ite" id="id" onkeyup="sb()"></td></tr>
+				<tr><td><input type="password" name="password" placeholder="パスワード" class="ite" id="pas" onkeyup="sb()"></td></tr>
 				<tr><td><input type="submit" value="ログイン" class="isub" id="submit"></td></tr>
 			</form>
 			<tr><td><hr></td></tr>

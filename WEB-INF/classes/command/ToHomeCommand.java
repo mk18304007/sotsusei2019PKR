@@ -59,7 +59,7 @@ public class ToHomeCommand extends AbstractCommand{
 		
 		
 		//managementId(セッションユーザー)が空なら
-		if(managementId.equals("") || managementId==null){
+		if(managementId==null||managementId.equals("")){
 			//ユーザーリストを一件ずつ取得し
 			for(int i=0; i<usersList.size();i++){
 				UsersBean ub=(UsersBean)usersList.get(i);

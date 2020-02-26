@@ -23,6 +23,7 @@ public class PostBean extends Bean{
     private String report;
     // いいねされた数
     private String likesCount;
+	private String timeStamp;
 
     public String getPostId(){
         return postId;
@@ -114,4 +115,10 @@ public class PostBean extends Bean{
     public void setLikesCount(String likesCount){
         this.likesCount=likesCount;
     }
+	public String getTimeStamp(){
+		return timeStamp;
+	}
+	public void setTimeStamp(String timeStamp){
+		this.timeStamp=timeStamp;
+	}
 }

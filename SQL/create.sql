@@ -7,7 +7,7 @@
 		mailAddress 	VARCHAR2(30) CONSTRAINT UQ_NN_Users_mailAddres UNIQUE NOT NULL,
 		password 		VARCHAR2(20) CONSTRAINT NN_Users_password NOT NULL,
 		profile 		VARCHAR2(800) DEFAULT ' ' CONSTRAINT NN_Users_profile NOT NULL,
-		profilePicture 	VARCHAR2(1000) DEFAULT '/images/default_icon.jpg' CONSTRAINT NN_Users_profilePicture NOT NULL,
+		profilePicture 	VARCHAR2(1000) DEFAULT 'default_icon.jpg' CONSTRAINT NN_Users_profilePicture NOT NULL,
 		state 			NUMBER(1) DEFAULT 1 CONSTRAINT NN_Users_state NOT NULL,
 		postCount 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Users_postCount NOT NULL,
 		likesCount 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Users_likesCount NOT NULL,
@@ -34,7 +34,8 @@
 		text 			VARCHAR2(4000) DEFAULT ' ',
 		report 			NUMBER(2) DEFAULT 0 CONSTRAINT NN_Post_report NOT NULL,
 		likesCount 		NUMBER(10) DEFAULT 0 CONSTRAINT NN_Post_likesCount NOT NULL,
-		CONSTRAINT FK_Post_managementID FOREIGN KEY(managementID) REFERENCES Users(managementID)
+		CONSTRAINT FK_Post_managementID FOREIGN KEY(managementID) REFERENCES Users(managementID),
+		timeStamp 		DATE DEFAULT SYSDATE CONSTRAINT NN_Post_timeStamp NOT NULL
 	);
 
 -- Reply表

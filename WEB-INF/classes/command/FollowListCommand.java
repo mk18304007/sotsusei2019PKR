@@ -27,8 +27,7 @@ public class FollowListCommand extends AbstractCommand{
 		
 		//判定用のMap
 		Map<String,String> palams=new HashMap<>();
-		palams.put("value","0");
-		palams.put("where","WHERE state=?");
+		palams.put("where","WHERE state=0");
 		
 		//トランザクションを開始する
 		OracleConnectionManager.getInstance().beginTransaction();
