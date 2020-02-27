@@ -4,11 +4,14 @@
 	<head>
 		<title>プロフィール</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/profile.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script>
 			window.onload=function(){
 				$('.fbtn').on('click',function() {
 					var managementId=${user.managementId}
+					
 					
 					$.ajax({
 						url:"FollowAjaxServlet",
@@ -63,10 +66,10 @@
 			</tr>
 			<tr>
 				<form method="post" action="followList">
-					<input type="hidden" name="managementId" value="${user.managementId}">
+					<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
 					<td><input type="submit" formaction="followList" value="フォロー中 ${user.follows} 人"  class="list"></td>
 					<td><input type="submit" formaction="followerList" value="フォロワー ${user.followers} 人"  class="list"></td>
-				</form>
+				</from>
 				<td>フォローする<input type="checkbox" class="fbtn" ></td>
 				<td>ブロックする<input type="checkbox" class="bbtn" ></td>
 			</tr>

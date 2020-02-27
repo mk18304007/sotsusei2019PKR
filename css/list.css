@@ -1,0 +1,28 @@
+h1{
+    text-align: center;
+}
+.utd{
+    text-align: center;
+    margin:0 0 0 0;
+    padding:10 10 10 10;
+}
+.ut{
+    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.fos{
+    margin-bottom: 0px;
+}
+.uname{
+    font-size:25px;
+}
+.uid{
+    color:rgb(75, 75, 75);
+    font-size:20px;
+}
+.prof{
+    text-align: center;
+    margin:0 0 0 0;
+    padding:3 10 10 10;
+}

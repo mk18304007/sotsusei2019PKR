@@ -1,17 +1,6 @@
-#icon{
-    border-radius:50%;
-}
 h1{
     text-align: center;
 }
-body{
-    width: 100%;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    background-color:rgb(250,250,250);
-}
-
 td{
     text-align: center;
     margin:0 0 0 0;

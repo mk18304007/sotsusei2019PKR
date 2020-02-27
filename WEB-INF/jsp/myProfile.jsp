@@ -4,6 +4,8 @@
 	<head>
 		<title>プロフィール</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/profile.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	</head>
 	<body>
@@ -30,21 +32,18 @@
 			</tr>
 			<tr>
 				<form method="post" action="followList">
-				<input type="hidden" name="managementId" value="${user.managementId}">
+				<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
 					<td><input type="submit" formaction="followList" value="フォロー中 ${user.follows} 人" class="list"></td>
 					<td><input type="submit" formaction="followerList" value="フォロワー ${user.followers} 人" class="list"></td>
 				</from>
 				
 				<form method="post" action="blockList">
-					<input type="hidden" name="managementId" value="${user.managementId}">
+					<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
 					<td><input type="submit" formaction="blockList" value="ブロックしたユーザー" class="list"></td>
-				</form>
+				</from>
 			</tr>
 			<tr>
 				<td colspan="3">${user.profile}</td>
-			</tr>
-			<tr>
-				<td><a href="userDelete">アカウントを削除</a></td>
 			</tr>
 		</table>
 
@@ -61,17 +60,6 @@
 			<tr>
 				<c:forEach var="post" items="${post}">
 					<td>${post.likesCount}</td>
-					
-				</c:forEach>
-			</tr>
-			<tr>
-				<c:forEach var="post" items="${post}">
-					<td>
-						<form action="comment" method="POST">
-							<input type="hidden" name="postId" value="${post.postId}">
-							<input type="submit" value="詳細">
-						</form>
-					</td>
 				</c:forEach>
 			</tr>
 		</table>
