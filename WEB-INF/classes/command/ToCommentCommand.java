@@ -67,7 +67,7 @@ public class ToCommentCommand extends AbstractCommand{
 			ReplyBean rb=(ReplyBean)replyList.get(i);
 			ReplyDataBean replyData=new ReplyDataBean();
 			for(int j=0;j<usersList.size();j++){
-				UsersBean ub=(UsersBean)usersList.get(i);
+				UsersBean ub=(UsersBean)usersList.get(j);
 				//リプライと一致するとき
 				if(rb.getManagementId().equals(ub.getManagementId())){
 					replyData.setUsersBean(ub);

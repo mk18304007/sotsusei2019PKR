@@ -48,7 +48,7 @@ public class LikeCommand extends AbstractCommand{
 			
 			//Mapを初期化し、Post表のデータを取得
 			palams.clear();
-			palams.put("where","WHERE postId=?");
+			palams.put("where"," WHERE postId=?");
 			palams.put("value",postId);
 			
 			factory=AbstractDaoFactory.getFactory("post");
@@ -70,7 +70,7 @@ public class LikeCommand extends AbstractCommand{
 			
 			//Mapを初期化し、Post表のデータを取得
 			palams.clear();
-			palams.put("where","WHERE postId=?");
+			palams.put("where"," WHERE postId=?");
 			palams.put("value",postId);
 			
 			factory=AbstractDaoFactory.getFactory("post");
