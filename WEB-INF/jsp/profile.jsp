@@ -69,7 +69,7 @@
 					<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
 					<td><input type="submit" formaction="followList" value="フォロー中 ${user.follows} 人"  class="list"></td>
 					<td><input type="submit" formaction="followerList" value="フォロワー ${user.followers} 人"  class="list"></td>
-				</from>
+				</form>
 				<td>フォローする<input type="checkbox" class="fbtn" ></td>
 				<td>ブロックする<input type="checkbox" class="bbtn" ></td>
 			</tr>
@@ -91,6 +91,16 @@
 			<tr>
 				<c:forEach var="post" items="${post}">
 					<td>${post.likesCount}</td>
+				</c:forEach>
+			</tr>
+			<tr>
+				<c:forEach var="post" items="${post}">
+					<td>
+						<form action="comment" method="POST">
+							<input type="hidden" name="postId" value="${post.postId}">
+							<input type="submit" value="詳細">
+						</form>
+					</td>
 				</c:forEach>
 			</tr>
 		</table>

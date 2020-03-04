@@ -35,12 +35,12 @@
 				<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
 					<td><input type="submit" formaction="followList" value="フォロー中 ${user.follows} 人" class="list"></td>
 					<td><input type="submit" formaction="followerList" value="フォロワー ${user.followers} 人" class="list"></td>
-				</from>
+				</form>
 				
 				<form method="post" action="blockList">
 					<input type="text" name="managementId" value="${user.managementId}" style="display:none;">
 					<td><input type="submit" formaction="blockList" value="ブロックしたユーザー" class="list"></td>
-				</from>
+				</form>
 			</tr>
 			<tr>
 				<td colspan="3">${user.profile}</td>
@@ -60,6 +60,16 @@
 			<tr>
 				<c:forEach var="post" items="${post}">
 					<td>${post.likesCount}</td>
+				</c:forEach>
+			</tr>
+			<tr>
+				<c:forEach var="post" items="${post}">
+					<td>
+						<form action="comment" method="POST">
+							<input type="hidden" name="postId" value="${post.postId}">
+							<input type="submit" value="詳細">
+						</form>
+					</td>
 				</c:forEach>
 			</tr>
 		</table>

@@ -10,7 +10,7 @@
 		<script>
 			function check(){
 				var fileList = document.getElementById("files").files;
-				if(fileList.length>10 || fileList<0){
+				if(fileList.length>10 || fileList<=0){
 					$("#sbtn").prop("disabled",true);
 				}else{
 					$("#sbtn").prop("disabled",false);
