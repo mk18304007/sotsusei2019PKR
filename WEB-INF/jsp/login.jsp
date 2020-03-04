@@ -11,6 +11,11 @@
 				$('#submit').prop("disabled",true);
 				console.log("true");
 			}
+			
+			var state=${notfound}
+			if(state==0){
+				document.getElementById("failedMessage").removeAttribute("style");
+			}
 		});
 
 		function sb(){
@@ -23,6 +28,9 @@
 		<table class="loginBox">
 			<tr><td><h1>ログイン</h1></td></tr>
 			<form action="login_check" method="post" >
+				<tr><td><div id="failedMessage" style="display:none;">
+					<p style="color:red;">IDかパスワードが間違っているか、ユーザーが存在しません</p>
+				</div><td><tr>
 				<tr><td><input type="text" name="userId" placeholder="ID" class="ite" id="id" onkeyup="sb()"></td></tr>
 				<tr><td><input type="password" name="password" placeholder="パスワード" class="ite" id="pas" onkeyup="sb()"></td></tr>
 				<tr><td><input type="submit" value="ログイン" class="isub" id="submit"></td></tr>

@@ -13,7 +13,7 @@
 					var managementId=$(this).attr("id");
 					
 					$.ajax({
-						url:"FollowAjaxServlet",
+						url:"follow",
 						type:"POST",
 						data:{managementId:managementId}
 					}).done(function(result){

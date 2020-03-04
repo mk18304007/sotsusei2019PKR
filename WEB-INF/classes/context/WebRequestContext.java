@@ -3,6 +3,8 @@ package context;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
+import exception.PresentationException;
+
 public class WebRequestContext implements RequestContext{
 	private Map _parameters;
 	private HttpServletRequest _request;
@@ -18,7 +20,7 @@ public class WebRequestContext implements RequestContext{
 	public Object getRequest(){
 		return _request;
 	}
-	public void setRequest(Object req){
+	public void setRequest(Object req)throws PresentationException{
 		_request=(HttpServletRequest)req;
 		_parameters=_request.getParameterMap();
 	}

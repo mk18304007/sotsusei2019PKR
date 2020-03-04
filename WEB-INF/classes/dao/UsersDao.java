@@ -14,12 +14,14 @@ import bean.UsersBean;
 
 import util.OracleConnectionManager;
 
+import exception.integration.IntegrationException;
+
 public class UsersDao implements AbstractDao{
 	private PreparedStatement ps=null;
 	private Connection cn=null;
 	private ResultSet rs=null;
 	
-	public int update(Map map){
+	public int update(Map map)throws IntegrationException{
 		UsersBean ub=new UsersBean();
 		int count=0;
 		if(map.containsKey("Bean")){
@@ -37,7 +39,7 @@ public class UsersDao implements AbstractDao{
 			System.out.println("UsersDao.update.sql:"+sql);
 			
 			if(map.containsKey("userID")){
-				ps.setString(1,(String)map.get("userId"));
+				ps.setString(1,(String)map.get("userID"));
 			}else{
 				ps.setString(1,ub.getUserId());
 			}
@@ -103,6 +105,8 @@ public class UsersDao implements AbstractDao{
 		}catch(SQLException e){
 			System.out.println("UsersDao.update.catch:失敗");
 			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -110,13 +114,13 @@ public class UsersDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("UsersDao.update.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
 
-	public int insert(Map map){
+	public int insert(Map map)throws IntegrationException{
 		UsersBean ub=new UsersBean();
 		int count = 0;
 		try{
@@ -135,7 +139,8 @@ public class UsersDao implements AbstractDao{
 			count=ps.executeUpdate();
 		}catch(SQLException e){
 			System.out.println("UsersDao.insert.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -143,12 +148,12 @@ public class UsersDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("UsersDao.insert.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
-	public Bean read(Map map){
+	public Bean read(Map map)throws IntegrationException{
 		UsersBean ub=new UsersBean();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -184,7 +189,7 @@ public class UsersDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("UsersDao.read.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -192,12 +197,12 @@ public class UsersDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("UsersDao.read.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return ub;
 	}
-	public List readAll(Map map){
+	public List readAll(Map map)throws IntegrationException{
 		List<Bean> list=new ArrayList<Bean>();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -236,7 +241,7 @@ public class UsersDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("UsersDao.readAll.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -244,12 +249,12 @@ public class UsersDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("UsersDao.readAll.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return list;
 	}
-	public int delete(Map map){
+	public int delete(Map map)throws IntegrationException{
 		int count=0;
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -274,7 +279,8 @@ public class UsersDao implements AbstractDao{
 			cn.commit();
 		}catch(Exception e){
 			System.out.println("UsersDao.delete.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}
 		return count;
 	}

@@ -3,9 +3,6 @@
 	<head>
 		<title>プロフィール編集</title>
 		<style>
-			.active{
-				display:block;
-			}
 			.passive{
 				display:none;
 			}
@@ -18,6 +15,11 @@
 					document.getElementById("public").checked=true;
 				}else{
 					document.getElementById("private").checked=true;
+				}
+				
+				var state=${notfound}+0;
+				if(state==1){
+					document.getElementById("failedMessage").removeAttribute("style");
 				}
 			}
 			
@@ -36,7 +38,9 @@
 		
 		<label><input type="radio" name="target" value="profile" onchange="showPublic();" checked>公開情報の編集</label><br>
 		<label><input type="radio" name="target" value="password" onchange="showPrivate();">非公開情報の編集</label>
-		
+		<div id="failedMessage" style="display:none;">
+			<p style="color:red;">IDかメールアドレスが既に使用されています</p>
+		</div>
 		<form action="edit" enctype="multipart/form-data" method="post">
 			<input type="hidden" value="${sessionScope.user.managementId}" name="managementId">
 			<table id="public_area" class="active">

@@ -12,6 +12,8 @@ import controller.*;
 import context.RequestContext;
 import context.ResponseContext;
 
+import exception.PresentationException;
+
 @MultipartConfig(maxFileSize=100000000)
 
 public class FrontServlet extends HttpServlet{
@@ -20,15 +22,18 @@ public class FrontServlet extends HttpServlet{
 	}
 	public void doPost(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException{
 		req.setCharacterEncoding("UTF-8");
-		
-		ApplicationController app=new WebApplicationController();
-		
-		RequestContext reqc=app.getRequest(req);
-		
-		ResponseContext resc=app.handleRequest(reqc);
-		
-		resc.setResponse(res);
-		
-		app.handleResponse(reqc,resc);
+		try{
+			ApplicationController app=new WebApplicationController();
+			
+			RequestContext reqc=app.getRequest(req);
+			
+			ResponseContext resc=app.handleRequest(reqc);
+			
+			resc.setResponse(res);
+			
+			app.handleResponse(reqc,resc);
+		}catch(PresentationException e){
+			throw new ServletException(e.getMessage(),e);
+		}
 	}
 }

@@ -19,15 +19,17 @@ import context.WebResponseContext;
 import command.AbstractCommand;
 import command.CommandFactory;
 
+import exception.PresentationException;
+
 public class WebApplicationController implements ApplicationController{
-	public RequestContext getRequest(Object request){
+	public RequestContext getRequest(Object request)throws PresentationException{
 		RequestContext reqc=new WebRequestContext();
 		
 		reqc.setRequest(request);
 		
 		return reqc;
 	}
-	public ResponseContext handleRequest(RequestContext req){
+	public ResponseContext handleRequest(RequestContext req)throws PresentationException{
 		AbstractCommand command=CommandFactory.getCommand(req);
 		
 		command.init(req);
@@ -36,7 +38,7 @@ public class WebApplicationController implements ApplicationController{
 		
 		return resc;
 	}
-	public void handleResponse(RequestContext reqc,ResponseContext resc){
+	public void handleResponse(RequestContext reqc,ResponseContext resc)throws PresentationException{
 		HttpServletRequest req=(HttpServletRequest)reqc.getRequest();
 		HttpServletResponse res=(HttpServletResponse)resc.getResponse();
 		

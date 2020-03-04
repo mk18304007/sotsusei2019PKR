@@ -14,12 +14,14 @@ import bean.PostBean;
 
 import util.OracleConnectionManager;
 
+import exception.integration.IntegrationException;
+
 public class PostDao implements AbstractDao{
 	private PreparedStatement ps=null;
 	private Connection cn=null;
 	private ResultSet rs=null;
 	
-	public int update(Map map){
+	public int update(Map map)throws IntegrationException{
 		PostBean pb=new PostBean();
 		int count=0;
 		//更新前のデータをMapから取り出す
@@ -57,7 +59,8 @@ public class PostDao implements AbstractDao{
 			cn.commit();
 		}catch(SQLException e){
 			System.out.println("PostDao.update.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -65,13 +68,13 @@ public class PostDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("PostDao.update.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
 
-	public int insert(Map map){
+	public int insert(Map map)throws IntegrationException{
 		PostBean pb=new PostBean();
 		int count = 0;
 		try{
@@ -145,7 +148,8 @@ public class PostDao implements AbstractDao{
 			count=ps.executeUpdate();
 		}catch(SQLException e){
 			System.out.println("PostDao.insert.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -153,12 +157,12 @@ public class PostDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("PostDao.insert.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
-	public Bean read(Map map){
+	public Bean read(Map map)throws IntegrationException{
 		PostBean pb=new PostBean();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -196,7 +200,7 @@ public class PostDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("PostDao.read.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -204,12 +208,12 @@ public class PostDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("PostDao.read.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return pb;
 	}
-	public List readAll(Map map){
+	public List readAll(Map map)throws IntegrationException{
 		List<Bean> list=new ArrayList<Bean>();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -248,7 +252,7 @@ public class PostDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("PostDao.readAll.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -256,12 +260,12 @@ public class PostDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("PostDao.readAll.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return list;
 	}
-	public int delete(Map map){
+	public int delete(Map map)throws IntegrationException{
 		int count=0;
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -286,7 +290,8 @@ public class PostDao implements AbstractDao{
 			cn.commit();
 		}catch(Exception e){
 			System.out.println("PostDao.delete.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}
 		return count;
 	}

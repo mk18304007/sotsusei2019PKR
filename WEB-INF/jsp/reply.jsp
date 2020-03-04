@@ -5,7 +5,6 @@
 		<title>Reply</title>
 		<script>
 			window.onload=function(){
-				console.log("yaa");
 				var postId=${postData.postBean.managementId};
 				var managementId=${sessionScope.user.managementId};
 				if(postId==managementId){

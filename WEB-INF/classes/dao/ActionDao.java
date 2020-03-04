@@ -14,15 +14,17 @@ import bean.ActionBean;
 
 import util.OracleConnectionManager;
 
+import exception.integration.IntegrationException;
+
 public class ActionDao implements AbstractDao{
 	private PreparedStatement ps=null;
 	private Connection cn=null;
 	private ResultSet rs=null;
 	
-	public int update(Map map){
+	public int update(Map map)throws IntegrationException{
 		return 0;
 	}
-	public int insert(Map map){
+	public int insert(Map map)throws IntegrationException{
 		ActionBean ab =new ActionBean();
 		int count = 0;
 		try{
@@ -40,7 +42,8 @@ public class ActionDao implements AbstractDao{
 			count=ps.executeUpdate();
 		}catch(SQLException e){
 			System.out.println("ActionDao.insert.finally.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -48,12 +51,12 @@ public class ActionDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ActionDao.insert.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
     }
-	public Bean read(Map map){
+	public Bean read(Map map)throws IntegrationException{
 		ActionBean ab =new ActionBean();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -86,7 +89,8 @@ public class ActionDao implements AbstractDao{
 				System.out.println("ActionDao.read.else:失敗");
 			}
 		}catch(SQLException e){
-			throw new RuntimeException(e.getMessage(),e);
+			System.out.println("ActionDao.read.catch:失敗");
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -94,12 +98,12 @@ public class ActionDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ActionDao.read.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return ab;
 	}
-	public List readAll(Map map){
+	public List readAll(Map map)throws IntegrationException{
 		List<Bean> list=new ArrayList<Bean>();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -126,7 +130,7 @@ public class ActionDao implements AbstractDao{
 			}
 		}catch(Exception e){
 			System.out.println("ActionDao.readAll.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -134,12 +138,12 @@ public class ActionDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ActionDao.readAll.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return list;
 	}
-	public int delete(Map map){
+	public int delete(Map map)throws IntegrationException{
 		int count=0;
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -169,7 +173,8 @@ public class ActionDao implements AbstractDao{
 			cn.commit();
 		}catch(Exception e){
 			System.out.println("ActionDao.delete.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}
 		return count;
 	}

@@ -3,6 +3,8 @@ package command;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 import context.RequestContext;
 import context.ResponseContext;
@@ -17,81 +19,100 @@ import util.PostManager;
 
 import dao.AbstractDao;
 
+import exception.business.BusinessLogicException;
+import exception.business.ParameterInvalidException;
+import exception.integration.IntegrationException;
+
 public class ProfileEditCommand extends AbstractCommand{
-	public ResponseContext execute(ResponseContext resc){
-		//RequestContextのインスタンスを取得する
-		RequestContext reqc=getRequestContext();
-		
-		//一意な値を更新する場合でも変更できるように
-		//セッションから主キーを取得する
-		SessionManager session=new SessionManager(reqc);
-		String managementId=((UsersBean)session.getAttribute("user")).getManagementId();
-		
-		//PostManagerを利用し、画像を保存、保存先のパスを取得する
-		String profilePicture="";
+	public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
 		try{
-			PostManager pm= new PostManager(reqc);
-			profilePicture = (String)pm.getContentsPath().get(4);
-		}catch(StringIndexOutOfBoundsException e){
-			profilePicture="";
+			//RequestContextのインスタンスを取得する
+			RequestContext reqc=getRequestContext();
+			
+			//一意な値を更新する場合でも変更できるように
+			//セッションから主キーを取得する
+			SessionManager session=new SessionManager(reqc);
+			String managementId=((UsersBean)session.getAttribute("user")).getManagementId();
+			
+			//PostManagerを利用し、画像を保存、保存先のパスを取得する
+			String profilePicture="";
+			try{
+				PostManager pm= new PostManager(reqc);
+				profilePicture = (String)pm.getContentsPath().get(4);
+			}catch(StringIndexOutOfBoundsException e){
+				profilePicture="";
+			}
+			//RequestContextから入力パラメータを受け取る
+			String userName=reqc.getParameter("userName")[0];
+			String userId=reqc.getParameter("userId")[0];
+			String profile=reqc.getParameter("profile")[0];
+			String mailAddress=reqc.getParameter("mailAddress")[0];
+			String password=reqc.getParameter("password")[0];
+			String confirm=reqc.getParameter("password")[1];
+			String state=reqc.getParameter("state")[0];
+			
+			//トランザクションを開始する
+			OracleConnectionManager.getInstance().beginTransaction();
+			
+			//インテグレーションレイヤの処理を呼び出す
+			AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
+			AbstractDao dao=factory.getAbstractDao();
+			
+			//更新前の値を取得し、Mapに格納する
+			//更新がない列はdaoからこのBeanの値を参照する
+			//where句以降は同じものを使える
+			Map<String,Object> palams=new HashMap<String,Object>();
+			palams.put("where","WHERE managementID=?");
+			palams.put("value",managementId);
+			UsersBean ub=(UsersBean)dao.read(palams);
+			palams.put("Bean",ub);
+			
+			//更新する値をマップに格納
+			palams.put("userName",userName);
+			palams.put("userID",userId);
+			palams.put("profile",profile);
+			palams.put("mailAddress",mailAddress);
+			palams.put("password",password);
+			palams.put("state",state);
+			if(profilePicture.equals("") || profilePicture==null || profilePicture.equals("/images/")){
+				palams.put("profilePicture",ub.getProfilePicture());
+			}else{
+				palams.put("profilePicture",profilePicture);
+			}
+			
+			//更新処理
+			dao.update(palams);
+			
+			//更新後のデータを取得する
+			//where句は同じものを使える
+			ub=(UsersBean)dao.read(palams);
+			
+			//トランザクションを終了する
+			OracleConnectionManager.getInstance().commit();
+			
+			//セッションのもつ情報を最新のものにする
+			session=new SessionManager(reqc);
+			session.setAttribute("user",ub);
+			
+			//更新後はプロフィールページへ飛ばす
+			ToProfileCommand tpc=new ToProfileCommand();
+			tpc.init(reqc);
+			resc=tpc.execute(resc);
+			
+			return resc;
+		}catch(NullPointerException e){
+			throw new ParameterInvalidException("入力内容が足りません",e);
+		}catch(IntegrationException e){
+			//編集できない場合、
+			List<String> first=new ArrayList<String>();
+			String state="1";
+			first.add("notfound");
+			first.add(state);
+			List<List> result=new ArrayList<>();
+			result.add(first);
+			resc.setResult(result);
+			resc.setTarget("profileEdit");
+			return resc;
 		}
-		//RequestContextから入力パラメータを受け取る
-		String userName=reqc.getParameter("userName")[0];
-		String userId=reqc.getParameter("userId")[0];
-		String profile=reqc.getParameter("profile")[0];
-		String mailAddress=reqc.getParameter("mailAddress")[0];
-		String password=reqc.getParameter("password")[0];
-		String confirm=reqc.getParameter("password")[1];
-		String state=reqc.getParameter("state")[0];
-		
-		//トランザクションを開始する
-		OracleConnectionManager.getInstance().beginTransaction();
-		
-		//インテグレーションレイヤの処理を呼び出す
-		AbstractDaoFactory factory=AbstractDaoFactory.getFactory("users");
-		AbstractDao dao=factory.getAbstractDao();
-		
-		//更新前の値を取得し、Mapに格納する
-		//更新がない列はdaoからこのBeanの値を参照する
-		//where句以降は同じものを使える
-		Map<String,Object> palams=new HashMap<String,Object>();
-		palams.put("where","WHERE managementID=?");
-		palams.put("value",managementId);
-		UsersBean ub=(UsersBean)dao.read(palams);
-		palams.put("Bean",ub);
-		
-		//更新する値をマップに格納
-		palams.put("userName",userName);
-		palams.put("userId",userId);
-		palams.put("profile",profile);
-		palams.put("mailAddress",mailAddress);
-		palams.put("password",password);
-		palams.put("state",state);
-		if(profilePicture.equals("") || profilePicture==null || profilePicture.equals("/images/")){
-			palams.put("profilePicture",ub.getProfilePicture());
-		}else{
-			palams.put("profilePicture",profilePicture);
-		}
-		
-		//更新処理
-		dao.update(palams);
-		
-		//更新後のデータを取得する
-		//where句は同じものを使える
-		ub=(UsersBean)dao.read(palams);
-		
-		//トランザクションを終了する
-		OracleConnectionManager.getInstance().commit();
-		
-		//セッションのもつ情報を最新のものにする
-		session=new SessionManager(reqc);
-		session.setAttribute("user",ub);
-		
-		//更新後はプロフィールページへ飛ばす
-		ToProfileCommand tpc=new ToProfileCommand();
-		tpc.init(reqc);
-		resc=tpc.execute(resc);
-		
-		return resc;
 	}
 }

@@ -14,15 +14,17 @@ import bean.DirectMailBean;
 
 import util.OracleConnectionManager;
 
+import exception.integration.IntegrationException;
+
 public class DirectMailDao implements AbstractDao{
 	private PreparedStatement ps=null;
 	private Connection cn=null;
 	private ResultSet rs=null;
 	
-	public int update(Map map){
+	public int update(Map map)throws IntegrationException{
 		return 0;
 	}
-	public int insert(Map map){
+	public int insert(Map map)throws IntegrationException{
 		DirectMailBean db=new DirectMailBean();
 		int count = 0;
 		try{
@@ -46,7 +48,8 @@ public class DirectMailDao implements AbstractDao{
 			count=ps.executeUpdate();
 		}catch(SQLException e){
 			System.out.println("DirectMailDao.insert.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -54,12 +57,12 @@ public class DirectMailDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("DirectMailDao.insert.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
-	public Bean read(Map map){
+	public Bean read(Map map)throws IntegrationException{
 		DirectMailBean db=new DirectMailBean();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -85,7 +88,7 @@ public class DirectMailDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("DirectMailDao.read.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -93,12 +96,12 @@ public class DirectMailDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("DirectMailDao.read.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return db;
 	}
-	public List readAll(Map map){
+	public List readAll(Map map)throws IntegrationException{
 		List<Bean> list=new ArrayList<Bean>();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -123,19 +126,19 @@ public class DirectMailDao implements AbstractDao{
 				list.add(db);
 			}
 		}catch(SQLException e){
-			throw new RuntimeException(e.getMessage(),e);
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
 					ps.close();
 				}
 			}catch(SQLException e){
-				throw new RuntimeException(e.getMessage(),e);
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return list;
 	}
-	public int delete(Map map){
+	public int delete(Map map)throws IntegrationException{
 		int count=0;
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -160,7 +163,8 @@ public class DirectMailDao implements AbstractDao{
 			cn.commit();
 		}catch(Exception e){
 			System.out.println("DirectMailDao.delete.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}
 		return count;
 	}

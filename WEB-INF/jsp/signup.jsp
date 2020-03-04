@@ -10,6 +10,11 @@
 			if($('#na').val().length==0 || $('#id').val().length == 0 || $('#ma').val().length == 0 || $('#p1').val().length == 0 || $('#p2').val().length == 0){
 				$('#submit').prop("disabled",true);
 			}
+			
+			var state=${notfound}
+			if(state==0){
+				document.getElementById("failedMessage").removeAttribute("style");
+			}
 		});
 
 		
@@ -29,6 +34,9 @@
 		<table>
 		<tr><td><h1>アカウント作成</h1>
 			<form action="signup" method="post">
+				<tr><td><div id="failedMessage" style="display:none;">
+					<p style="color:red;">IDかメールアドレスが使用されています</p>
+				</div></td></tr>
 				<tr><td><input type="text" name="userName" placeholder="ユーザー名" class="ite" id="na" ></td></tr>
 				<tr><td><input type="text" name="userId" placeholder="ID" class="ite" id="id"></td></tr>
 				<tr><td><input type="email" name="mailAddress" placeholder="メールアドレス" class="ite" id="ma"></td></tr>

@@ -14,12 +14,14 @@ import bean.ReplyBean;
 import dao.AbstractDao;
 import util.OracleConnectionManager;
 
+import exception.integration.IntegrationException;
+
 public class ReplyDao implements AbstractDao{
 	private PreparedStatement ps=null;
 	private Connection cn=null;
 	private ResultSet rs=null;
 	
-	public int update(Map map){
+	public int update(Map map)throws IntegrationException{
 		ReplyBean rb =new ReplyBean();
 		int count = 0;
 		if(map.containsKey("Bean")){
@@ -47,7 +49,8 @@ public class ReplyDao implements AbstractDao{
 			count=ps.executeUpdate();
 		}catch(SQLException e){
 			System.out.println("ReplyDao.update.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -55,12 +58,12 @@ public class ReplyDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ReplyDao.update.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
-	public int insert(Map map){
+	public int insert(Map map)throws IntegrationException{
 		ReplyBean rb =new ReplyBean();
 		int count = 0;
 		try{
@@ -79,7 +82,8 @@ public class ReplyDao implements AbstractDao{
 			count=ps.executeUpdate();
 		}catch(SQLException e){
 			System.out.println("ReplyDao.insert.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -87,12 +91,12 @@ public class ReplyDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ReplyDao.insert.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return count;
 	}
-	public Bean read(Map map){
+	public Bean read(Map map)throws IntegrationException{
 		ReplyBean rb =new ReplyBean();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -120,7 +124,8 @@ public class ReplyDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("ReplyDao.read.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -128,12 +133,12 @@ public class ReplyDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ReplyDao.read.finally.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return rb;
 	}
-	public List readAll(Map map){
+	public List readAll(Map map)throws IntegrationException{
 		List<Bean> list=new ArrayList<Bean>();
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -162,7 +167,7 @@ public class ReplyDao implements AbstractDao{
 			}
 		}catch(SQLException e){
 			System.out.println("ReplyDao.readAll.catch:失敗");
-			e.printStackTrace();
+			throw new IntegrationException(e.getMessage(),e);
 		}finally{
 			try{
 				if(ps!=null){
@@ -170,12 +175,12 @@ public class ReplyDao implements AbstractDao{
 				}
 			}catch(SQLException e){
 				System.out.println("ReplyDao.readAll.catch:失敗");
-				e.printStackTrace();
+				throw new IntegrationException(e.getMessage(),e);
 			}
 		}
 		return list;
 	}
-	public int delete(Map map){
+	public int delete(Map map)throws IntegrationException{
 		int count=0;
 		try{
 			cn=OracleConnectionManager.getInstance().getConnection();
@@ -200,7 +205,8 @@ public class ReplyDao implements AbstractDao{
 			cn.commit();
 		}catch(Exception e){
 			System.out.println("ReplyDao.delete.catch:失敗");
-			e.printStackTrace();
+			OracleConnectionManager.getInstance().rollback();
+			throw new IntegrationException(e.getMessage(),e);
 		}
 		return count;
 	}
