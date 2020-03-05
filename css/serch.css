@@ -1,0 +1,68 @@
+#icon{
+    width: 150px;
+    height: 150px;
+    margin: 0 0 20 0;
+}
+#user_line,#post_line{
+   margin-left: auto;
+   margin-right: auto; 
+}
+.line{
+    width:600px ;
+}
+.listname{
+    padding: 0 50 0 50;
+    font-size: 20px;
+}
+/* ユーザー情報 */
+#user_area{
+    margin-left: auto;
+    margin-right: auto; 
+}
+.truserName{
+    text-align: center;
+}
+.userName{
+    z-index: 1;
+    padding: 30 0 0 0;
+    font-size:28px;
+}
+.truserId{
+    text-align: center;
+}
+.userId{
+    padding: 0 0 40 0;
+    color:rgb(75, 75, 75);
+    font-size: 21px;
+}
+.userProf{
+    font-size: 18px;
+    padding: 0 0 20 0;
+}
+.postu{
+    width:1680px;
+    margin-left: auto;
+    margin-right: auto;
+    display:flex;
+    flex-wrap: wrap;
+    display:-webkit-flex; 
+    list-style-type:none;
+    padding:0 50 0 50;
+}
+.pp{
+    width: 400px;
+    height: 400px;
+    flex-basis:40px;
+    margin:10 10 10 10;
+    overflow: hidden;
+    background: #000;
+}
+.ppimg{
+    object-fit: cover;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+.ppimg:hover{
+    opacity: 0.5;
+    transition-duration: 0.3s;
+}

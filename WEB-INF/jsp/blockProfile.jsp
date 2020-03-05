@@ -4,6 +4,7 @@
 	<head>
 		<title>プロフィール</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/profile.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script>
 			window.onload=function(){

@@ -3,8 +3,10 @@ h1{
 }
 td{
     text-align: center;
-    margin:0 0 0 0;
-    padding:10 10 10 10;
+}
+.head{
+    margin-left: auto;
+    margin-left: auto;
 }
 
 .ut{
@@ -27,9 +29,9 @@ td{
     background:none;
 	border:none;
 	outline: none;
-	-webkit-appearance: none;
+	/* -webkit-appearance: none;
 	-moz-appearance: none;
-	appearance: none;
+	appearance: none; */
 }
 
 .ht{
@@ -41,11 +43,33 @@ td{
 hr{
     color:#cecece;
 }
-.pt{
-    margin-top:50px;
+.t{
+    padding: 0 30 0 30;
+}
+.postu{
+    width:1680px;
     margin-left: auto;
     margin-right: auto;
+    display:flex;
+    flex-wrap: wrap;
+    display:-webkit-flex; 
+    list-style-type:none;
+    padding:0 50 0 50;
 }
-.t{
-    color:rgb(90, 90, 90);
+.pp{
+    width: 400px;
+    height: 400px;
+    flex-basis:40px;
+    margin:10 10 10 10;
+    overflow: hidden;
+    background: #000;
+}
+.ppimg{
+    object-fit: cover;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+.ppimg:hover{
+    opacity: 0.5;
+    transition-duration: 0.3s;
 }

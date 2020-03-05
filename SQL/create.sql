@@ -29,7 +29,7 @@
 		contents6 		VARCHAR2(100),
 		contents7 		VARCHAR2(100),
 		contents8 		VARCHAR2(100),
-		contents9		VARCHAR2(100),
+		contents9 		VARCHAR2(100),
 		contents10 		VARCHAR2(100),
 		text 			VARCHAR2(4000) DEFAULT ' ',
 		report 			NUMBER(2) DEFAULT 0 CONSTRAINT NN_Post_report NOT NULL,
@@ -53,9 +53,9 @@
 	);
 -- Likes表
 	CREATE TABLE Likes(
-		likeID			NUMBER(14) CONSTRAINT PK_Likes_likeID PRIMARY KEY,
+		likeID 			NUMBER(14) CONSTRAINT PK_Likes_likeID PRIMARY KEY,
 		managementID 	NUMBER(10),
-		postID			NUMBER(12),
+		postID 			NUMBER(12),
 		ReplyID 		NUMBER(12),
 		state 			NUMBER(1) DEFAULT(0), --投稿に対する(0)/リプライに対する(1)
 		CONSTRAINT FK_Likes_managementID 	FOREIGN KEY(managementID) 	REFERENCES Users(managementID),

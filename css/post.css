@@ -8,12 +8,6 @@ table{
     margin-right: auto;
 }
 
-td{
-    text-align: center;
-    margin:0 0 0 0;
-    padding:10 10 10 10;
-}
-
 #files{
     float:left;
     clear:both;
@@ -21,12 +15,58 @@ td{
 }
   
 #preview-item1{
-    width:150px;
+    text-align: center;
+    width:auto;
     float:left;
     clear:both;
 }
+
   
- td img{
-    width:20px;
-    border: 1px solid #000;
+td img{
+    width:400px;
+    height:400px;
+    margin: 5 5 5 5;
+    border: solid 1px;
+    object-fit: cover;
+    z-index: 1;
+    position: relative;
+}
+td a{
+    /* border-style:none; */
+    border: solid 1px;
+    width:400px;
+    height:400px;
+    margin: 5 5 5 5;
+    
+    position: absolute;
+    z-index: 2;
+}
+.imgbutton{
+    text-align: center;
+}
+.postcoment{
+    text-align: center;
+}
+.postbutton{
+    text-align: center;
+}
+#sbtn{
+    border-radius: 0.3em;
+    border: 0;
+    padding: 10px;
+    font-size: 17px;
+    color:white;
+    margin: 20 0 20 0;
+    width: 300px;
+    background-color: rgb(35, 111, 187);
+}
+#sbtn[disabled]{
+    border-radius: 0.3em;
+    border: 0;
+    padding: 10px;
+    font-size: 17px;
+    color:white;
+    margin: 20 0 20 0;
+    width: 300px;
+    background-color:rgb(189, 189, 189)
 }

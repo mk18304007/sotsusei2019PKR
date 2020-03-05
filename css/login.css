@@ -1,10 +1,3 @@
-body{
-    width: 100%;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    background-color:rgb(250,250,250);
-}
 .loginBox{
     margin-top:100px;
     margin-left: auto;
@@ -12,18 +5,24 @@ body{
     padding: 30 70 70 70;
     background-color:rgb(255, 255, 255);
     border:solid 1px #ccc;
-
 }
 td{
-    text-align: center;
     padding-top: 12px;
 }
 .ite{
     border-radius: 0.3em;
-    padding: 10px;
+    padding: 13 13 13 13 ;
     font-size: 15px;
     border:solid 1px #ccc;
-    margin: 0 0 20px;
+    margin: 10 0 10 0;
+    width: 300px;
+}
+.itepass{
+    border-radius: 0.3em;
+    padding: 13 13 13 13 ;
+    font-size: 15px;
+    border:solid 1px #ccc;
+    margin: 10 0 10 0;
     width: 300px;
 }
 .isub{
@@ -32,7 +31,7 @@ td{
     padding: 10px;
     font-size: 17px;
     color:white;
-    margin: 0 0 20px;
+    margin: 5 0 17 0;
     width: 300px;
     background-color: dodgerblue;
 }
@@ -42,23 +41,20 @@ td{
     padding: 10px;
     font-size: 17px;
     color:white;
-    margin: 0 0 20px;
+    margin: 5 0 17 0;
     width: 300px;
-    background-color:rgb(154, 230, 255);
+    background-color:rgb(168, 168, 168);
+}
+.topage{
+    text-align: center;
+    margin:10 0 0 0;
 }
 a{
-    /* 下線部を消す */
-    text-decoration: none;
+    text-decoratin: none;
 }
-/* .line{
-    display: flex;
-    align-items: center;
+#failedMessage{
+    text-align: center;
 }
-.line:before,.line:after{
-    border-top: 1px solid;
-    content: "";
-    flex-grow: 1;
+.message{
+    font-size: 13px;
 }
-.line:before,.line:after{
-    margin-right: 2px;
-} */

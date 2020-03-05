@@ -1,0 +1,46 @@
+h1{
+    text-align: center;
+}
+.head{
+    margin-top:100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30 0 30 0;
+}
+.active{
+    
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30 70 70 70;
+    background-color:rgb(255, 255, 255);
+    border:solid 1px #ccc;
+}
+
+.passive{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30 70 70 70;
+    background-color:rgb(255, 255, 255);
+}
+
+.ite{
+    border-radius: 0.3em;
+    padding: 13 13 13 13 ;
+    font-size: 15px;
+    border:solid 1px #ccc;
+    width: 300px;
+}
+.itename{
+    border-radius: 0.3em;
+    padding: 13 13 13 13 ;
+    font-size: 15px;
+    border:solid 1px #ccc;
+    margin: 10 0 10 0;
+    width: 300px;
+}
+.save{
+    text-align: center;
+}
+.pic{
+
+}

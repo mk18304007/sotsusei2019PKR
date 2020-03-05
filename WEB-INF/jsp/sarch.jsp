@@ -4,20 +4,30 @@
 	<head>
 		<title>プロフィール</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
-		<style>
-			#icon{
-				 border-radius:50px;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/serch.css" />
 		<script>
-			function showUsers(a,b){
-				if(b==2){
-					document.getElementById(a).setAttribute("style","display:none;")
-				}
+			function showUser(){
+				document.getElementById("user_line").className="active";
+				document.getElementById("user_area").className="active";
+				document.getElementById("post_line").className="passive";
+				document.getElementById("post_area").className="passive";
+
+			}
+			function showPost(){
+				document.getElementById("user_line").className="passive";
+				document.getElementById("user_area").className="passive";
+				document.getElementById("post_line").className="active";
+				document.getElementById("post_area").className="active";
 			}
 		</script>
+		<style>
+			.passive{
+				display:none;
+			}
+		</style>
 	</head>
 	<body>
+
 		<form method="post" action="home">
 			<input type="submit" value="ホームへ" id="submit_btn"><br>
 		</form>
@@ -27,35 +37,55 @@
 		<form method="post" action="logout">
 			<input type="submit" value="ログアウト" id="submit_btn">
 		</form>
-		
-		<table border="0">
+
+		<h1>検索結果</h1>
+		<table class="ht passive" id="user_line">
+			<tr><td class="line"><hr></td><td class="listname">ユーザー</td><td class="line"><hr></td></tr>
+		</table>
+
+		<table class="head">
 			<tr>
-				<c:forEach var="user" items="${user}">
-					<td>
-						<div id="user${user.usersBean.managementId}">
-							<form method="POST" action="profile">
-								<input type="hidden" value="${user.usersBean.managementId}" name="managementId">
-								<input type="image" src="${pageContext.request.contextPath}/images/${user.usersBean.profilePicture}" width="50px" height="50px" style="border-radius:50px;" onload="showUsers('user${user.usersBean.managementId}','${user.state}');">
-								<input type="submit" value="${user.usersBean.userName}" id="submit_btn">
-								<input type="submit" value="${user.usersBean.userId}" id="submit_btn">
-							</form>
-						</div>
-					</td>
-				</c:forEach>
+				<td><label><input type="radio" name="target" onchange="showUser();" >ユーザー</label></td>
+				<td><label><input type="radio" name="target" onchange="showPost();" checked>投稿</label></td>
 			</tr>
 		</table>
-		
-		<table border="0">
-			<tr>
-				<c:forEach var="post" items="${post}">
-					<td><img src="${pageContext.request.contextPath}/images/${post.contents1}" width="100px" height="100px"></td>
-				</c:forEach>
-			</tr>
-			<tr>
-				<c:forEach var="post" items="${post}">
-						<td>${post.likesCount}</td>
-				</c:forEach>
-			</tr>
+
+		<table class="usersTable passive" id="user_area">
+			<c:forEach var="user" items="${user}">
+					<form method="POST" action="profile">
+						<td><input type="hidden" value="${user.usersBean.managementId}" name="managementId"></td>
+						<tr class="truserName">
+							<td rowspan="3" class="userImg"><input type="image" src="${pageContext.request.contextPath}/images/${user.usersBean.profilePicture}" class="im" id="icon"></td>					
+							<td ><input type="submit" value="${user.usersBean.userName}" id="submit_btn" class="userName"></td>
+						</tr>						
+						<tr class="truserId">
+							<td><input type="submit" value="${user.usersBean.userId}" id="submit_btn" class="userId"></td>
+						</tr>
+						<tr>
+							<td class="userProf"><input type="submit" value="${user.usersBean.profile}" id="submit_btn" class="userProf"></td>
+						</tr>
+					</form>
+			</c:forEach>
 		</table>
+		
+		<table class="ht active" id="post_line">
+			<tr><td class="line"><hr></td><td class="listname">投稿</td><td class="line"><hr></td></tr>
+		</table>
+
+		<div class="active"  id="post_area">
+			<ul class="postu">
+				<c:forEach var="post" items="${post}">
+					<form action="comment" method="POST" >
+						<li class="pp">
+							<input type="image" src="${pageContext.request.contextPath}/images/${post.contents1}" class="ppimg" width="400px" height="400px">
+							<input type="hidden" name="postId" value="${post.postId}">
+							<input type="submit" value="詳細" hidden>
+							<div class="mask" hidden><p class="likeC">${post.likesCount}</p></div>	
+						</li>
+					</form>
+				</c:forEach>
+			</ul>
+		</div>
 	</body>
 </html>
+
