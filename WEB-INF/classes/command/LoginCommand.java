@@ -75,8 +75,10 @@ public class LoginCommand extends AbstractCommand{
 			
 			return resc;
 		}catch(NullPointerException e){
+			System.out.println(e.getMessage());
 			throw new ParameterInvalidException("入力内容が足りません",e);
 		}catch(IntegrationException e){
+			e.printStackTrace();
 			throw new BusinessLogicException(e.getMessage(),e);
 		}
 	}

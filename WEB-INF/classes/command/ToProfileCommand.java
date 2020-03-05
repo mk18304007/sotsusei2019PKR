@@ -72,20 +72,22 @@ public class ToProfileCommand extends AbstractCommand{
 				
 				List<Object> second=new ArrayList<>();
 				second.add("user");
-				//プロフィールの内容を取得して、記号や改行を置換する
-				String text = ub.getProfile();
-				text = text.replaceAll("&amp;","&amp;amp;");
-				text = text.replaceAll("&lt;","&amp;lt;");
-				text = text.replaceAll("&gt;","&amp;gt;");
-				text = text.replaceAll("&quot;","&amp;quot;");
-				text = text.replaceAll("&apos;","&amp;apos;");
-				text = text.replaceAll("&nbsp;","&amp;nbsp;");
-				text = text.replaceAll("\"","&quot;");
-				text = text.replaceAll("'","&apos;");
-				text = text.replaceAll("<","&lt;");
-				text = text.replaceAll(">","&gt;");
-				text = text.replaceAll("\n","<br>");
-				ub.setProfile(text);
+				if(ub!=null||ub.getProfile()!=null){
+					//プロフィールの内容を取得して、記号や改行を置換する
+					String text = ub.getProfile();
+					text = text.replaceAll("&amp;","&amp;amp;");
+					text = text.replaceAll("&lt;","&amp;lt;");
+					text = text.replaceAll("&gt;","&amp;gt;");
+					text = text.replaceAll("&quot;","&amp;quot;");
+					text = text.replaceAll("&apos;","&amp;apos;");
+					text = text.replaceAll("&nbsp;","&amp;nbsp;");
+					text = text.replaceAll("\"","&quot;");
+					text = text.replaceAll("'","&apos;");
+					text = text.replaceAll("<","&lt;");
+					text = text.replaceAll(">","&gt;");
+					text = text.replaceAll("\n","<br>");
+					ub.setProfile(text);
+				}
 				second.add(ub);
 				
 				List<Object> third=new ArrayList<>();

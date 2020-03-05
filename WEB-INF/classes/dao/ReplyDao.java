@@ -109,7 +109,9 @@ public class ReplyDao implements AbstractDao{
 			ps=cn.prepareStatement(new String(sql));
 			System.out.println("ReplyDao.read.sql:"+sql);
 			
-			ps.setString(1,(String)map.get("value"));
+			if(map.containsKey("value")){
+				ps.setString(1,(String)map.get("value"));
+			}
 			rs=ps.executeQuery();
 			if(rs.next()){
 				rb.setReplyId(rs.getString(1));

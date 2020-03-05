@@ -117,19 +117,21 @@ public class ToHomeCommand extends AbstractCommand{
 						}
 					}
 					//投稿の内容を取得して、記号や改行を置換する
-					String text = pb.getText();
-					text = text.replaceAll("&amp;","&amp;amp;");
-					text = text.replaceAll("&lt;","&amp;lt;");
-					text = text.replaceAll("&gt;","&amp;gt;");
-					text = text.replaceAll("&quot;","&amp;quot;");
-					text = text.replaceAll("&apos;","&amp;apos;");
-					text = text.replaceAll("&nbsp;","&amp;nbsp;");
-					text = text.replaceAll("\"","&quot;");
-					text = text.replaceAll("'","&apos;");
-					text = text.replaceAll("<","&lt;");
-					text = text.replaceAll(">","&gt;");
-					text = text.replaceAll("\n","<br>");
-					pb.setText(text);
+					if(pb!=null && pb.getText()!=null){
+						String text = pb.getText();
+						text = text.replaceAll("&amp;","&amp;amp;");
+						text = text.replaceAll("&lt;","&amp;lt;");
+						text = text.replaceAll("&gt;","&amp;gt;");
+						text = text.replaceAll("&quot;","&amp;quot;");
+						text = text.replaceAll("&apos;","&amp;apos;");
+						text = text.replaceAll("&nbsp;","&amp;nbsp;");
+						text = text.replaceAll("\"","&quot;");
+						text = text.replaceAll("'","&apos;");
+						text = text.replaceAll("<","&lt;");
+						text = text.replaceAll(">","&gt;");
+						text = text.replaceAll("\n","<br>");
+						pb.setText(text);
+					}
 					
 					//最後に投稿をBeanに登録する
 					uplb.setPostBean(pb);

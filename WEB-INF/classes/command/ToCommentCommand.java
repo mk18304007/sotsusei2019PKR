@@ -64,20 +64,24 @@ public class ToCommentCommand extends AbstractCommand{
 				UsersBean ub=(UsersBean)usersList.get(i);
 				//投稿と一致するとき
 				if(pb.getManagementId().equals(ub.getManagementId())){
-					//投稿の内容を取得して、記号や改行を置換する
-					String text = pb.getText();
-					text = text.replaceAll("&amp;","&amp;amp;");
-					text = text.replaceAll("&lt;","&amp;lt;");
-					text = text.replaceAll("&gt;","&amp;gt;");
-					text = text.replaceAll("&quot;","&amp;quot;");
-					text = text.replaceAll("&apos;","&amp;apos;");
-					text = text.replaceAll("&nbsp;","&amp;nbsp;");
-					text = text.replaceAll("\"","&quot;");
-					text = text.replaceAll("'","&apos;");
-					text = text.replaceAll("<","&lt;");
-					text = text.replaceAll(">","&gt;");
-					text = text.replaceAll("\n","<br>");
-					pb.setText(text);
+					if(pb!=null||pb.getText()!=null){
+						//投稿の内容を取得して、記号や改行を置換する
+						String text = pb.getText();
+						if(text!=null){
+							text = text.replaceAll("&amp;","&amp;amp;");
+							text = text.replaceAll("&lt;","&amp;lt;");
+							text = text.replaceAll("&gt;","&amp;gt;");
+							text = text.replaceAll("&quot;","&amp;quot;");
+							text = text.replaceAll("&apos;","&amp;apos;");
+							text = text.replaceAll("&nbsp;","&amp;nbsp;");
+							text = text.replaceAll("\"","&quot;");
+							text = text.replaceAll("'","&apos;");
+							text = text.replaceAll("<","&lt;");
+							text = text.replaceAll(">","&gt;");
+							text = text.replaceAll("\n","<br>");
+							pb.setText(text);
+						}
+					}
 					postData.setUsersBean(ub);
 					postData.setPostBean(pb);
 				}
@@ -89,20 +93,22 @@ public class ToCommentCommand extends AbstractCommand{
 					UsersBean ub=(UsersBean)usersList.get(j);
 					//リプライと一致するとき
 					if(rb.getManagementId().equals(ub.getManagementId())){
-						//リプライのの内容を取得して、記号や改行を置換する
-						String text = rb.getReply();
-						text = text.replaceAll("&amp;","&amp;amp;");
-						text = text.replaceAll("&lt;","&amp;lt;");
-						text = text.replaceAll("&gt;","&amp;gt;");
-						text = text.replaceAll("&quot;","&amp;quot;");
-						text = text.replaceAll("&apos;","&amp;apos;");
-						text = text.replaceAll("&nbsp;","&amp;nbsp;");
-						text = text.replaceAll("\"","&quot;");
-						text = text.replaceAll("'","&apos;");
-						text = text.replaceAll("<","&lt;");
-						text = text.replaceAll(">","&gt;");
-						text = text.replaceAll("\n","<br>");
-						rb.setReply(text);
+						if(rb!=null||rb.getReply()!=null){
+							//リプライのの内容を取得して、記号や改行を置換する
+							String text = rb.getReply();
+							text = text.replaceAll("&amp;","&amp;amp;");
+							text = text.replaceAll("&lt;","&amp;lt;");
+							text = text.replaceAll("&gt;","&amp;gt;");
+							text = text.replaceAll("&quot;","&amp;quot;");
+							text = text.replaceAll("&apos;","&amp;apos;");
+							text = text.replaceAll("&nbsp;","&amp;nbsp;");
+							text = text.replaceAll("\"","&quot;");
+							text = text.replaceAll("'","&apos;");
+							text = text.replaceAll("<","&lt;");
+							text = text.replaceAll(">","&gt;");
+							text = text.replaceAll("\n","<br>");
+							rb.setReply(text);
+						}
 						replyData.setUsersBean(ub);
 						replyData.setReplyBean(rb);
 					}

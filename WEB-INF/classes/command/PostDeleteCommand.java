@@ -33,13 +33,13 @@ public class PostDeleteCommand extends AbstractCommand{
 			//リプライ表を参照して投稿にコメントがついているかを調べる
 			//インテグレーションレイヤの処理を呼び出す
 			Map<String,String> palams=new HashMap<>();
-			palams.put("where"," WHERE postId="+postId);
+			palams.put("where","WHERE postId="+postId);
 			AbstractDaoFactory factory = AbstractDaoFactory.getFactory("reply");
 			AbstractDao dao = factory.getAbstractDao();
 			ReplyBean rb=(ReplyBean)dao.read(palams);
 			
 			//投稿にコメントがある場合コメントを先に削除する
-			if(rb==null){
+			if(rb!=null){
 				dao.delete(palams);
 			}
 			
