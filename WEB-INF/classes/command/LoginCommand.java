@@ -56,7 +56,7 @@ public class LoginCommand extends AbstractCommand{
 			}else{
 				//一致しない場合、ログインページへ(仮)本来は例外を送出する
 				List<String> first=new ArrayList<String>();
-				String state="0";
+				String state="1";
 				first.add("notfound");
 				first.add(state);
 				List<List> result=new ArrayList<>();

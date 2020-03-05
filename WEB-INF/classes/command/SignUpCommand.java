@@ -67,7 +67,7 @@ public class SignUpCommand extends AbstractCommand{
 		}catch(IntegrationException e){
 			//ユーザー登録できない場合、
 			List<String> first=new ArrayList<String>();
-			String state="0";
+			String state="1";
 			first.add("notfound");
 			first.add(state);
 			List<List> result=new ArrayList<>();

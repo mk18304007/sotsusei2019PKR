@@ -12,7 +12,7 @@
 				$('#submit').prop("disabled",true);
 			}
 
-			var state=${notfound}
+			var state=${notfound}+1;
 			if(state==0){
 				document.getElementById("failedMessage").removeAttribute("style");
 			}
